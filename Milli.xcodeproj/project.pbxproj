@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384D1FD36CD500967288 /* HomeViewController.swift */; };
+		243338501FD3764500967288 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384F1FD3764500967288 /* MainTableViewCell.swift */; };
+		246AAC381FDE15BE00E2E708 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AAC371FDE15BD00E2E708 /* Utility.swift */; };
+		246AAC3A1FDE172800E2E708 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AAC391FDE172800E2E708 /* Article.swift */; };
+		247F149720061F4F00C2D686 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F149620061F4F00C2D686 /* ShareViewController.swift */; };
+		247F149A20061F4F00C2D686 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247F149820061F4F00C2D686 /* MainInterface.storyboard */; };
+		247F149E20061F4F00C2D686 /* MilliShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 247F149420061F4F00C2D686 /* MilliShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		247F703B1FC2C8460072C3CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F703A1FC2C8460072C3CE /* AppDelegate.swift */; };
-		247F703D1FC2C8460072C3CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F703C1FC2C8460072C3CE /* ViewController.swift */; };
 		247F70401FC2C8460072C3CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247F703E1FC2C8460072C3CE /* Main.storyboard */; };
 		247F70421FC2C8460072C3CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 247F70411FC2C8460072C3CE /* Assets.xcassets */; };
 		247F70451FC2C8460072C3CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247F70431FC2C8460072C3CE /* LaunchScreen.storyboard */; };
@@ -17,6 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		247F149C20061F4F00C2D686 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 247F702F1FC2C8460072C3CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 247F149320061F4F00C2D686;
+			remoteInfo = MilliShare;
+		};
 		247F704C1FC2C8460072C3CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 247F702F1FC2C8460072C3CE /* Project object */;
@@ -33,10 +46,34 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		247F14A220061F4F00C2D686 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				247F149E20061F4F00C2D686 /* MilliShare.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		2433384D1FD36CD500967288 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		2433384F1FD3764500967288 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		246AAC371FDE15BD00E2E708 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		246AAC391FDE172800E2E708 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		247F149420061F4F00C2D686 /* MilliShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MilliShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		247F149620061F4F00C2D686 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		247F149920061F4F00C2D686 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		247F149B20061F4F00C2D686 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		247F14A320067B7F00C2D686 /* Milli-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Milli-Bridging-Header.h"; sourceTree = "<group>"; };
+		247F14A4200A5D0B00C2D686 /* MilliShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MilliShare.entitlements; sourceTree = "<group>"; };
+		247F14A5200A5F4000C2D686 /* Milli.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Milli.entitlements; sourceTree = "<group>"; };
 		247F70371FC2C8460072C3CE /* Milli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Milli.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		247F703A1FC2C8460072C3CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		247F703C1FC2C8460072C3CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		247F703F1FC2C8460072C3CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		247F70411FC2C8460072C3CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		247F70441FC2C8460072C3CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -50,6 +87,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		247F149120061F4F00C2D686 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		247F70341FC2C8460072C3CE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -74,12 +118,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		247F149520061F4F00C2D686 /* MilliShare */ = {
+			isa = PBXGroup;
+			children = (
+				247F14A4200A5D0B00C2D686 /* MilliShare.entitlements */,
+				247F149620061F4F00C2D686 /* ShareViewController.swift */,
+				247F149820061F4F00C2D686 /* MainInterface.storyboard */,
+				247F149B20061F4F00C2D686 /* Info.plist */,
+			);
+			path = MilliShare;
+			sourceTree = "<group>";
+		};
 		247F702E1FC2C8460072C3CE = {
 			isa = PBXGroup;
 			children = (
 				247F70391FC2C8460072C3CE /* Milli */,
 				247F704E1FC2C8460072C3CE /* MilliTests */,
 				247F70591FC2C8460072C3CE /* MilliUITests */,
+				247F149520061F4F00C2D686 /* MilliShare */,
 				247F70381FC2C8460072C3CE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +146,7 @@
 				247F70371FC2C8460072C3CE /* Milli.app */,
 				247F704B1FC2C8460072C3CE /* MilliTests.xctest */,
 				247F70561FC2C8460072C3CE /* MilliUITests.xctest */,
+				247F149420061F4F00C2D686 /* MilliShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,12 +154,17 @@
 		247F70391FC2C8460072C3CE /* Milli */ = {
 			isa = PBXGroup;
 			children = (
+				247F14A5200A5F4000C2D686 /* Milli.entitlements */,
 				247F703A1FC2C8460072C3CE /* AppDelegate.swift */,
-				247F703C1FC2C8460072C3CE /* ViewController.swift */,
-				247F703E1FC2C8460072C3CE /* Main.storyboard */,
-				247F70411FC2C8460072C3CE /* Assets.xcassets */,
+				246AAC391FDE172800E2E708 /* Article.swift */,
+				2433384D1FD36CD500967288 /* HomeViewController.swift */,
+				2433384F1FD3764500967288 /* MainTableViewCell.swift */,
+				246AAC371FDE15BD00E2E708 /* Utility.swift */,
 				247F70431FC2C8460072C3CE /* LaunchScreen.storyboard */,
+				247F703E1FC2C8460072C3CE /* Main.storyboard */,
 				247F70461FC2C8460072C3CE /* Info.plist */,
+				247F14A320067B7F00C2D686 /* Milli-Bridging-Header.h */,
+				247F70411FC2C8460072C3CE /* Assets.xcassets */,
 			);
 			path = Milli;
 			sourceTree = "<group>";
@@ -128,6 +190,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		247F149320061F4F00C2D686 /* MilliShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 247F149F20061F4F00C2D686 /* Build configuration list for PBXNativeTarget "MilliShare" */;
+			buildPhases = (
+				247F149020061F4F00C2D686 /* Sources */,
+				247F149120061F4F00C2D686 /* Frameworks */,
+				247F149220061F4F00C2D686 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MilliShare;
+			productName = MilliShare;
+			productReference = 247F149420061F4F00C2D686 /* MilliShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		247F70361FC2C8460072C3CE /* Milli */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 247F705F1FC2C8470072C3CE /* Build configuration list for PBXNativeTarget "Milli" */;
@@ -135,10 +214,12 @@
 				247F70331FC2C8460072C3CE /* Sources */,
 				247F70341FC2C8460072C3CE /* Frameworks */,
 				247F70351FC2C8460072C3CE /* Resources */,
+				247F14A220061F4F00C2D686 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				247F149D20061F4F00C2D686 /* PBXTargetDependency */,
 			);
 			name = Milli;
 			productName = Milli;
@@ -187,13 +268,27 @@
 		247F702F1FC2C8460072C3CE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0910;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = Milli;
 				TargetAttributes = {
+					247F149320061F4F00C2D686 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					247F70361FC2C8460072C3CE = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					247F704A1FC2C8460072C3CE = {
 						CreatedOnToolsVersion = 9.1;
@@ -223,11 +318,20 @@
 				247F70361FC2C8460072C3CE /* Milli */,
 				247F704A1FC2C8460072C3CE /* MilliTests */,
 				247F70551FC2C8460072C3CE /* MilliUITests */,
+				247F149320061F4F00C2D686 /* MilliShare */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		247F149220061F4F00C2D686 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				247F149A20061F4F00C2D686 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		247F70351FC2C8460072C3CE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -255,12 +359,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		247F149020061F4F00C2D686 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				247F149720061F4F00C2D686 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		247F70331FC2C8460072C3CE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				247F703D1FC2C8460072C3CE /* ViewController.swift in Sources */,
+				246AAC381FDE15BE00E2E708 /* Utility.swift in Sources */,
 				247F703B1FC2C8460072C3CE /* AppDelegate.swift in Sources */,
+				243338501FD3764500967288 /* MainTableViewCell.swift in Sources */,
+				2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */,
+				246AAC3A1FDE172800E2E708 /* Article.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +398,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		247F149D20061F4F00C2D686 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 247F149320061F4F00C2D686 /* MilliShare */;
+			targetProxy = 247F149C20061F4F00C2D686 /* PBXContainerItemProxy */;
+		};
 		247F704D1FC2C8460072C3CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 247F70361FC2C8460072C3CE /* Milli */;
@@ -296,6 +416,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		247F149820061F4F00C2D686 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				247F149920061F4F00C2D686 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		247F703E1FC2C8460072C3CE /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -315,6 +443,40 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		247F14A020061F4F00C2D686 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MilliShare/MilliShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8KWZL9VH93;
+				INFOPLIST_FILE = MilliShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Milli.Milli.MilliShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		247F14A120061F4F00C2D686 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MilliShare/MilliShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8KWZL9VH93;
+				INFOPLIST_FILE = MilliShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Milli.Milli.MilliShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		247F705D1FC2C8470072C3CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -425,12 +587,16 @@
 		247F70601FC2C8470072C3CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Milli/Milli.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8KWZL9VH93;
 				INFOPLIST_FILE = Milli/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Milli.Milli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Milli/Milli-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -439,12 +605,16 @@
 		247F70611FC2C8470072C3CE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Milli/Milli.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8KWZL9VH93;
 				INFOPLIST_FILE = Milli/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Milli.Milli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Milli/Milli-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -515,6 +685,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		247F149F20061F4F00C2D686 /* Build configuration list for PBXNativeTarget "MilliShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				247F14A020061F4F00C2D686 /* Debug */,
+				247F14A120061F4F00C2D686 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		247F70321FC2C8460072C3CE /* Build configuration list for PBXProject "Milli" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
