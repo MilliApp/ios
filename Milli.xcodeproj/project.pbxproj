@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384D1FD36CD500967288 /* HomeViewController.swift */; };
 		243338501FD3764500967288 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384F1FD3764500967288 /* MainTableViewCell.swift */; };
+		243550AF20556B950007E21D /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243550AE20556B950007E21D /* Globals.swift */; };
 		246AAC381FDE15BE00E2E708 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AAC371FDE15BD00E2E708 /* Utility.swift */; };
 		246AAC3A1FDE172800E2E708 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AAC391FDE172800E2E708 /* Article.swift */; };
 		247F149720061F4F00C2D686 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F149620061F4F00C2D686 /* ShareViewController.swift */; };
@@ -20,6 +21,7 @@
 		247F70451FC2C8460072C3CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247F70431FC2C8460072C3CE /* LaunchScreen.storyboard */; };
 		247F70501FC2C8460072C3CE /* MilliTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F704F1FC2C8460072C3CE /* MilliTests.swift */; };
 		247F705B1FC2C8460072C3CE /* MilliUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F705A1FC2C8460072C3CE /* MilliUITests.swift */; };
+		24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A11BBB2030FB340073EB95 /* AWSClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,7 @@
 /* Begin PBXFileReference section */
 		2433384D1FD36CD500967288 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2433384F1FD3764500967288 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		243550AE20556B950007E21D /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		246AAC371FDE15BD00E2E708 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		246AAC391FDE172800E2E708 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		247F149420061F4F00C2D686 /* MilliShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MilliShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +87,7 @@
 		247F70561FC2C8460072C3CE /* MilliUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MilliUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		247F705A1FC2C8460072C3CE /* MilliUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilliUITests.swift; sourceTree = "<group>"; };
 		247F705C1FC2C8460072C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24A11BBB2030FB340073EB95 /* AWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,8 +161,10 @@
 				247F14A5200A5F4000C2D686 /* Milli.entitlements */,
 				247F703A1FC2C8460072C3CE /* AppDelegate.swift */,
 				246AAC391FDE172800E2E708 /* Article.swift */,
+				24A11BBB2030FB340073EB95 /* AWSClient.swift */,
 				2433384D1FD36CD500967288 /* HomeViewController.swift */,
 				2433384F1FD3764500967288 /* MainTableViewCell.swift */,
+				243550AE20556B950007E21D /* Globals.swift */,
 				246AAC371FDE15BD00E2E708 /* Utility.swift */,
 				247F70431FC2C8460072C3CE /* LaunchScreen.storyboard */,
 				247F703E1FC2C8460072C3CE /* Main.storyboard */,
@@ -373,8 +379,10 @@
 			files = (
 				246AAC381FDE15BE00E2E708 /* Utility.swift in Sources */,
 				247F703B1FC2C8460072C3CE /* AppDelegate.swift in Sources */,
+				24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */,
 				243338501FD3764500967288 /* MainTableViewCell.swift in Sources */,
 				2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */,
+				243550AF20556B950007E21D /* Globals.swift in Sources */,
 				246AAC3A1FDE172800E2E708 /* Article.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

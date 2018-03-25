@@ -7,12 +7,6 @@
 //
 
 import Foundation
-import UIKit
-
-struct Globals {
-    static var mainTableView: UITableView = UITableView()
-    static var articles: [Article] = [Article]()
-}
 
 func print_debug(_ tagID: String, message: String) {
     print(tagID + ": " + message)

@@ -105,7 +105,7 @@
                                         </constraints>
                                         <state key="normal" image="Rewind Filled-50"/>
                                         <connections>
-                                            <action selector="RewindPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="wuN-S6-Mxh"/>
+                                            <action selector="rewindPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="1er-za-btK"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jSz-9E-iCR">
@@ -118,7 +118,7 @@
                                         <color key="tintColor" red="1" green="0.57609218360000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="Play Filled-50"/>
                                         <connections>
-                                            <action selector="PlayPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="Pi3-jG-tdP"/>
+                                            <action selector="playPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="0HK-wT-xJI"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-0:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bw-ZD-Vxl">
@@ -139,7 +139,7 @@
                                         </constraints>
                                         <state key="normal" image="Fast Forward Filled-50"/>
                                         <connections>
-                                            <action selector="ForwardPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="Jr2-MG-YSt"/>
+                                            <action selector="forwardPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="ias-ME-v6V"/>
                                         </connections>
                                     </button>
                                 </subviews>

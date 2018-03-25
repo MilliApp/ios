@@ -46,33 +46,56 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @objc func applicationDidBecomeActive(_ notification: NSNotification) {
-        print_debug(tagID, message: "applicationDidBecomeActive")
+//        print_debug(tagID, message: "applicationDidBecomeActive")
         loadSampleArticles()
+    }
+    
+    func loadArticles() -> [Article]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Article.ArchiveURL.path) as? [Article]
+    }
+    
+    func saveArticles(articleArray: [Article]) {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(articleArray, toFile: Article.ArchiveURL.path)
+        
+        if !isSuccessfulSave {
+            print("Failed to save articles...")
+        }
     }
     
     func parseArticle(url:String, firstLoad:Bool) -> Void {
         print_debug(tagID, message: "parseArticle")
-        print_debug(tagID, message: url)
+        let article = AWSClient.getArticleMeta(url: url)
+        print(article)
+        
+        // Loading from stored data
+        var articleArray = [Article]()
+        if let storedArray = loadArticles() {
+            articleArray = storedArray
+        }
+        
+        // Add new article to it
+        articleArray.append(article)
+        
+        // append articles only if not starting up
+        if !firstLoad {
+            Globals.articles.insert(article, at: 0)
+        }
+        
+        // Update the stored array
+        saveArticles(articleArray: articleArray)
+        
+//        dispatch_async(dispatch_get_main_queue(), {
+//            self.tableView.reloadData()
+//        })
+        
+        self.tableView.reloadData()
     }
     
     func convertURLstoArticles(firstLoad: Bool){
-        print_debug(tagID, message: "convertURLstoArticles")
-        
-//        if var urlArray = self.userDefaults?.objectForKey("urlArray") as? [String] {
-//            //            print("URL Array from App: ", urlArray)
-//            for (i,url) in urlArray.enumerate().reverse() {
-//                parseArticle(url,firstLoad: firstLoad)
-//                urlArray.removeAtIndex(i)
-//            }
-//        } else {
-//            "Wasn't able to retrieve URL Array"
-//        }
-//        // Update urlArray
-//        self.userDefaults!.setObject([String](), forKey: "urlArray") // Update the object
-        
+//        print_debug(tagID, message: "convertURLstoArticles")
         let temp = self.userDefaults?.object(forKey: "urlArray") as? [String]
         print_debug(tagID, message: "urlArray:")
-        print(temp!.count as Int)
+        print_debug(tagID, message: "Size \(temp!.count)")
         
         if var urlArray = self.userDefaults?.object(forKey: "urlArray") as? [String] {
             for (i, url) in urlArray.enumerated().reversed() {
@@ -83,11 +106,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             print_debug(tagID, message: "Wasn't able to retrieve URL Array")
         }
         self.userDefaults?.set([String](), forKey: "urlArray")
+        
+        print_debug(tagID, message: "Globals.articles")
+        print(Globals.articles)
     }
     
     func loadSampleArticles() {
-        print_debug(tagID, message: "loadSampleArticles")
+//        print_debug(tagID, message: "loadSampleArticles")
         convertURLstoArticles(firstLoad: true)
+        
+        // Uncomment if you need to clear the archived object
+//        saveArticles(articleArray: [Article]())
+        
+        var articles = [Article]()
+        if let storedArray = loadArticles() {
+            articles = storedArray.reversed()
+        }
+        Globals.articles = articles // Set global array - only needs to be set on add or delete
+        
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -105,6 +142,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let progress = Float(0.0)
         cell.articleInfo.text = "0% read"
         
+        //TODO(cvwang): Store image in archive
         let url = NSURL(string: "https://logo.clearbit.com/" + article.source)
         let data = NSData(contentsOf: url! as URL)
         let image = UIImage(data: data! as Data)
@@ -116,6 +154,34 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Globals.articles.count
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            Globals.articles.remove(at: indexPath.row)
+//            let temp_articles = Globals.articles
+            saveArticles(articleArray: Globals.articles.reversed())
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.tableView.reloadData()
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+    }
+    
+    @IBAction func playPressed(_ sender: Any) {
+        print_debug(tagID, message: "Play pressed")
+//        commandPlay()
+    }
+    
+    @IBAction func rewindPressed(_ sender: Any) {
+        print_debug(tagID, message: "Rewind pressed")
+//        commandRewind()
+    }
+    
+    @IBAction func forwardPressed(_ sender: Any) {
+        print_debug(tagID, message: "Forward pressed")
+//        commandForward()
     }
     
 }
