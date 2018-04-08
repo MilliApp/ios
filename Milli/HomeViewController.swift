@@ -62,31 +62,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func parseArticle(url:String, firstLoad:Bool) -> Void {
-        print_debug(tagID, message: "parseArticle")
-        let article = AWSClient.getArticleMeta(url: url)
-        print(article)
+    func loadSampleArticles() {
+        //        print_debug(tagID, message: "loadSampleArticles")
+        convertURLstoArticles(firstLoad: true)
         
-        // Loading from stored data
-        var articleArray = [Article]()
+        // Uncomment if you need to clear the archived object
+        //        saveArticles(articleArray: [Article]())
+        
+        var articles = [Article]()
         if let storedArray = loadArticles() {
-            articleArray = storedArray
+            articles = storedArray.reversed()
         }
-        
-        // Add new article to it
-        articleArray.append(article)
-        
-        // append articles only if not starting up
-        if !firstLoad {
-            Globals.articles.insert(article, at: 0)
-        }
-        
-        // Update the stored array
-        saveArticles(articleArray: articleArray)
-        
-//        dispatch_async(dispatch_get_main_queue(), {
-//            self.tableView.reloadData()
-//        })
+        Globals.articles = articles // Set global array - only needs to be set on add or delete
         
         self.tableView.reloadData()
     }
@@ -106,25 +93,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             print_debug(tagID, message: "Wasn't able to retrieve URL Array")
         }
         self.userDefaults?.set([String](), forKey: "urlArray")
-        
-        print_debug(tagID, message: "Globals.articles")
-        print(Globals.articles)
     }
     
-    func loadSampleArticles() {
-//        print_debug(tagID, message: "loadSampleArticles")
-        convertURLstoArticles(firstLoad: true)
-        
-        // Uncomment if you need to clear the archived object
-//        saveArticles(articleArray: [Article]())
-        
-        var articles = [Article]()
-        if let storedArray = loadArticles() {
-            articles = storedArray.reversed()
-        }
-        Globals.articles = articles // Set global array - only needs to be set on add or delete
-        
-        self.tableView.reloadData()
+    func parseArticle(url:String, firstLoad:Bool) -> Void {
+        print_debug(tagID, message: "parseArticle")
+        AWSClient.addArticle(url: url, tableView: self.tableView)
     }
     
     override func didReceiveMemoryWarning() {
@@ -138,7 +111,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Configure the cell...
         cell.articleTitle.text = article.title
-        cell.articleSource.text = article.source + " | " + article.info
+        
+        let formatter = DateFormatter()
+        // initially set the format based on your datepicker date
+        formatter.dateFormat = "dd-MMM-yyyy"
+        let dateStr = formatter.string(from: article.date)
+        
+        cell.articleSource.text = article.source + " | " + dateStr
         let progress = Float(0.0)
         cell.articleInfo.text = "0% read"
         
@@ -167,6 +146,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Globals.currentArticleIdx = indexPath.row
+        print(Globals.currentArticleIdx)
     }
     
     @IBAction func playPressed(_ sender: Any) {
