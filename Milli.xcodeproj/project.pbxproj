@@ -23,6 +23,7 @@
 		247F70501FC2C8460072C3CE /* MilliTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F704F1FC2C8460072C3CE /* MilliTests.swift */; };
 		247F705B1FC2C8460072C3CE /* MilliUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F705A1FC2C8460072C3CE /* MilliUITests.swift */; };
 		24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A11BBB2030FB340073EB95 /* AWSClient.swift */; };
+		67FBC24C2096713A00D910D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 247F70411FC2C8460072C3CE /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -337,6 +338,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67FBC24C2096713A00D910D2 /* Assets.xcassets in Resources */,
 				247F149A20061F4F00C2D686 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
