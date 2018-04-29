@@ -29,6 +29,7 @@ class Article: NSObject, NSCoding {
         aCoder.encode(date, forKey: PropertyKey.dateKey)
         aCoder.encode(url, forKey: PropertyKey.urlKey)
         aCoder.encode(articleId, forKey: PropertyKey.articleIdKey)
+        aCoder.encode(audioURL, forKey: PropertyKey.audioURLKey)
     }
     
     var title: String
@@ -36,6 +37,7 @@ class Article: NSObject, NSCoding {
     var date: Date
     var url: String
     var articleId: String
+    var audioURL: String = ""
     
     // MARK: Properties
     struct PropertyKey {
@@ -44,6 +46,7 @@ class Article: NSObject, NSCoding {
         static let dateKey = "date"
         static let urlKey = "url"
         static let articleIdKey = "articleId"
+        static let audioURLKey = "audioURL"
     }
     
     // MARK: Archiving Paths
@@ -68,8 +71,14 @@ class Article: NSObject, NSCoding {
         
         super.init()
         if title.isEmpty { // No empty articles
+            //Indicates a point at which initilization failure canbe triggered
             return nil
         }
+    }
+    
+    convenience init?(title:String, source:String, date:Date, url:String, articleId:String, audioURL:String) {
+        self.init(title: title, source: source, date: date, url: url, articleId: articleId)
+        self.audioURL = audioURL
     }
     
     // Mark: NSCoding
@@ -84,9 +93,11 @@ class Article: NSObject, NSCoding {
         let _source = aDecoder.decodeObject(forKey: PropertyKey.sourceKey) as! String
         let _date = aDecoder.decodeObject(forKey: PropertyKey.dateKey) as! Date
         let _url = aDecoder.decodeObject(forKey: PropertyKey.urlKey) as! String
-        let _articleId = aDecoder.decodeObject(forKey: PropertyKey.articleIdKey) as? String
+        let _articleId = aDecoder.decodeObject(forKey: PropertyKey.articleIdKey) as! String
+        let _audioURL = aDecoder.decodeObject(forKey: PropertyKey.audioURLKey) as! String
         
-        self.init(title: _title, source: _source, date: _date, url: _url, articleId: _articleId!)
+        self.init(title: _title, source: _source, date: _date, url: _url, articleId: _articleId, audioURL: _audioURL)
+        
     }
     
 }

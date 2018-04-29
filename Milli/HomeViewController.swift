@@ -151,6 +151,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Globals.currentArticleIdx = indexPath.row
         print(Globals.currentArticleIdx)
+        AWSClient.getArticleAudioMeta(article: Globals.articles[Globals.currentArticleIdx])
     }
     
     @IBAction func playPressed(_ sender: Any) {

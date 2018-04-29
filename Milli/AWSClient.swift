@@ -13,14 +13,51 @@ class AWSClient {
     
     static let tagID = "[AWS_CLIENT]"
     
-    class func getArticleAudio(article:Article) {
-        let articleMetaAPI = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio?"
-        var request = URLRequest(url: URL(string: articleMetaAPI)!)
+    class func getArticleAudioMeta(article:Article) {
+        let articleMetaURL = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio?articleId=" + article.articleId
+        var request = URLRequest(url: URL(string: articleMetaURL)!)
         request.httpMethod = "GET"
         
+        // Execute HTTP Request
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {data, response, error  in
+            // Check for error
+            if error != nil {
+                print("error=\(String(describing: error))")
+                return
+            }
             
+            let str = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+            print_debug(tagID, message: str as String)
+            
+            do {
+                if let convertedJsonIntoDict = try JSONSerialization.jsonObject(with: data!, options: []) as? [NSDictionary] {
+                    print(convertedJsonIntoDict)
+                    //TODO(chwang): ask alex to change this endpoint to return just single JSON object instead of array of one object
+                    let audioURL = convertedJsonIntoDict[0]["url"] as! String
+                    article.audioURL = audioURL
+                    print_debug(tagID, message: "Article AudioURL: " + article.audioURL)
+                    getArticleAudio(article: article)
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
         })
+        task.resume()
+    }
+    
+    class func getArticleAudio(article:Article) {
+        print_debug(tagID, message: "[GET_ARTICLE_AUDIO]")
+        let articleAudioURL = article.audioURL
+        let url = URL(string: articleAudioURL)!
+        
+        print(url)
+        
+        var downloadTask:URLSessionDownloadTask
+        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: {urlDownload, response, error  in
+            print_debug(tagID, message: "Playing audio...")
+            AudioPlayer.play(url: urlDownload!)
+        })
+        downloadTask.resume()
     }
 
     class func addArticle(url:String, tableView:UITableView) {
