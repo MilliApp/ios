@@ -12,6 +12,16 @@ import UIKit
 class AWSClient {
     
     static let tagID = "[AWS_CLIENT]"
+    
+    class func getArticleAudio(article:Article) {
+        let articleMetaAPI = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio?"
+        var request = URLRequest(url: URL(string: articleMetaAPI)!)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {data, response, error  in
+            
+        })
+    }
 
     class func addArticle(url:String, tableView:UITableView) {
         print_debug(tagID, message: url)
@@ -46,7 +56,7 @@ class AWSClient {
                     let publishDate = convertedJsonIntoDict["publishDate"] as! String
                     
                     let articleUrl = URL(string: url)!
-                    let article = Article(title: title, source: articleUrl.host!, isoDate: publishDate, url: url)
+                    let article = Article(title: title, source: articleUrl.host!, isoDate: publishDate, url: url, articleId: articleId)
                     
                     // Loading from stored data
                     var articleArray = [Article]()

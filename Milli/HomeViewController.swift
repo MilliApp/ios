@@ -67,7 +67,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         convertURLstoArticles(firstLoad: true)
         
         // Uncomment if you need to clear the archived object
-        //        saveArticles(articleArray: [Article]())
+//        saveArticles(articleArray: [Article]())
         
         var articles = [Article]()
         if let storedArray = loadArticles() {
@@ -82,7 +82,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        print_debug(tagID, message: "convertURLstoArticles")
         let temp = self.userDefaults?.object(forKey: "urlArray") as? [String]
         print_debug(tagID, message: "urlArray:")
-        print_debug(tagID, message: "Size \(temp!.count)")
+//        print_debug(tagID, message: "Size \(temp!.count)")
         
         if var urlArray = self.userDefaults?.object(forKey: "urlArray") as? [String] {
             for (i, url) in urlArray.enumerated().reversed() {
