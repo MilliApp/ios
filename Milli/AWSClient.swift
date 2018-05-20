@@ -14,6 +14,8 @@ class AWSClient {
     static let tagID = "[AWS_CLIENT]"
     
     class func getArticleAudioMeta(article:Article) {
+        print_debug(tagID, message: "[GET_ARTICLE_AUDIO_META] Loading Audio URL...")
+        
         let articleMetaURL = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio?articleId=" + article.articleId
         var request = URLRequest(url: URL(string: articleMetaURL)!)
         request.httpMethod = "GET"
@@ -33,10 +35,13 @@ class AWSClient {
                 if let convertedJsonIntoDict = try JSONSerialization.jsonObject(with: data!, options: []) as? [NSDictionary] {
                     print(convertedJsonIntoDict)
                     //TODO(chwang): ask alex to change this endpoint to return just single JSON object instead of array of one object
-                    let audioURL = convertedJsonIntoDict[0]["url"] as! String
-                    article.audioURL = audioURL
-                    print_debug(tagID, message: "Article AudioURL: " + article.audioURL)
-                    getArticleAudio(article: article)
+                    if let audioURL = convertedJsonIntoDict[0]["url"] as? String {
+                        article.audioURL = audioURL
+                        print_debug(tagID, message: "[GET_ARTICLE_AUDIO_META] Article AudioURL retrieved: " + article.audioURL!)
+                    } else {
+                        print_debug(tagID, message: "[GET_ARTICLE_AUDIO_META] Audio URL not ready yet on backend...")
+                    }
+//                    getArticleAudio(article: article)
                 }
             } catch let error as NSError {
                 print(error.localizedDescription)
@@ -47,17 +52,21 @@ class AWSClient {
     
     class func getArticleAudio(article:Article) {
         print_debug(tagID, message: "[GET_ARTICLE_AUDIO]")
-        let articleAudioURL = article.audioURL
-        let url = URL(string: articleAudioURL)!
-        
-        print(url)
-        
-        var downloadTask:URLSessionDownloadTask
-        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: {urlDownload, response, error  in
-            print_debug(tagID, message: "Playing audio...")
-            AudioPlayer.play(url: urlDownload!)
-        })
-        downloadTask.resume()
+        if let articleAudioURL = article.audioURL as String? {
+            let url = URL(string: articleAudioURL)!
+            
+            print(url)
+            
+            var downloadTask:URLSessionDownloadTask
+            downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: {urlDownload, response, error  in
+                print_debug(tagID, message: "Playing audio...")
+                AudioPlayer.play(url: urlDownload!)
+            })
+            downloadTask.resume()
+        } else {
+            print_debug(tagID, message: "[GET_ARTICLE_AUDIO] Audio URL not loaded yet")
+            getArticleAudioMeta(article: article)
+        }
     }
 
     class func addArticle(url:String, tableView:UITableView) {
@@ -90,10 +99,11 @@ class AWSClient {
                     let articleId = convertedJsonIntoDict["articleId"] as! String
                     let domain = convertedJsonIntoDict["domain"] as! String
                     let title = convertedJsonIntoDict["title"] as! String
-                    let publishDate = convertedJsonIntoDict["publishDate"] as! String
+                    let publishDate = convertedJsonIntoDict["publishDate"] as? String
                     
                     let articleUrl = URL(string: url)!
-                    let article = Article(title: title, source: articleUrl.host!, isoDate: publishDate, url: url, articleId: articleId)
+                    let article = Article(title: title, source: articleUrl.host!, isoDate: publishDate, url: url, articleId: articleId)!
+                    getArticleAudioMeta(article: article)
                     
                     // Loading from stored data
                     var articleArray = [Article]()
@@ -102,11 +112,11 @@ class AWSClient {
                     }
                     
                     // Add new article to it
-                    articleArray.append(article!)
+                    articleArray.append(article)
                     
                     // append articles only if not starting up
 //                    if !firstLoad {
-                        Globals.articles.insert(article!, at: 0)
+                        Globals.articles.insert(article, at: 0)
 //                    }
                     
                     // Update the stored array

@@ -20,7 +20,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Setting initial variables
     let tagID = "[HOME_VIEW_CONTROLLER]"
     var userDefaults = UserDefaults(suiteName: "group.com.Milli.Milli")
-//    var pollyArray = [TextToSpeechPolly]()
     var articleImages = [UIImage]()
     
     override func viewDidLoad() {
@@ -63,7 +62,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func loadSampleArticles() {
-        //        print_debug(tagID, message: "loadSampleArticles")
+//        print_debug(tagID, message: "loadSampleArticles")
         convertURLstoArticles(firstLoad: true)
         
         // Uncomment if you need to clear the archived object
@@ -82,7 +81,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        print_debug(tagID, message: "convertURLstoArticles")
         let temp = self.userDefaults?.object(forKey: "urlArray") as? [String]
         print_debug(tagID, message: "urlArray:")
-//        print_debug(tagID, message: "Size \(temp!.count)")
         
         if var urlArray = self.userDefaults?.object(forKey: "urlArray") as? [String] {
             for (i, url) in urlArray.enumerated().reversed() {
@@ -112,10 +110,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Configure the cell...
         cell.articleTitle.text = article.title
         
-        let formatter = DateFormatter()
-        // initially set the format based on your datepicker date
-        formatter.dateFormat = "dd-MMM-yyyy"
-        let dateStr = formatter.string(from: article.date)
+        var dateStr: String = "No date"
+        if let date = article.date {
+            let formatter = DateFormatter()
+            // initially set the format based on your datepicker date
+            formatter.dateFormat = "dd-MMM-yyyy"
+            dateStr = formatter.string(from: date)
+        }
         
         cell.articleSource.text = article.source + " | " + dateStr
         let progress = Float(0.0)
@@ -151,7 +152,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Globals.currentArticleIdx = indexPath.row
         print(Globals.currentArticleIdx)
-        AWSClient.getArticleAudioMeta(article: Globals.articles[Globals.currentArticleIdx])
+//        AWSClient.getArticleAudioMeta(article: Globals.articles[Globals.currentArticleIdx])
+        AWSClient.getArticleAudio(article: Globals.articles[Globals.currentArticleIdx])
     }
     
     @IBAction func playPressed(_ sender: Any) {

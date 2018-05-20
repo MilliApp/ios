@@ -34,10 +34,10 @@ class Article: NSObject, NSCoding {
     
     var title: String
     var source: String
-    var date: Date
+    var date: Date?
     var url: String
     var articleId: String
-    var audioURL: String = ""
+    var audioURL: String?
     
     // MARK: Properties
     struct PropertyKey {
@@ -53,16 +53,18 @@ class Article: NSObject, NSCoding {
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("articles")
     
-    convenience init?(title:String, source:String, isoDate:String, url:String, articleId:String) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-        let date = dateFormatter.date(from:String(isoDate.prefix(19)))!
-        
+    convenience init?(title:String, source:String, isoDate:String?, url:String, articleId:String) {
+        var date: Date? = nil
+        if let dateStr = isoDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+            date = dateFormatter.date(from:String(dateStr.prefix(19)))!
+        }
         self.init(title: title, source: source, date: date, url: url, articleId: articleId)
     }
     
-    init?(title:String, source:String, date:Date, url:String, articleId:String) {
+    init?(title:String, source:String, date:Date?, url:String, articleId:String) {
         self.title = title
         self.source = source
         self.date = date
@@ -76,7 +78,7 @@ class Article: NSObject, NSCoding {
         }
     }
     
-    convenience init?(title:String, source:String, date:Date, url:String, articleId:String, audioURL:String) {
+    convenience init?(title:String, source:String, date:Date?, url:String, articleId:String, audioURL:String?) {
         self.init(title: title, source: source, date: date, url: url, articleId: articleId)
         self.audioURL = audioURL
     }
@@ -91,10 +93,10 @@ class Article: NSObject, NSCoding {
     required convenience init?(coder aDecoder: NSCoder) {
         let _title = aDecoder.decodeObject(forKey: PropertyKey.titleKey) as! String
         let _source = aDecoder.decodeObject(forKey: PropertyKey.sourceKey) as! String
-        let _date = aDecoder.decodeObject(forKey: PropertyKey.dateKey) as! Date
+        let _date = aDecoder.decodeObject(forKey: PropertyKey.dateKey) as? Date
         let _url = aDecoder.decodeObject(forKey: PropertyKey.urlKey) as! String
         let _articleId = aDecoder.decodeObject(forKey: PropertyKey.articleIdKey) as! String
-        let _audioURL = aDecoder.decodeObject(forKey: PropertyKey.audioURLKey) as! String
+        let _audioURL = aDecoder.decodeObject(forKey: PropertyKey.audioURLKey) as? String
         
         self.init(title: _title, source: _source, date: _date, url: _url, articleId: _articleId, audioURL: _audioURL)
         
