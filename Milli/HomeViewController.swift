@@ -63,7 +63,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func loadSampleArticles() {
 //        print_debug(tagID, message: "loadSampleArticles")
-        convertURLstoArticles(firstLoad: true)
+        convertURLstoArticles()
         
         // Uncomment if you need to clear the archived object
 //        saveArticles(articleArray: [Article]())
@@ -77,25 +77,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.reloadData()
     }
     
-    func convertURLstoArticles(firstLoad: Bool){
+    func convertURLstoArticles(){
 //        print_debug(tagID, message: "convertURLstoArticles")
         let temp = self.userDefaults?.object(forKey: "urlArray") as? [String]
         print_debug(tagID, message: "urlArray:")
         
         if var urlArray = self.userDefaults?.object(forKey: "urlArray") as? [String] {
             for (i, url) in urlArray.enumerated().reversed() {
-                parseArticle(url: url, firstLoad: firstLoad)
+                AWSClient.addArticle(url: url, tableView: self.tableView)
                 urlArray.remove(at: i)
             }
         } else {
             print_debug(tagID, message: "Wasn't able to retrieve URL Array")
         }
         self.userDefaults?.set([String](), forKey: "urlArray")
-    }
-    
-    func parseArticle(url:String, firstLoad:Bool) -> Void {
-        print_debug(tagID, message: "parseArticle")
-        AWSClient.addArticle(url: url, tableView: self.tableView)
     }
     
     override func didReceiveMemoryWarning() {
@@ -149,16 +144,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    private func checkArticleAudioInitialized(article: Article, articleID: String) {
+        let article = Globals.articles[Globals.currentArticleIdx]
+        let articleID = article.articleId
+        if Globals.articleIdAudioPlayers[articleID] == nil {
+            Globals.articleIdAudioPlayers[articleID] = AudioPlayer(article: article)
+        }
+    }
+    
+    private func playSelectedArticleAudio(orPause: Bool = false) {
+        let article = Globals.articles[Globals.currentArticleIdx]
+        let articleID = article.articleId
+        checkArticleAudioInitialized(article: article, articleID: articleID)
+        if orPause {
+            Globals.articleIdAudioPlayers[articleID]?.playPause()
+        } else {
+            Globals.articleIdAudioPlayers[articleID]?.play()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Globals.currentArticleIdx = indexPath.row
         print(Globals.currentArticleIdx)
-//        AWSClient.getArticleAudioMeta(article: Globals.articles[Globals.currentArticleIdx])
-        AWSClient.getArticleAudio(article: Globals.articles[Globals.currentArticleIdx])
+        playSelectedArticleAudio()
     }
     
     @IBAction func playPressed(_ sender: Any) {
         print_debug(tagID, message: "Play pressed")
 //        commandPlay()
+        playSelectedArticleAudio(orPause: true)
     }
     
     @IBAction func rewindPressed(_ sender: Any) {

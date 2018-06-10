@@ -12,5 +12,6 @@ import UIKit
 struct Globals {
     static var mainTableView: UITableView = UITableView()
     static var articles: [Article] = [Article]()
+    static var articleIdAudioPlayers = [String: AudioPlayer]()
     static var currentArticleIdx = 0
 }

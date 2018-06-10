@@ -53,17 +53,6 @@ class Article: NSObject, NSCoding {
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("articles")
     
-    convenience init?(title:String, source:String, isoDate:String?, url:String, articleId:String) {
-        var date: Date? = nil
-        if let dateStr = isoDate {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-            date = dateFormatter.date(from:String(dateStr.prefix(19)))!
-        }
-        self.init(title: title, source: source, date: date, url: url, articleId: articleId)
-    }
-    
     init?(title:String, source:String, date:Date?, url:String, articleId:String) {
         self.title = title
         self.source = source
@@ -76,6 +65,17 @@ class Article: NSObject, NSCoding {
             //Indicates a point at which initilization failure canbe triggered
             return nil
         }
+    }
+    
+    convenience init?(title:String, source:String, isoDate:String?, url:String, articleId:String) {
+        var date: Date? = nil
+        if let dateStr = isoDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+            date = dateFormatter.date(from:String(dateStr.prefix(19)))!
+        }
+        self.init(title: title, source: source, date: date, url: url, articleId: articleId)
     }
     
     convenience init?(title:String, source:String, date:Date?, url:String, articleId:String, audioURL:String?) {

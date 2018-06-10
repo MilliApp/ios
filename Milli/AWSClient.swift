@@ -49,25 +49,6 @@ class AWSClient {
         })
         task.resume()
     }
-    
-    class func getArticleAudio(article:Article) {
-        print_debug(tagID, message: "[GET_ARTICLE_AUDIO]")
-        if let articleAudioURL = article.audioURL as String? {
-            let url = URL(string: articleAudioURL)!
-            
-            print(url)
-            
-            var downloadTask:URLSessionDownloadTask
-            downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: {urlDownload, response, error  in
-                print_debug(tagID, message: "Playing audio...")
-                AudioPlayer.play(url: urlDownload!)
-            })
-            downloadTask.resume()
-        } else {
-            print_debug(tagID, message: "[GET_ARTICLE_AUDIO] Audio URL not loaded yet")
-            getArticleAudioMeta(article: article)
-        }
-    }
 
     class func addArticle(url:String, tableView:UITableView) {
         print_debug(tagID, message: url)
@@ -113,11 +94,7 @@ class AWSClient {
                     
                     // Add new article to it
                     articleArray.append(article)
-                    
-                    // append articles only if not starting up
-//                    if !firstLoad {
-                        Globals.articles.insert(article, at: 0)
-//                    }
+                    Globals.articles.insert(article, at: 0)
                     
                     // Update the stored array
                     saveArticles(articleArray: articleArray)
