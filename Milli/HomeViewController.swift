@@ -144,22 +144,28 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    private func checkArticleAudioInitialized(article: Article, articleID: String) {
+    private func getCurrentArticleAudioPlayer() -> ArticleAudioPlayer {
         let article = Globals.articles[Globals.currentArticleIdx]
         let articleID = article.articleId
+        // Initialize current ArticleAudioPlayer if it doesn't exist
         if Globals.articleIdAudioPlayers[articleID] == nil {
-            Globals.articleIdAudioPlayers[articleID] = AudioPlayer(article: article)
+            Globals.articleIdAudioPlayers[articleID] = ArticleAudioPlayer(article: article)
+            // Attach periodic time observer
+//            Globals.articleIdAudioPlayers[articleID].setProgressCallback()
         }
+        return Globals.articleIdAudioPlayers[articleID]!
+    }
+    
+    func updateProgress() {
+        print_debug(tagID, message: "updateProgress")
     }
     
     private func playSelectedArticleAudio(orPause: Bool = false) {
-        let article = Globals.articles[Globals.currentArticleIdx]
-        let articleID = article.articleId
-        checkArticleAudioInitialized(article: article, articleID: articleID)
+        let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
         if orPause {
-            Globals.articleIdAudioPlayers[articleID]?.playPause()
+            currentArticleAudioPlayer.playPause()
         } else {
-            Globals.articleIdAudioPlayers[articleID]?.play()
+            currentArticleAudioPlayer.play()
         }
     }
     
@@ -171,18 +177,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func playPressed(_ sender: Any) {
         print_debug(tagID, message: "Play pressed")
-//        commandPlay()
         playSelectedArticleAudio(orPause: true)
+        if getCurrentArticleAudioPlayer().isPlaying() {
+            playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
+        } else {
+            playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
+        }
     }
     
     @IBAction func rewindPressed(_ sender: Any) {
         print_debug(tagID, message: "Rewind pressed")
-//        commandRewind()
+        getCurrentArticleAudioPlayer().rewind()
     }
     
     @IBAction func forwardPressed(_ sender: Any) {
         print_debug(tagID, message: "Forward pressed")
-//        commandForward()
+        getCurrentArticleAudioPlayer().forward()
     }
     
 }
