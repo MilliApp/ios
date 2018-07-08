@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -117,7 +118,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let progress = Float(0.0)
         cell.articleInfo.text = "0% read"
         
-        //TODO(cvwang): Store image in archive
+        // TODO(cvwang): Store image in archive
         let url = NSURL(string: "https://logo.clearbit.com/" + article.source)
         let data = NSData(contentsOf: url! as URL)
         let image = UIImage(data: data! as Data)
@@ -135,7 +136,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if editingStyle == .delete {
             // Delete the row from the data source
             Globals.articles.remove(at: indexPath.row)
-//            let temp_articles = Globals.articles
             saveArticles(articleArray: Globals.articles.reversed())
             tableView.deleteRows(at: [indexPath], with: .fade)
             self.tableView.reloadData()
@@ -144,45 +144,93 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    // Return string conveying current time out of total time
+    // i.e. mm:ss/mm:ss
+    func getTimeString(current:Double, total:Double) -> String {
+        let total_str = convertSecondsToTimeFormat(time: (Int64)(total))
+        let current_str = convertSecondsToTimeFormat(time: (Int64)(current))
+        let res = "(" + current_str + "/" + total_str + ")"
+        return res
+    }
+    
+    func updateProgress(time: CMTime) -> Void {
+        print_debug(tagID, message: "NEW Update Progress Called")
+        let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
+        // This is to prevent reading the player current and total time while paused as it causes a crash
+        // TODO(cvwang): Look into why there is a crash without this check
+        if !currentArticleAudioPlayer.isPlaying() {
+            print_debug(tagID, message: "Article is not playing")
+            return
+        }
+        // Set progress bar
+        mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress()), animated: true)
+        // Set time label on media panel
+        timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: currentArticleAudioPlayer.secondsLeft()))
+        // Set progress string in article row
+        let indexPath = IndexPath(row: Globals.currentArticleIdx, section: 0)
+        let cell = tableView.cellForRow(at: indexPath) as! MainTableViewCell
+        let currentTime = currentArticleAudioPlayer.currentTime()
+        let totalTime = currentArticleAudioPlayer.totalTime()
+        cell.articleInfo.text = "\(min(max(Int(floor(currentArticleAudioPlayer.progress()*100)), 0), 100))% read \(getTimeString(current: currentTime, total: totalTime))"
+    }
+    
     private func getCurrentArticleAudioPlayer() -> ArticleAudioPlayer {
         let article = Globals.articles[Globals.currentArticleIdx]
         let articleID = article.articleId
         // Initialize current ArticleAudioPlayer if it doesn't exist
         if Globals.articleIdAudioPlayers[articleID] == nil {
-            Globals.articleIdAudioPlayers[articleID] = ArticleAudioPlayer(article: article)
             // Attach periodic time observer
-//            Globals.articleIdAudioPlayers[articleID].setProgressCallback()
+            Globals.articleIdAudioPlayers[articleID] = ArticleAudioPlayer(article: article, callback: updateProgress)
         }
         return Globals.articleIdAudioPlayers[articleID]!
     }
     
-    func updateProgress() {
+    func updateProgress(percentage: Float) {
         print_debug(tagID, message: "updateProgress")
     }
     
     private func playSelectedArticleAudio(orPause: Bool = false) {
         let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
+        
+        // PlayPause vs. just Play
         if orPause {
             currentArticleAudioPlayer.playPause()
         } else {
             currentArticleAudioPlayer.play()
         }
+        
+        // Assign Play/Pause image based off audio player status
+        if currentArticleAudioPlayer.isPlaying() {
+            playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
+        } else {
+            playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print_debug(tagID, message: "didSelectRowAt \(indexPath.row)")
+        let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
+        
+        // If new article is selected, pause old article if it is playing
+        if Globals.currentArticleIdx != indexPath.row && currentArticleAudioPlayer.isPlaying() {
+            print_debug(tagID, message: "Pause previous article")
+            currentArticleAudioPlayer.pause()
+        }
+        
+        // Play newly selected article
+        print_debug(tagID, message: "Play current article")
         Globals.currentArticleIdx = indexPath.row
-        print(Globals.currentArticleIdx)
         playSelectedArticleAudio()
     }
     
     @IBAction func playPressed(_ sender: Any) {
         print_debug(tagID, message: "Play pressed")
         playSelectedArticleAudio(orPause: true)
-        if getCurrentArticleAudioPlayer().isPlaying() {
-            playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
-        } else {
-            playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
-        }
+//        if getCurrentArticleAudioPlayer().isPlaying() {
+//            playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
+//        } else {
+//            playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
+//        }
     }
     
     @IBAction func rewindPressed(_ sender: Any) {

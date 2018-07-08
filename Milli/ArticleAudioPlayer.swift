@@ -11,7 +11,9 @@ import AVFoundation
 
 class ArticleAudioPlayer {
     
-    //TODO (cvwang): allow the seek time to be configurable
+    typealias CallbackHandler = (_ time: CMTime) -> Void
+    
+    // TODO(cvwang): allow the seek time to be configurable
     private let SEEK_SECONDS: Int64 = 30
     private let tagID = "[AUDIO_PLAYER]"
     
@@ -26,11 +28,16 @@ class ArticleAudioPlayer {
     private var playState: PlayState
     private var article: Article
     private var player: AVPlayer = AVPlayer()
+    private var updateProgressCallback: CallbackHandler
     
-    init?(article:Article) {
+    init?(article:Article, callback:@escaping CallbackHandler) {
+        print_debug(tagID, message: "Initializing")
         self.article = article
         self.state = .NO_URL
         self.playState = .STOP
+        self.updateProgressCallback = callback
+//        print_debug(tagID, message: "Loading Player...")
+//        loadPlayArticleAudioPlayer()
     }
     
     private func loadPlayArticleAudioPlayer() {
@@ -48,25 +55,8 @@ class ArticleAudioPlayer {
             self.player.play()
             self.playState = .PLAY
             
-//            var downloadTask:URLSessionDownloadTask
-//            downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: {urlDownload, response, error  in
-//                print_debug(self.tagID, message: "[GET_ARTICLE_AUDIO] Playing audio...")
-//                do {
-//                    // Load the AudioPlayer
-//                    self.player = AVPlayer.init(url: urlDownload)
-////                    self.player.prepareToPlay()
-//                    self.state = .AUDIO_LOADED
-//
-//                    // Play the audio
-//                    self.player.play()
-//                    self.playState = .PLAY
-//                } catch let error as NSError {
-//                    print(error.localizedDescription)
-//                } catch {
-//                    print("AudioPlayer init failed")
-//                }
-//            })
-//            downloadTask.resume()
+            print_debug(tagID, message: "Loading Player...")
+            setProgressCallback()
         } else {
             print_debug(tagID, message: "[GET_ARTICLE_AUDIO] Audio URL not loaded yet")
             AWSClient.getArticleAudioMeta(article: article)
@@ -79,13 +69,13 @@ class ArticleAudioPlayer {
             loadPlayArticleAudioPlayer()
             return
         }
-        print_debug(tagID, message: "[PLAY] Playing \(article.audioURL)")
+        print_debug(tagID, message: "[PLAY] Playing \(String(describing: article.audioURL))")
         player.play()
         playState = .PLAY
     }
     
     func pause() {
-        print_debug(tagID, message: "[PLAY] Pausing \(article.audioURL)")
+        print_debug(tagID, message: "[PLAY] Pausing \(String(describing: article.audioURL))")
         player.pause()
         playState = .PAUSE
     }
@@ -98,8 +88,35 @@ class ArticleAudioPlayer {
         }
     }
     
-    func currentTime() -> Int64 {
-        return Int64(CMTimeGetSeconds(player.currentTime()))
+    func currentTime() -> Double {
+        return CMTimeGetSeconds(player.currentTime())
+    }
+    
+    func totalTime() -> Double {
+//        return (player.currentItem?.duration.seconds)!
+        let currentItem = player.currentItem!
+        var duration = 0.0
+        for tr in currentItem.loadedTimeRanges {
+            duration += CMTimeGetSeconds(tr.timeRangeValue.duration)
+        }
+        if duration == 0.0 {
+            print_debug(tagID, message: "0 duration")
+            return 0 // error
+        }
+        return duration
+    }
+    
+    func progress() -> Double {
+        let currentTime = self.currentTime()
+        let totalTime = self.totalTime()
+        if totalTime == 0.0 {
+            return 0.0
+        }
+        return currentTime / totalTime
+    }
+    
+    func secondsLeft() -> Int64 {
+        return Int64(totalTime() - currentTime())
     }
     
     private func seek(to: Int64) {
@@ -108,14 +125,19 @@ class ArticleAudioPlayer {
     }
     
     func rewind() {
-        seek(to: currentTime() - SEEK_SECONDS)
+        seek(to: (Int64)(currentTime()) - SEEK_SECONDS)
     }
     
     func forward() {
-        seek(to: currentTime() + SEEK_SECONDS)
+        seek(to: (Int64)(currentTime()) + SEEK_SECONDS)
     }
     
     func isPlaying() -> Bool {
         return playState == .PLAY
+    }
+    
+    func setProgressCallback() {
+        print_debug(tagID, message: "setProgressCallback called")
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1,2), queue: nil, using: updateProgressCallback)
     }
 }
