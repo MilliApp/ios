@@ -42,43 +42,46 @@ class ShareViewController: SLComposeServiceViewController {
     }
     
     func getUrlToApp() {
-        let item = self.extensionContext!.inputItems[0] as! NSExtensionItem; // NSExtensionItem - first object
-        let itemProvider = item.attachments![0] as! NSItemProvider; //NSItemProvider - first object
-        if (itemProvider.hasItemConformingToTypeIdentifier(kUTTypeURL as String)) {
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-                itemProvider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: {
-                    (urlItem, error) in
-                    if (error != nil) {
-                        // Error
-                        print(self.tagID + "ERROR")
-                    }
-                    print(self.tagID + "Url: ", urlItem!)
-                    
-                    // Get the currently stored array
-                    var urlArray = [String]()
-                    if let storedArray = self.userDefaults?.object(forKey: "urlArray") as? [String] {
+        let item = self.extensionContext?.inputItems.first as! NSExtensionItem; // NSExtensionItem - first object
+        let itemProvider = item.attachments?.first as! NSItemProvider; //NSItemProvider - first object
+        let propertyList = String(kUTTypePropertyList)
+        if itemProvider.hasItemConformingToTypeIdentifier(propertyList) {
+            itemProvider.loadItem(forTypeIdentifier: propertyList, options: nil, completionHandler: { (item, error) -> Void in
+                guard let dictionary = item as? NSDictionary else { return }
+                OperationQueue.main.addOperation {
+                    if let results = dictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary,
+                        let urlString = results["URL"] as? String,
+                        let url = NSURL(string: urlString) {
                         
-                        for item in urlArray {
-                            print(self.tagID + item)
+                        print(results)
+                        print("URL retrieved: \(urlString)")
+                        // Get the currently stored array
+                        var urlArray = [String]()
+                        if let storedArray = self.userDefaults?.object(forKey: "urlArray") as? [String] {
+                            
+                            for item in urlArray {
+                                print(self.tagID + item)
+                            }
+                            print(self.tagID + "set urlArray to storedArray")
+                            urlArray = storedArray
                         }
-                        print(self.tagID + "set urlArray to storedArray")
-                        urlArray = storedArray
+                        
+                        // Add new url to it
+                        let urlItemNS = url
+                        urlArray.append(urlItemNS.absoluteString!)
+                        
+                        // Update the stored array
+                        self.userDefaults!.set(urlArray, forKey: "urlArray") // Update the object
+                        self.userDefaults!.synchronize() // Update the data
+                        
+                        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+                        
+                        print(urlArray)
+                        print(self.tagID + "Here...")
                     }
-                    
-                    // Add new url to it
-                    let urlItemNS = urlItem! as! NSURL
-                    urlArray.append(urlItemNS.absoluteString!)
-                    
-                    // Update the stored array
-                    self.userDefaults!.set(urlArray, forKey: "urlArray") // Update the object
-                    self.userDefaults!.synchronize() // Update the data
-                    
-                    self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-                    
-                    print(urlArray)
-                    print(self.tagID + "Here...")
-                })
-            }
+                }
+            })
         }
     }
 }
+

@@ -23,6 +23,7 @@
 		247F70501FC2C8460072C3CE /* MilliTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F704F1FC2C8460072C3CE /* MilliTests.swift */; };
 		247F705B1FC2C8460072C3CE /* MilliUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F705A1FC2C8460072C3CE /* MilliUITests.swift */; };
 		24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A11BBB2030FB340073EB95 /* AWSClient.swift */; };
+		67EDC73E20B2252A00135B80 /* GetURL.js in Resources */ = {isa = PBXBuildFile; fileRef = 67EDC73D20B2252A00135B80 /* GetURL.js */; };
 		67FBC24C2096713A00D910D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 247F70411FC2C8460072C3CE /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		247F705A1FC2C8460072C3CE /* MilliUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilliUITests.swift; sourceTree = "<group>"; };
 		247F705C1FC2C8460072C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24A11BBB2030FB340073EB95 /* AWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSClient.swift; sourceTree = "<group>"; };
+		67EDC73D20B2252A00135B80 /* GetURL.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = GetURL.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 		247F149520061F4F00C2D686 /* MilliShare */ = {
 			isa = PBXGroup;
 			children = (
+				67EDC73D20B2252A00135B80 /* GetURL.js */,
 				247F14A4200A5D0B00C2D686 /* MilliShare.entitlements */,
 				247F149620061F4F00C2D686 /* ShareViewController.swift */,
 				247F149820061F4F00C2D686 /* MainInterface.storyboard */,
@@ -340,6 +343,7 @@
 			files = (
 				67FBC24C2096713A00D910D2 /* Assets.xcassets in Resources */,
 				247F149A20061F4F00C2D686 /* MainInterface.storyboard in Resources */,
+				67EDC73E20B2252A00135B80 /* GetURL.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
