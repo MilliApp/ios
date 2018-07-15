@@ -30,6 +30,7 @@ class Article: NSObject, NSCoding {
         aCoder.encode(url, forKey: PropertyKey.urlKey)
         aCoder.encode(articleId, forKey: PropertyKey.articleIdKey)
         aCoder.encode(audioURL, forKey: PropertyKey.audioURLKey)
+        aCoder.encode(sourceLogo, forKey: PropertyKey.sourceLogoKey)
     }
     
     var title: String
@@ -38,6 +39,7 @@ class Article: NSObject, NSCoding {
     var url: String
     var articleId: String
     var audioURL: String?
+    var sourceLogo: UIImage
     
     // MARK: Properties
     struct PropertyKey {
@@ -47,18 +49,20 @@ class Article: NSObject, NSCoding {
         static let urlKey = "url"
         static let articleIdKey = "articleId"
         static let audioURLKey = "audioURL"
+        static let sourceLogoKey = "sourceLogo"
     }
     
     // MARK: Archiving Paths
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("articles")
     
-    init?(title:String, source:String, date:Date?, url:String, articleId:String) {
+    init?(title:String, source:String, date:Date?, url:String, articleId:String, sourceLogo:UIImage) {
         self.title = title
         self.source = source
         self.date = date
         self.url = url
         self.articleId = articleId
+        self.sourceLogo = sourceLogo
         
         super.init()
         if title.isEmpty { // No empty articles
@@ -67,7 +71,7 @@ class Article: NSObject, NSCoding {
         }
     }
     
-    convenience init?(title:String, source:String, isoDate:String?, url:String, articleId:String) {
+    convenience init?(title:String, source:String, isoDate:String?, url:String, articleId:String, sourceLogo:UIImage) {
         var date: Date? = nil
         if let dateStr = isoDate {
             let dateFormatter = DateFormatter()
@@ -75,11 +79,11 @@ class Article: NSObject, NSCoding {
             dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
             date = dateFormatter.date(from:String(dateStr.prefix(19)))!
         }
-        self.init(title: title, source: source, date: date, url: url, articleId: articleId)
+        self.init(title: title, source: source, date: date, url: url, articleId: articleId, sourceLogo: sourceLogo)
     }
     
-    convenience init?(title:String, source:String, date:Date?, url:String, articleId:String, audioURL:String?) {
-        self.init(title: title, source: source, date: date, url: url, articleId: articleId)
+    convenience init?(title:String, source:String, date:Date?, url:String, articleId:String, audioURL:String?, sourceLogo:UIImage) {
+        self.init(title: title, source: source, date: date, url: url, articleId: articleId, sourceLogo: sourceLogo)
         self.audioURL = audioURL
     }
     
@@ -97,9 +101,11 @@ class Article: NSObject, NSCoding {
         let _url = aDecoder.decodeObject(forKey: PropertyKey.urlKey) as! String
         let _articleId = aDecoder.decodeObject(forKey: PropertyKey.articleIdKey) as! String
         let _audioURL = aDecoder.decodeObject(forKey: PropertyKey.audioURLKey) as? String
+        let _sourceLogo = aDecoder.decodeObject(forKey: PropertyKey.sourceLogoKey) as! UIImage
         
-        self.init(title: _title, source: _source, date: _date, url: _url, articleId: _articleId, audioURL: _audioURL)
+        // TODO(cvwang): Create safe way to decode these objects without crashing app
         
+        self.init(title: _title, source: _source, date: _date, url: _url, articleId: _articleId, audioURL: _audioURL, sourceLogo: _sourceLogo)
     }
     
 }

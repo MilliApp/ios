@@ -21,7 +21,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Setting initial variables
     let tagID = "[HOME_VIEW_CONTROLLER]"
     var userDefaults = UserDefaults(suiteName: "group.com.Milli.Milli")
-    var articleImages = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +79,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func convertURLstoArticles(){
 //        print_debug(tagID, message: "convertURLstoArticles")
-        let temp = self.userDefaults?.object(forKey: "urlArray") as? [String]
         print_debug(tagID, message: "urlArray:")
         
         if var urlArray = self.userDefaults?.object(forKey: "urlArray") as? [String] {
@@ -115,15 +113,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         cell.articleSource.text = article.source + " | " + dateStr
-        let progress = Float(0.0)
         cell.articleInfo.text = "0% read"
         
-        // TODO(cvwang): Store image in archive
-        let url = NSURL(string: "https://logo.clearbit.com/" + article.source)
-        let data = NSData(contentsOf: url! as URL)
-        let image = UIImage(data: data! as Data)
-        cell.articleImage.image = image
-        articleImages.append(image!)
+        // Store image in article object archive
+        cell.articleImage.image = article.sourceLogo
         
         return cell
     }
@@ -175,7 +168,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func getCurrentArticleAudioPlayer() -> ArticleAudioPlayer {
-        let article = Globals.articles[Globals.currentArticleIdx]
+        let article = getCurrentArticle()
         let articleID = article.articleId
         // Initialize current ArticleAudioPlayer if it doesn't exist
         if Globals.articleIdAudioPlayers[articleID] == nil {
@@ -183,6 +176,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             Globals.articleIdAudioPlayers[articleID] = ArticleAudioPlayer(article: article, callback: updateProgress)
         }
         return Globals.articleIdAudioPlayers[articleID]!
+    }
+    
+    private func getCurrentArticle() -> Article {
+        return Globals.articles[Globals.currentArticleIdx]
     }
     
     func updateProgress(percentage: Float) {
@@ -205,6 +202,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
         }
+        
+        // Set media bar article logo image
+        mediaBarImage.image = getCurrentArticle().sourceLogo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -226,11 +226,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func playPressed(_ sender: Any) {
         print_debug(tagID, message: "Play pressed")
         playSelectedArticleAudio(orPause: true)
-//        if getCurrentArticleAudioPlayer().isPlaying() {
-//            playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
-//        } else {
-//            playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
-//        }
     }
     
     @IBAction func rewindPressed(_ sender: Any) {

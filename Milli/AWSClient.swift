@@ -78,12 +78,17 @@ class AWSClient {
             do {
                 if let convertedJsonIntoDict = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary {
                     let articleId = convertedJsonIntoDict["articleId"] as! String
-                    let domain = convertedJsonIntoDict["domain"] as! String
                     let title = convertedJsonIntoDict["title"] as! String
                     let publishDate = convertedJsonIntoDict["publishDate"] as? String
                     
+                    // Retrieve source and article logo image
                     let articleUrl = URL(string: url)!
-                    let article = Article(title: title, source: articleUrl.host!, isoDate: publishDate, url: url, articleId: articleId)!
+                    let source = articleUrl.host!
+                    let logoURL = NSURL(string: "https://logo.clearbit.com/" + source)
+                    let data = NSData(contentsOf: logoURL! as URL)
+                    let sourceLogo = UIImage(data: data! as Data)
+
+                    let article = Article(title: title, source: source, isoDate: publishDate, url: url, articleId: articleId, sourceLogo: sourceLogo!)!
                     getArticleAudioMeta(article: article)
                     
                     // Loading from stored data
