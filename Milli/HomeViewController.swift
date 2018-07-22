@@ -8,15 +8,17 @@
 
 import UIKit
 import AVFoundation
+import DeckTransition
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // IBOutlets
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var mediaBarView: UIView!
     @IBOutlet var mediaBarImage: UIImageView!
-    @IBOutlet var mediaBarProgressView: UIProgressView!
     @IBOutlet var timeLabel: UILabel!
-    
     @IBOutlet var playPauseButton: UIButton!
+    @IBOutlet var mediaBarProgressView: UIProgressView!
     
     // Setting initial variables
     let tagID = "[HOME_VIEW_CONTROLLER]"
@@ -24,18 +26,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         print_debug(tagID, message: "viewDidLoad")
         
+        // Set tableview delegate and datasource
         tableView.delegate = self
         tableView.dataSource = self
         
+        // Load sample articles
         loadSampleArticles()
         
+        // Cell formatting
         Globals.mainTableView = self.tableView
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         self.tableView.allowsMultipleSelectionDuringEditing = false;
+        
+        // Assign function to media bar single tap
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(mediaBarSingleTapped(recognizer:)))
+        mediaBarView.addGestureRecognizer(singleTapGesture)
         
         NotificationCenter.default.addObserver(
             self,
@@ -238,4 +246,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         getCurrentArticleAudioPlayer().forward()
     }
     
+    @objc func mediaBarSingleTapped(recognizer: UIGestureRecognizer) {
+        print_debug(tagID, message: "Media Bar Single Tapped")
+        performSegue(withIdentifier: "articleDetailSegue", sender: nil)
+        
+//        let modal = ArticleViewController()
+//        let transitionDelegate = DeckTransitioningDelegate()
+//        modal.transitioningDelegate = transitionDelegate
+//        modal.modalPresentationStyle = .custom
+//        present(modal, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ArticleViewController {
+            // Pass on current playing article URL
+            vc.articleURL = getCurrentArticle().url
+        }
+    }
 }

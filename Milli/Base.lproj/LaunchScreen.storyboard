@@ -1,43 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="EHf-IW-A2E">
+        <scene sceneID="dNM-kU-5IJ">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="53" y="375"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="Xhc-rh-ao2">
-            <objects>
-                <viewController id="hrf-21-Q61" sceneMemberID="viewController">
+                <viewController id="Zb1-4A-kxR" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ltv-Lc-ftm"/>
-                        <viewControllerLayoutGuide type="bottom" id="kwC-zo-PDg"/>
+                        <viewControllerLayoutGuide type="top" id="I6R-H8-yPr"/>
+                        <viewControllerLayoutGuide type="bottom" id="bd5-ox-MAO"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TxE-qV-Vwg">
+                    <view key="view" contentMode="scaleToFill" id="vEh-Sl-3iD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="milli" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YX2-1o-t1o">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="milli" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qzp-Uu-3Tb">
                                 <rect key="frame" x="207" y="240" width="187" height="120"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="100"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -46,15 +31,15 @@
                         </subviews>
                         <color key="backgroundColor" red="0.99004775290000002" green="0.4921230674" blue="0.057545989749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="YX2-1o-t1o" firstAttribute="centerX" secondItem="TxE-qV-Vwg" secondAttribute="centerX" id="6fj-Yf-nvr"/>
-                            <constraint firstItem="YX2-1o-t1o" firstAttribute="centerY" secondItem="TxE-qV-Vwg" secondAttribute="centerY" id="tQ8-nK-CNJ"/>
+                            <constraint firstItem="Qzp-Uu-3Tb" firstAttribute="centerX" secondItem="vEh-Sl-3iD" secondAttribute="centerX" id="Cwh-Ee-A7h"/>
+                            <constraint firstItem="Qzp-Uu-3Tb" firstAttribute="centerY" secondItem="vEh-Sl-3iD" secondAttribute="centerY" id="rhB-L6-4R9"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="5vD-MI-EqX"/>
+                        <viewLayoutGuide key="safeArea" id="UHe-2P-MwW"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9T7-3m-1bP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KSu-EE-uXg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="278" y="387"/>
         </scene>
     </scenes>
 </document>
