@@ -49,18 +49,19 @@ class AWSClient {
         })
         task.resume()
     }
-
-    class func addArticle(url:String, tableView:UITableView) {
+    
+    class func addArticle(data: NSDictionary, tableView:UITableView) {
+        guard let url = data["url"] as? String else {
+            print("data doesn't contain url", data)
+            return
+        }
         print_debug(tagID, message: url)
-
-        let json = ["url":url]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-
-        let articleMetaAPI = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio"
+        
+        let articleMetaAPI = handleArticleEndpoint(url)
         var request = URLRequest(url: URL(string: articleMetaAPI)!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
+        request.httpBody = try? JSONSerialization.data(withJSONObject: data)
         
         // Execute HTTP Request
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {data, response, error  in
@@ -103,6 +104,7 @@ class AWSClient {
                     DispatchQueue.main.async {
                         print_debug(tagID, message: "Dispatch TableView reload.")
                         tableView.reloadData()
+                        
                     }
                 }
             } catch let error as NSError {
@@ -111,4 +113,24 @@ class AWSClient {
         })
         task.resume()
     }
+    
+    class func handleArticleEndpoint(_ url: String) -> String {
+        if hasPaywall(url) {
+            return "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio"
+        } else {
+            return "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/raw_html"
+        }
+    }
+    
+    class func hasPaywall(_ url: String) -> Bool {
+        let paywalls = ["wsj", "nytimes", "economist"]
+        for paywall in paywalls {
+            if url.range(of: paywall + ".com") != nil {
+                return true
+            }
+        }
+        return false
+    }
+    
+
 }

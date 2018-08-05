@@ -1,9 +1,10 @@
 var GetURL = function() {};
 GetURL.prototype = {
 run: function(arguments) {
-    arguments.completionFunction({"URL": document.URL,
+    arguments.completionFunction({"url": document.URL,
                                  "title": document.title,
-                                 "body": document.body.innerHTML
+                                 "html": document.body.innerHTML,
+                                 "domain": document.location.hostname
                                  });
 }
 };

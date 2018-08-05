@@ -24,6 +24,8 @@
 		247F705B1FC2C8460072C3CE /* MilliUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F705A1FC2C8460072C3CE /* MilliUITests.swift */; };
 		24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A11BBB2030FB340073EB95 /* AWSClient.swift */; };
 		67EDC73E20B2252A00135B80 /* GetURL.js in Resources */ = {isa = PBXBuildFile; fileRef = 67EDC73D20B2252A00135B80 /* GetURL.js */; };
+		67F463F52104FAB1001D5271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F463F42104FAB1001D5271 /* Utils.swift */; };
+		67F463F62104FAB1001D5271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F463F42104FAB1001D5271 /* Utils.swift */; };
 		67FBC24C2096713A00D910D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 247F70411FC2C8460072C3CE /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +95,7 @@
 		247F705C1FC2C8460072C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24A11BBB2030FB340073EB95 /* AWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSClient.swift; sourceTree = "<group>"; };
 		67EDC73D20B2252A00135B80 /* GetURL.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = GetURL.js; sourceTree = "<group>"; };
+		67F463F42104FAB1001D5271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +138,7 @@
 				247F149620061F4F00C2D686 /* ShareViewController.swift */,
 				247F149820061F4F00C2D686 /* MainInterface.storyboard */,
 				247F149B20061F4F00C2D686 /* Info.plist */,
+				67F463F42104FAB1001D5271 /* Utils.swift */,
 			);
 			path = MilliShare;
 			sourceTree = "<group>";
@@ -379,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				247F149720061F4F00C2D686 /* ShareViewController.swift in Sources */,
+				67F463F62104FAB1001D5271 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +393,7 @@
 			files = (
 				246AAC381FDE15BE00E2E708 /* Utility.swift in Sources */,
 				247F703B1FC2C8460072C3CE /* AppDelegate.swift in Sources */,
+				67F463F52104FAB1001D5271 /* Utils.swift in Sources */,
 				24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */,
 				245E18E4209680FA008B7E5A /* ArticleAudioPlayer.swift in Sources */,
 				243338501FD3764500967288 /* MainTableViewCell.swift in Sources */,
