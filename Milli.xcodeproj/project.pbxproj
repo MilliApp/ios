@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2429FC9720FBF681007533FE /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2429FC9620FBF681007533FE /* ArticleViewController.swift */; };
 		2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384D1FD36CD500967288 /* HomeViewController.swift */; };
 		243338501FD3764500967288 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384F1FD3764500967288 /* MainTableViewCell.swift */; };
 		243550AF20556B950007E21D /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243550AE20556B950007E21D /* Globals.swift */; };
@@ -27,6 +28,7 @@
 		67F463F52104FAB1001D5271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F463F42104FAB1001D5271 /* Utils.swift */; };
 		67F463F62104FAB1001D5271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F463F42104FAB1001D5271 /* Utils.swift */; };
 		67FBC24C2096713A00D910D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 247F70411FC2C8460072C3CE /* Assets.xcassets */; };
+		82648E3580DFD2B4A61F615C /* libPods-Milli.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA80F89C7600B5A93B0CC822 /* libPods-Milli.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2429FC9620FBF681007533FE /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
 		2433384D1FD36CD500967288 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2433384F1FD3764500967288 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		243550AE20556B950007E21D /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
@@ -96,6 +99,9 @@
 		24A11BBB2030FB340073EB95 /* AWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSClient.swift; sourceTree = "<group>"; };
 		67EDC73D20B2252A00135B80 /* GetURL.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = GetURL.js; sourceTree = "<group>"; };
 		67F463F42104FAB1001D5271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		784942550FCA9ADBBA94B839 /* Pods-Milli.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Milli.release.xcconfig"; path = "Pods/Target Support Files/Pods-Milli/Pods-Milli.release.xcconfig"; sourceTree = "<group>"; };
+		BA80F89C7600B5A93B0CC822 /* libPods-Milli.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Milli.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7045D6FA3E7AFCF2B673AC2 /* Pods-Milli.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Milli.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Milli/Pods-Milli.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82648E3580DFD2B4A61F615C /* libPods-Milli.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +158,8 @@
 				247F70591FC2C8460072C3CE /* MilliUITests */,
 				247F149520061F4F00C2D686 /* MilliShare */,
 				247F70381FC2C8460072C3CE /* Products */,
+				F625A32AB03E099CFC65707F /* Pods */,
+				B974F23A55DF52541AA6FAA0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -174,6 +183,7 @@
 				245E18E3209680FA008B7E5A /* ArticleAudioPlayer.swift */,
 				24A11BBB2030FB340073EB95 /* AWSClient.swift */,
 				2433384D1FD36CD500967288 /* HomeViewController.swift */,
+				2429FC9620FBF681007533FE /* ArticleViewController.swift */,
 				2433384F1FD3764500967288 /* MainTableViewCell.swift */,
 				243550AE20556B950007E21D /* Globals.swift */,
 				246AAC371FDE15BD00E2E708 /* Utility.swift */,
@@ -204,6 +214,23 @@
 			path = MilliUITests;
 			sourceTree = "<group>";
 		};
+		B974F23A55DF52541AA6FAA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA80F89C7600B5A93B0CC822 /* libPods-Milli.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F625A32AB03E099CFC65707F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C7045D6FA3E7AFCF2B673AC2 /* Pods-Milli.debug.xcconfig */,
+				784942550FCA9ADBBA94B839 /* Pods-Milli.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -228,6 +255,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 247F705F1FC2C8470072C3CE /* Build configuration list for PBXNativeTarget "Milli" */;
 			buildPhases = (
+				429A478A61BD5E4AF4E1A09F /* [CP] Check Pods Manifest.lock */,
 				247F70331FC2C8460072C3CE /* Sources */,
 				247F70341FC2C8460072C3CE /* Frameworks */,
 				247F70351FC2C8460072C3CE /* Resources */,
@@ -377,6 +405,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		429A478A61BD5E4AF4E1A09F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Milli-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		247F149020061F4F00C2D686 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -396,6 +445,7 @@
 				67F463F52104FAB1001D5271 /* Utils.swift in Sources */,
 				24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */,
 				245E18E4209680FA008B7E5A /* ArticleAudioPlayer.swift in Sources */,
+				2429FC9720FBF681007533FE /* ArticleViewController.swift in Sources */,
 				243338501FD3764500967288 /* MainTableViewCell.swift in Sources */,
 				2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */,
 				243550AF20556B950007E21D /* Globals.swift in Sources */,
@@ -618,6 +668,7 @@
 		};
 		247F70601FC2C8470072C3CE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7045D6FA3E7AFCF2B673AC2 /* Pods-Milli.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -638,6 +689,7 @@
 		};
 		247F70611FC2C8470072C3CE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 784942550FCA9ADBBA94B839 /* Pods-Milli.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

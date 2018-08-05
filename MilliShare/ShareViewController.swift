@@ -39,9 +39,6 @@ class ShareViewController: SLComposeServiceViewController {
             guard let processedResults = item as? NSDictionary else { return }
             OperationQueue.main.addOperation {
                 if let article = processedResults[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary {
-                    let html = article["html"] as! String
-                article.html.toBase64()
-                    
                     var articleBuffer = getShareBuffer()
                     articleBuffer.append(article)
                     setShareBuffer(with: articleBuffer)

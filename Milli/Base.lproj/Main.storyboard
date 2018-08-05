@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6hs-qs-OjI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6hs-qs-OjI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -84,8 +84,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gpa-5x-FiF">
-                                <rect key="frame" x="0.0" y="620" width="375" height="47"/>
+                            <view opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gpa-5x-FiF">
+                                <rect key="frame" x="0.0" y="619" width="375" height="47"/>
                                 <subviews>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DVv-6P-W6N">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
@@ -178,14 +178,50 @@
                     <connections>
                         <outlet property="mediaBarImage" destination="ZAH-y1-583" id="b4R-YL-8cQ"/>
                         <outlet property="mediaBarProgressView" destination="DVv-6P-W6N" id="2QC-32-rck"/>
+                        <outlet property="mediaBarView" destination="Gpa-5x-FiF" id="2KT-89-AWX"/>
                         <outlet property="playPauseButton" destination="jSz-9E-iCR" id="54q-iu-YCi"/>
                         <outlet property="tableView" destination="T9w-Sy-kmT" id="9sy-Es-ckf"/>
                         <outlet property="timeLabel" destination="1Bw-ZD-Vxl" id="WCa-Wy-MX2"/>
+                        <segue destination="mpz-Cz-9XM" kind="custom" identifier="articleDetailSegue" customClass="DeckSegue" customModule="DeckTransition" id="OFP-PL-smu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H1h-gy-RgJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1412" y="143"/>
+            <point key="canvasLocation" x="1446" y="143"/>
+        </scene>
+        <!--Article View Controller-->
+        <scene sceneID="uNN-mU-HQ1">
+            <objects>
+                <viewController id="mpz-Cz-9XM" customClass="ArticleViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eoy-dy-wlA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hvX-43-RCo">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hvX-43-RCo" firstAttribute="bottom" secondItem="I6i-vZ-tzp" secondAttribute="bottom" id="EU0-Kc-QQB"/>
+                            <constraint firstItem="hvX-43-RCo" firstAttribute="trailing" secondItem="I6i-vZ-tzp" secondAttribute="trailing" id="hDs-hh-XU6"/>
+                            <constraint firstItem="hvX-43-RCo" firstAttribute="top" secondItem="I6i-vZ-tzp" secondAttribute="top" id="vMI-CF-kFp"/>
+                            <constraint firstItem="hvX-43-RCo" firstAttribute="leading" secondItem="I6i-vZ-tzp" secondAttribute="leading" id="wYQ-s9-alh"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="I6i-vZ-tzp"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="hvX-43-RCo" id="EQR-dB-CpT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PUP-SY-g4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2224.8000000000002" y="142.57871064467767"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ldg-Nd-mdh">

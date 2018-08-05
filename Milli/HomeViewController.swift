@@ -8,35 +8,42 @@
 
 import UIKit
 import AVFoundation
+import DeckTransition
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // IBOutlets
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var mediaBarView: UIView!
     @IBOutlet var mediaBarImage: UIImageView!
-    @IBOutlet var mediaBarProgressView: UIProgressView!
     @IBOutlet var timeLabel: UILabel!
-    
     @IBOutlet var playPauseButton: UIButton!
+    @IBOutlet var mediaBarProgressView: UIProgressView!
     
     // Setting initial variables
     let tagID = "[HOME_VIEW_CONTROLLER]"
     var userDefaults = UserDefaults(suiteName: "group.com.Milli.Milli")
-    var articleImages = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         print_debug(tagID, message: "viewDidLoad")
         
+        // Set tableview delegate and datasource
         tableView.delegate = self
         tableView.dataSource = self
         
+        // Load sample articles
         loadSampleArticles()
         
+        // Cell formatting
         Globals.mainTableView = self.tableView
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         self.tableView.allowsMultipleSelectionDuringEditing = false;
+        
+        // Assign function to media bar single tap
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(mediaBarSingleTapped(recognizer:)))
+        mediaBarView.addGestureRecognizer(singleTapGesture)
         
         NotificationCenter.default.addObserver(
             self,
@@ -104,15 +111,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         cell.articleSource.text = article.source + " | " + dateStr
-        let progress = Float(0.0)
         cell.articleInfo.text = "0% read"
         
-        // TODO(cvwang): Store image in archive
-        let url = NSURL(string: "https://logo.clearbit.com/" + article.source)
-        let data = NSData(contentsOf: url! as URL)
-        let image = UIImage(data: data! as Data)
-        cell.articleImage.image = image
-        articleImages.append(image!)
+        // Store image in article object archive
+        cell.articleImage.image = article.sourceLogo
         
         return cell
     }
@@ -164,7 +166,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func getCurrentArticleAudioPlayer() -> ArticleAudioPlayer {
-        let article = Globals.articles[Globals.currentArticleIdx]
+        let article = getCurrentArticle()
         let articleID = article.articleId
         // Initialize current ArticleAudioPlayer if it doesn't exist
         if Globals.articleIdAudioPlayers[articleID] == nil {
@@ -172,6 +174,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             Globals.articleIdAudioPlayers[articleID] = ArticleAudioPlayer(article: article, callback: updateProgress)
         }
         return Globals.articleIdAudioPlayers[articleID]!
+    }
+    
+    private func getCurrentArticle() -> Article {
+        return Globals.articles[Globals.currentArticleIdx]
     }
     
     func updateProgress(percentage: Float) {
@@ -194,6 +200,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
         }
+        
+        // Set media bar article logo image
+        mediaBarImage.image = getCurrentArticle().sourceLogo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -215,11 +224,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func playPressed(_ sender: Any) {
         print_debug(tagID, message: "Play pressed")
         playSelectedArticleAudio(orPause: true)
-//        if getCurrentArticleAudioPlayer().isPlaying() {
-//            playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
-//        } else {
-//            playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
-//        }
     }
     
     @IBAction func rewindPressed(_ sender: Any) {
@@ -232,4 +236,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         getCurrentArticleAudioPlayer().forward()
     }
     
+    @objc func mediaBarSingleTapped(recognizer: UIGestureRecognizer) {
+        print_debug(tagID, message: "Media Bar Single Tapped")
+        performSegue(withIdentifier: "articleDetailSegue", sender: nil)
+        
+//        let modal = ArticleViewController()
+//        let transitionDelegate = DeckTransitioningDelegate()
+//        modal.transitioningDelegate = transitionDelegate
+//        modal.modalPresentationStyle = .custom
+//        present(modal, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ArticleViewController {
+            // Pass on current playing article URL
+            vc.articleURL = getCurrentArticle().url
+        }
+    }
 }
