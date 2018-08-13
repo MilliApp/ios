@@ -86,9 +86,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func convertURLstoArticles(){
-        print_debug(tagID, message: "convertURLstoArticles")
         let articleBuffer = getShareBuffer()
-        print(tagID, articleBuffer)
         for article in articleBuffer.reversed() {
             AWSClient.addArticle(data: article, tableView: self.tableView)
         }
