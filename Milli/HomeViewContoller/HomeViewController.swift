@@ -86,23 +86,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func convertURLstoArticles(){
-//        print_debug(tagID, message: "convertURLstoArticles")
-        print_debug(tagID, message: "urlArray:")
-        
-        if var urlArray = self.userDefaults?.object(forKey: "urlArray") as? [String] {
-            for (i, url) in urlArray.enumerated().reversed() {
-                AWSClient.addArticle(url: url, tableView: self.tableView)
-                urlArray.remove(at: i)
-            }
-        } else {
-            print_debug(tagID, message: "Wasn't able to retrieve URL Array")
+        let articleBuffer = getShareBuffer()
+        for article in articleBuffer.reversed() {
+            AWSClient.addArticle(data: article, tableView: self.tableView)
         }
-        self.userDefaults?.set([String](), forKey: "urlArray")
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        setShareBuffer(with: [NSDictionary]())
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -49,46 +49,24 @@ class AWSClient {
         })
         task.resume()
     }
+    
+    class func addArticle(data: NSDictionary, tableView:UITableView) {
+        guard let url = data["url"] as? String else {
+            print("[data doesn't contain url]", data)
+            return
+        }
+        print_debug(tagID, message: "[ADDING ARTICLE] \(url)")
 
-    class func addArticle(url:String, tableView:UITableView) {
-        print_debug(tagID, message: url)
-
-        let json = ["url":url]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-
-        let articleMetaAPI = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio"
-        var request = URLRequest(url: URL(string: articleMetaAPI)!)
+        var request = URLRequest(url: handleArticleEndpoint(url))
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
+        request.httpBody = try? JSONSerialization.data(withJSONObject: data)
         
         // Execute HTTP Request
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {data, response, error  in
-            
-            let str = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-            print_debug(tagID, message: str as String)
-            
-            // Check for error
-            if error != nil {
-                print("error=\(String(describing: error))")
-                return
-            }
-            
-            // Convert server json response to NSDictionary
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {data, response, error in
             do {
-                if let convertedJsonIntoDict = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary {
-                    let articleId = convertedJsonIntoDict["articleId"] as! String
-                    let title = convertedJsonIntoDict["title"] as! String
-                    let publishDate = convertedJsonIntoDict["publishDate"] as? String
-                    
-                    // Retrieve source and article logo image
-                    let articleUrl = URL(string: url)!
-                    let source = articleUrl.host!
-                    let logoURL = NSURL(string: "https://logo.clearbit.com/" + source)
-                    let data = NSData(contentsOf: logoURL! as URL)
-                    let sourceLogo = UIImage(data: data! as Data)
-
-                    let article = Article(title: title, source: source, isoDate: publishDate, url: url, articleId: articleId, sourceLogo: sourceLogo!)!
+                if let response = try JSONSerialization.jsonObject(with: (data!), options: []) as? [String: Any] {
+                    let article = Article(url: url, response: response)
                     getArticleAudioMeta(article: article)
                     
                     // Loading from stored data
@@ -113,7 +91,30 @@ class AWSClient {
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
+            
         })
         task.resume()
     }
+    
+    class func handleArticleEndpoint(_ url: String) -> URL {
+        let BASE_URL = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/"
+        let ENV = "dev/"
+        if hasPaywall(url) {
+            return URL(string: BASE_URL + ENV + "raw-html")!
+        } else {
+            return URL(string: BASE_URL + ENV + "audio")!
+        }
+    }
+    
+    class func hasPaywall(_ url: String) -> Bool {
+        let paywalls = ["wsj", "nytimes", "economist"]
+        for paywall in paywalls {
+            if url.range(of: paywall + ".com") != nil {
+                return true
+            }
+        }
+        return false
+    }
+    
+    
 }

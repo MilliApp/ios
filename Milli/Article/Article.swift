@@ -22,7 +22,7 @@ func loadArticles() -> [Article]? {
 }
 
 class Article: NSObject, NSCoding {
-    
+
     func encode(with aCoder: NSCoder) {
         aCoder.encode(title, forKey: PropertyKey.titleKey)
         aCoder.encode(source, forKey: PropertyKey.sourceKey)
@@ -71,13 +71,20 @@ class Article: NSObject, NSCoding {
         }
     }
     
+    init(url: String, response: [String: Any]) {
+        self.title = response["title"] as! String
+        self.articleId = response["articleId"] as! String
+        self.date = convertDate(fromISO: response["publishDate"] as? String)
+        self.url = url
+        self.source = URL(string: url)!.host!
+        self.sourceLogo = Article.getLogo(for: self.source)
+        super.init()
+    }
+    
     convenience init?(title:String, source:String, isoDate:String?, url:String, articleId:String, sourceLogo:UIImage) {
         var date: Date? = nil
         if let dateStr = isoDate {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-            date = dateFormatter.date(from:String(dateStr.prefix(19)))!
+            date = convertDate(fromISO: dateStr)
         }
         self.init(title: title, source: source, date: date, url: url, articleId: articleId, sourceLogo: sourceLogo)
     }
@@ -106,6 +113,12 @@ class Article: NSObject, NSCoding {
         // TODO(cvwang): Create safe way to decode these objects without crashing app
         
         self.init(title: _title, source: _source, date: _date, url: _url, articleId: _articleId, audioURL: _audioURL, sourceLogo: _sourceLogo)
+    }
+    
+    static func getLogo(for source:String) -> UIImage {
+        let logoURL = NSURL(string: "https://logo.clearbit.com/" + source)
+        let data = NSData(contentsOf: logoURL! as URL)
+        return UIImage(data: data! as Data)!
     }
     
 }
