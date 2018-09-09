@@ -248,7 +248,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @objc func mediaBarSingleTapped(recognizer: UIGestureRecognizer) {
         print_debug(tagID, message: "Media Bar Single Tapped")
-        performSegue(withIdentifier: "articleDetailSegue", sender: nil)
+//        performSegue(withIdentifier: "articleDetailSegue", sender: nil)
+        performSegue(withIdentifier: "articleDetailPageSegue", sender: nil)
         
 //        let modal = ArticleViewController()
 //        let transitionDelegate = DeckTransitioningDelegate()
@@ -258,7 +259,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? ArticleViewController {
+        if let vc = segue.destination as? ArticlePageViewController {
             // Pass on current playing article URL
             vc.articleURL = getCurrentArticle().url
         }

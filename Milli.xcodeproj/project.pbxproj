@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2429FC9720FBF681007533FE /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2429FC9620FBF681007533FE /* ArticleViewController.swift */; };
+		2429FC99211779A8007533FE /* ArticlePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2429FC98211779A7007533FE /* ArticlePageViewController.swift */; };
+		2429FC9B21177F4F007533FE /* ControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2429FC9A21177F4F007533FE /* ControlViewController.swift */; };
 		2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384D1FD36CD500967288 /* HomeViewController.swift */; };
 		243338501FD3764500967288 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384F1FD3764500967288 /* MainTableViewCell.swift */; };
 		243550AF20556B950007E21D /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243550AE20556B950007E21D /* Globals.swift */; };
@@ -68,6 +70,8 @@
 
 /* Begin PBXFileReference section */
 		2429FC9620FBF681007533FE /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
+		2429FC98211779A7007533FE /* ArticlePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlePageViewController.swift; sourceTree = "<group>"; };
+		2429FC9A21177F4F007533FE /* ControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlViewController.swift; sourceTree = "<group>"; };
 		2433384D1FD36CD500967288 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2433384F1FD3764500967288 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		243550AE20556B950007E21D /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
@@ -132,6 +136,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2429FC9C21177F59007533FE /* PageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2429FC98211779A7007533FE /* ArticlePageViewController.swift */,
+				2429FC9620FBF681007533FE /* ArticleViewController.swift */,
+				2429FC9A21177F4F007533FE /* ControlViewController.swift */,
+			);
+			path = PageViewController;
+			sourceTree = "<group>";
+		};
+		2429FC9D21177F8C007533FE /* HomeViewContoller */ = {
+			isa = PBXGroup;
+			children = (
+				2433384D1FD36CD500967288 /* HomeViewController.swift */,
+				2433384F1FD3764500967288 /* MainTableViewCell.swift */,
+			);
+			path = HomeViewContoller;
+			sourceTree = "<group>";
+		};
+		2429FC9E21177FA2007533FE /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				247F703A1FC2C8460072C3CE /* AppDelegate.swift */,
+				243550AE20556B950007E21D /* Globals.swift */,
+				246AAC371FDE15BD00E2E708 /* Utility.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		2429FC9F21177FB9007533FE /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				246AAC391FDE172800E2E708 /* Article.swift */,
+				245E18E3209680FA008B7E5A /* ArticleAudioPlayer.swift */,
+				24A11BBB2030FB340073EB95 /* AWSClient.swift */,
+			);
+			path = Article;
+			sourceTree = "<group>";
+		};
 		247F149520061F4F00C2D686 /* MilliShare */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,15 +214,10 @@
 			isa = PBXGroup;
 			children = (
 				247F14A5200A5F4000C2D686 /* Milli.entitlements */,
-				247F703A1FC2C8460072C3CE /* AppDelegate.swift */,
-				246AAC391FDE172800E2E708 /* Article.swift */,
-				245E18E3209680FA008B7E5A /* ArticleAudioPlayer.swift */,
-				24A11BBB2030FB340073EB95 /* AWSClient.swift */,
-				2433384D1FD36CD500967288 /* HomeViewController.swift */,
-				2429FC9620FBF681007533FE /* ArticleViewController.swift */,
-				2433384F1FD3764500967288 /* MainTableViewCell.swift */,
-				243550AE20556B950007E21D /* Globals.swift */,
-				246AAC371FDE15BD00E2E708 /* Utility.swift */,
+				2429FC9D21177F8C007533FE /* HomeViewContoller */,
+				2429FC9F21177FB9007533FE /* Article */,
+				2429FC9C21177F59007533FE /* PageViewController */,
+				2429FC9E21177FA2007533FE /* Utility */,
 				247F70431FC2C8460072C3CE /* LaunchScreen.storyboard */,
 				247F703E1FC2C8460072C3CE /* Main.storyboard */,
 				247F70461FC2C8460072C3CE /* Info.plist */,
@@ -432,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				246AAC381FDE15BE00E2E708 /* Utility.swift in Sources */,
+				2429FC9B21177F4F007533FE /* ControlViewController.swift in Sources */,
 				247F703B1FC2C8460072C3CE /* AppDelegate.swift in Sources */,
 				24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */,
 				245E18E4209680FA008B7E5A /* ArticleAudioPlayer.swift in Sources */,
@@ -439,6 +478,7 @@
 				243338501FD3764500967288 /* MainTableViewCell.swift in Sources */,
 				2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */,
 				243550AF20556B950007E21D /* Globals.swift in Sources */,
+				2429FC99211779A8007533FE /* ArticlePageViewController.swift in Sources */,
 				246AAC3A1FDE172800E2E708 /* Article.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

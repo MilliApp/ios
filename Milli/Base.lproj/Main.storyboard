@@ -182,7 +182,7 @@
                         <outlet property="playPauseButton" destination="jSz-9E-iCR" id="54q-iu-YCi"/>
                         <outlet property="tableView" destination="T9w-Sy-kmT" id="9sy-Es-ckf"/>
                         <outlet property="timeLabel" destination="1Bw-ZD-Vxl" id="WCa-Wy-MX2"/>
-                        <segue destination="mpz-Cz-9XM" kind="custom" identifier="articleDetailSegue" customClass="DeckSegue" customModule="DeckTransition" id="OFP-PL-smu"/>
+                        <segue destination="d6y-WC-7i5" kind="custom" identifier="articleDetailPageSegue" customClass="DeckSegue" customModule="DeckTransition" id="59t-uU-Igb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H1h-gy-RgJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -192,7 +192,7 @@
         <!--Article View Controller-->
         <scene sceneID="uNN-mU-HQ1">
             <objects>
-                <viewController id="mpz-Cz-9XM" customClass="ArticleViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArticleViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mpz-Cz-9XM" customClass="ArticleViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eoy-dy-wlA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -216,12 +216,44 @@
                         <viewLayoutGuide key="safeArea" id="I6i-vZ-tzp"/>
                     </view>
                     <connections>
-                        <outlet property="webView" destination="hvX-43-RCo" id="EQR-dB-CpT"/>
+                        <outlet property="webView" destination="hvX-43-RCo" id="Mw9-oQ-IDg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PUP-SY-g4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2224.8000000000002" y="142.57871064467767"/>
+        </scene>
+        <!--Control View Controller-->
+        <scene sceneID="n7F-Nd-iqG">
+            <objects>
+                <viewController storyboardIdentifier="ControlViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tCe-RS-3t4" customClass="ControlViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sWi-ud-33B">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="hihihihihi" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UsB-wS-Itv">
+                                <rect key="frame" x="110" y="272" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="8wi-gf-GmE"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HOv-Rg-gQN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2937" y="143"/>
+        </scene>
+        <!--Article Page View Controller-->
+        <scene sceneID="5zp-bb-yRb">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="d6y-WC-7i5" customClass="ArticlePageViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ndf-2N-ebh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2225" y="912"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ldg-Nd-mdh">
