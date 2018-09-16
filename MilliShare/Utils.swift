@@ -8,7 +8,7 @@
 
 import Foundation
 
-let userDefaults = UserDefaults(suiteName: "group.com.Milli.Milli")
+let userDefaults = UserDefaults(suiteName: "group.com.Milli1.Milli1")
 let bufferKey = "articleArray"
 
 

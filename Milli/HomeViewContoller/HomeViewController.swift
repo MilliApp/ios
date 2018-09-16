@@ -22,7 +22,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Setting initial variables
     let tagID = "[HOME_VIEW_CONTROLLER]"
-    var userDefaults = UserDefaults(suiteName: "group.com.Milli.Milli")
+    var userDefaults = UserDefaults(suiteName: "group.com.Milli1.Milli1")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +70,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func loadSampleArticles() {
-//        print_debug(tagID, message: "loadSampleArticles")
+        print_debug(tagID, message: "loadSampleArticles")
         convertURLstoArticles()
         
         // Uncomment if you need to clear the archived object
@@ -86,6 +86,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func convertURLstoArticles(){
+        print_debug(tagID, message: "convertURLstoArticles")
         let articleBuffer = getShareBuffer()
         for article in articleBuffer.reversed() {
             AWSClient.addArticle(data: article, tableView: self.tableView)
