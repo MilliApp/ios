@@ -8,6 +8,7 @@
 
 import Foundation
 import AVFoundation
+import MediaPlayer
 
 class ArticleAudioPlayer {
     
@@ -57,6 +58,8 @@ class ArticleAudioPlayer {
             
             print_debug(tagID, message: "Loading Player...")
             setProgressCallback()
+            setupNowPlaying()
+            setupRemoteTransportControls()
         } else {
             print_debug(tagID, message: "[GET_ARTICLE_AUDIO] Audio URL not loaded yet")
             AWSClient.getArticleAudioMeta(article: article)
@@ -70,6 +73,7 @@ class ArticleAudioPlayer {
             return
         }
         print_debug(tagID, message: "[PLAY] Playing \(String(describing: article.audioURL))")
+
         player.play()
         playState = .PLAY
     }
@@ -139,5 +143,53 @@ class ArticleAudioPlayer {
     func setProgressCallback() {
         print_debug(tagID, message: "setProgressCallback called")
         player.addPeriodicTimeObserver(forInterval: CMTimeMake(1,2), queue: nil, using: updateProgressCallback)
+    }
+    
+    
+    func setupRemoteTransportControls() {
+        // Get the shared MPRemoteCommandCenter
+        print_debug(tagID, message: "setupRemoteTransportControls called")
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        // Add handler for Play Command
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            if self.player.rate == 0.0 {
+                self.player.play()
+                return .success
+            }
+            return .commandFailed
+        }
+        
+        // Add handler for Pause Command
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            if self.player.rate == 1.0 {
+                self.player.pause()
+                return .success
+            }
+            return .commandFailed
+        }
+    }
+    
+    func setupNowPlaying() {
+        // Define Now Playing Info
+        print_debug(tagID, message: "setupRemoteTransportControls called")
+        
+        var nowPlayingInfo = [String : Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = self.article.title
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: self.article.sourceLogo.size, requestHandler: {  (_) -> UIImage in
+            return self.article.sourceLogo
+        })
+//        if let image = article.sourceLogo {
+//            nowPlayingInfo[MPMediaItemPropertyArtwork] =
+//                MPMediaItemArtwork(boundsSize: image.size) { size in
+//                    return image
+//            }
+//        }
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = totalTime()
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
+        
+        // Set the metadata
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
