@@ -24,6 +24,7 @@ class ArticleViewController: UIViewController {
         
         print_debug(tagID, message: "viewDidLoad...")
         
+//        let webViewURL = URL(string: "https://www.google.com")
         let webViewURL = URL(string: self.articleURL)
         let webViewRequest = URLRequest(url: webViewURL!)
         webView.load(webViewRequest)

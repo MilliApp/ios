@@ -9,21 +9,26 @@
 import UIKit
 import DeckTransition
 
-class ArticlePageViewController: UIPageViewController, DeckTransitionViewControllerProtocol {
+class PullUpPageViewController: UIPageViewController, DeckTransitionViewControllerProtocol {
 
     // Setting initial variables
-    let tagID = "[ARTICLE_PAGE_VIEW_CONTROLLER]"
+    let tagID = "[PULL_UP_PAGE_VIEW_CONTROLLER]"
     
     var articleURL = ""
     
+    var pageControl = UIPageControl()
     var articleViewController: ArticleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ArticleViewController") as! ArticleViewController
     var controlViewController: ControlViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ControlViewController") as! ControlViewController
+    
+    // DeckTransitionViewControllerProtocol
+    var scrollViewForDeck: UIScrollView {
+        return articleViewController.webView.scrollView
+    }
     
     // Enum state variables to manage presenting view controller and order
     private enum ViewState: Int {
         case ARTICLE, CONTROL
     }
-    
     // Keep track of presenting view controller
     private var viewState: ViewState = .ARTICLE
     
@@ -43,56 +48,37 @@ class ArticlePageViewController: UIPageViewController, DeckTransitionViewControl
         setViewControllers([articleViewController], direction: .forward, animated: true, completion: nil)
         viewState = .ARTICLE
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    // This fixes scrolling behaviour for the deck.
-    //
-    // Conform view controller to DeckTransitionViewControllerProtocol and
-    // implement the scrollViewForDeck variable to return the webView
-    // UIScrollView instance to be tracked.
-
-    var scrollViewForDeck: UIScrollView {
-        return articleViewController.webView.scrollView
-    }
 }
 
-extension ArticlePageViewController: UIPageViewControllerDataSource {
+extension PullUpPageViewController: UIPageViewControllerDataSource {
+    
+    private func pageUpdate(newViewState: ViewState, forwardAnimation:Bool) {
+        pageControl.currentPage = newViewState.rawValue
+        viewState = newViewState
+        let directionAnimation = forwardAnimation ? NavigationDirection.forward : NavigationDirection.reverse
+        switch viewState {
+        case .ARTICLE:
+            print_debug(tagID, message: "here1")
+            articleViewController.articleURL = articleURL
+            setViewControllers([articleViewController], direction: directionAnimation, animated: true, completion: nil)
+        case .CONTROL:
+            print_debug(tagID, message: "here2")
+            setViewControllers([controlViewController], direction: directionAnimation, animated: true, completion: nil)
+        }
+    }
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         print_debug(tagID, message: "viewControllerBefore")
-        
-//        if viewState.rawValue == 0 {
-//            return nil
-//        }
-        
         if let newViewState = ViewState(rawValue: viewState.rawValue - 1) {
-            viewState = newViewState
-            switch viewState {
-            case .ARTICLE:
-                articleViewController.articleURL = articleURL
-                setViewControllers([articleViewController], direction: .reverse, animated: true, completion: nil)
-            case .CONTROL:
-                setViewControllers([controlViewController], direction: .reverse, animated: true, completion: nil)
-            }
+            pageUpdate(newViewState: newViewState, forwardAnimation: false)
         }
         return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         print_debug(tagID, message: "viewControllerAfter")
-        
         if let newViewState = ViewState(rawValue: viewState.rawValue + 1) {
-            viewState = newViewState
-            switch viewState {
-            case .ARTICLE:
-                articleViewController.articleURL = articleURL
-                setViewControllers([articleViewController], direction: .forward, animated: true, completion: nil)
-                break
-            case .CONTROL:
-                setViewControllers([controlViewController], direction: .forward, animated: true, completion: nil)
-            }
+            pageUpdate(newViewState: newViewState, forwardAnimation: true)
         }
         return nil
     }

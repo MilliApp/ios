@@ -9,7 +9,16 @@
 import UIKit
 
 class ControlViewController: UIViewController {
+    
+    @IBOutlet var slider: UISlider!
+    
+    // Setting initial variables
+    let tagID = "[CONTROL_VIEW_CONTROLLER]"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print_debug(tagID, message: "viewDidLoad...")
     }
+    
+    
 }
