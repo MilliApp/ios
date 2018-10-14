@@ -140,4 +140,8 @@ class ArticleAudioPlayer {
         print_debug(tagID, message: "setProgressCallback called")
         player.addPeriodicTimeObserver(forInterval: CMTimeMake(1,2), queue: nil, using: updateProgressCallback)
     }
+    
+    func setRate(rate:Float) {
+        player.rate = rate
+    }
 }

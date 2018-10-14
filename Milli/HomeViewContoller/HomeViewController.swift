@@ -49,7 +49,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self,
             selector: #selector(self.applicationDidBecomeActive(_:)),
             name: NSNotification.Name.UIApplicationDidBecomeActive,
-            object: nil)
+            object: nil
+        )
     }
     
     @objc func applicationDidBecomeActive(_ notification: NSNotification) {
@@ -136,7 +137,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Return string conveying current time out of total time
     // i.e. mm:ss/mm:ss
-    func getTimeString(current:Double, total:Double) -> String {
+    private func getTimeString(current:Double, total:Double) -> String {
         let total_str = convertSecondsToTimeFormat(time: (Int64)(total))
         let current_str = convertSecondsToTimeFormat(time: (Int64)(current))
         let res = "(" + current_str + "/" + total_str + ")"
@@ -177,10 +178,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private func getCurrentArticle() -> Article {
         return Globals.articles[Globals.currentArticleIdx]
-    }
-    
-    func updateProgress(percentage: Float) {
-        print_debug(tagID, message: "updateProgress")
     }
     
     private func playSelectedArticleAudio(orPause: Bool = false) {
