@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import DeckTransition
+import MediaPlayer
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -21,8 +22,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var mediaBarProgressView: UIProgressView!
     
     // Setting initial variables
-    let tagID = "[HOME_VIEW_CONTROLLER]"
-    var userDefaults = UserDefaults(suiteName: "group.com.Milli1.Milli1")
+    private let tagID = "[HOME_VIEW_CONTROLLER]"
+    private var userDefaults = UserDefaults(suiteName: "group.com.Milli1.Milli1")
+    private var remoteTransportControlsSetUp = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +88,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func convertURLstoArticles(){
-        print_debug(tagID, message: "convertURLstoArticles")
         let articleBuffer = getShareBuffer()
         for article in articleBuffer.reversed() {
             AWSClient.addArticle(data: article, tableView: self.tableView)
@@ -136,7 +137,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Return string conveying current time out of total time
     // i.e. mm:ss/mm:ss
-    func getTimeString(current:Double, total:Double) -> String {
+    func getTimeString(current:Int64, total:Int64) -> String {
         let total_str = convertSecondsToTimeFormat(time: (Int64)(total))
         let current_str = convertSecondsToTimeFormat(time: (Int64)(current))
         let res = "(" + current_str + "/" + total_str + ")"
@@ -144,24 +145,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateProgress(time: CMTime) -> Void {
-        print_debug(tagID, message: "NEW Update Progress Called")
         let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
-        // This is to prevent reading the player current and total time while paused as it causes a crash
-        // TODO(cvwang): Look into why there is a crash without this check
-        if !currentArticleAudioPlayer.isPlaying() {
-            print_debug(tagID, message: "Article is not playing")
-            return
-        }
         // Set progress bar
-        mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress()), animated: true)
+        mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress), animated: true)
+        
         // Set time label on media panel
-        timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: currentArticleAudioPlayer.secondsLeft()))
+        let currentTime = Int64(currentArticleAudioPlayer.currentTime)
+        let totalTime = Int64(currentArticleAudioPlayer.duration)
+        
+        timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: totalTime - currentTime))
+        
         // Set progress string in article row
         let indexPath = IndexPath(row: Globals.currentArticleIdx, section: 0)
         let cell = tableView.cellForRow(at: indexPath) as! MainTableViewCell
-        let currentTime = currentArticleAudioPlayer.currentTime()
-        let totalTime = currentArticleAudioPlayer.totalTime()
-        cell.articleInfo.text = "\(min(max(Int(floor(currentArticleAudioPlayer.progress()*100)), 0), 100))% read \(getTimeString(current: currentTime, total: totalTime))"
+
+        cell.articleInfo.text = "\(min(max(Int(floor(currentArticleAudioPlayer.progress*100)), 0), 100))% read \(getTimeString(current: currentTime, total: totalTime))"
     }
     
     private func getCurrentArticleAudioPlayer() -> ArticleAudioPlayer {
@@ -179,22 +177,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return Globals.articles[Globals.currentArticleIdx]
     }
     
-    func updateProgress(percentage: Float) {
-        print_debug(tagID, message: "updateProgress")
-    }
-    
     private func playSelectedArticleAudio(orPause: Bool = false) {
         let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
         
         // PlayPause vs. just Play
         if orPause {
-            currentArticleAudioPlayer.playPause()
+            currentArticleAudioPlayer.togglePlayPause()
         } else {
             currentArticleAudioPlayer.play()
         }
         
+        
         // Assign Play/Pause image based off audio player status
-        if currentArticleAudioPlayer.isPlaying() {
+        if currentArticleAudioPlayer.isPlaying {
             playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
         } else {
             playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
@@ -202,6 +197,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Set media bar article logo image
         mediaBarImage.image = getCurrentArticle().sourceLogo
+        updateNowPlayingInfo()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -209,15 +205,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
         
         // If new article is selected, pause old article if it is playing
-        if Globals.currentArticleIdx != indexPath.row && currentArticleAudioPlayer.isPlaying() {
+        if Globals.currentArticleIdx != indexPath.row && currentArticleAudioPlayer.isPlaying {
             print_debug(tagID, message: "Pause previous article")
-            currentArticleAudioPlayer.pause()
+            currentArticleAudioPlayer.togglePlayPause()
         }
         
         // Play newly selected article
         print_debug(tagID, message: "Play current article")
         Globals.currentArticleIdx = indexPath.row
         playSelectedArticleAudio()
+        setupRemoteTransportControls()
     }
     
     @IBAction func playPressed(_ sender: Any) {
@@ -227,12 +224,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func rewindPressed(_ sender: Any) {
         print_debug(tagID, message: "Rewind pressed")
-        getCurrentArticleAudioPlayer().rewind()
+        getCurrentArticleAudioPlayer().seek(to: -30, completion: updateNowPlayingInfo)
     }
     
     @IBAction func forwardPressed(_ sender: Any) {
         print_debug(tagID, message: "Forward pressed")
-        getCurrentArticleAudioPlayer().forward()
+        getCurrentArticleAudioPlayer().seek(to: 30, completion: updateNowPlayingInfo)
     }
     
     @objc func mediaBarSingleTapped(recognizer: UIGestureRecognizer) {
@@ -253,4 +250,54 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             vc.articleURL = getCurrentArticle().url
         }
     }
+    
+    private func updateNowPlayingInfo() {
+        let currentArticle = getCurrentArticle()
+        let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPMediaItemPropertyTitle: currentArticle.title,
+            MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: currentArticle.sourceLogo.size, requestHandler: {  (_) -> UIImage in
+                return currentArticle.sourceLogo
+            }),
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: currentArticleAudioPlayer.currentTime,
+            MPMediaItemPropertyPlaybackDuration: currentArticleAudioPlayer.duration,
+            MPNowPlayingInfoPropertyPlaybackRate: currentArticleAudioPlayer.rate
+        ]
+    }
+    
+    private func setupRemoteTransportControls() {
+        if remoteTransportControlsSetUp {
+            return
+        }
+        let commandCenter = MPRemoteCommandCenter.shared()
+
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            self.playPressed(self)
+            return .success
+        }
+        
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            self.playPressed(self)
+            return .success
+        }
+        
+        let skipBackwardCommand = commandCenter.skipBackwardCommand
+        skipBackwardCommand.isEnabled = true
+        skipBackwardCommand.preferredIntervals = [30]
+        skipBackwardCommand.addTarget { [unowned self] event in
+            self.rewindPressed(self)
+            return .success
+        }
+        
+        let skipForwardCommand = commandCenter.skipForwardCommand
+        skipForwardCommand.isEnabled = true
+        skipForwardCommand.preferredIntervals = [30]
+        skipForwardCommand.addTarget { [unowned self] event in
+            self.forwardPressed(self)
+            return .success
+        }
+        remoteTransportControlsSetUp = true
+    }
+    
 }
