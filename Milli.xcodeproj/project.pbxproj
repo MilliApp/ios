@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2429FC9720FBF681007533FE /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2429FC9620FBF681007533FE /* ArticleViewController.swift */; };
-		2429FC99211779A8007533FE /* ArticlePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2429FC98211779A7007533FE /* ArticlePageViewController.swift */; };
+		2429FC99211779A8007533FE /* PullUpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2429FC98211779A7007533FE /* PullUpPageViewController.swift */; };
 		2429FC9B21177F4F007533FE /* ControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2429FC9A21177F4F007533FE /* ControlViewController.swift */; };
 		2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384D1FD36CD500967288 /* HomeViewController.swift */; };
 		243338501FD3764500967288 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2433384F1FD3764500967288 /* MainTableViewCell.swift */; };
@@ -26,6 +26,7 @@
 		247F70501FC2C8460072C3CE /* MilliTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F704F1FC2C8460072C3CE /* MilliTests.swift */; };
 		247F705B1FC2C8460072C3CE /* MilliUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F705A1FC2C8460072C3CE /* MilliUITests.swift */; };
 		24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A11BBB2030FB340073EB95 /* AWSClient.swift */; };
+		24D9D3EB2161570900FBBA96 /* PullUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D9D3EA2161570900FBBA96 /* PullUpViewController.swift */; };
 		67EDC73E20B2252A00135B80 /* GetURL.js in Resources */ = {isa = PBXBuildFile; fileRef = 67EDC73D20B2252A00135B80 /* GetURL.js */; };
 		67F463F52104FAB1001D5271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F463F42104FAB1001D5271 /* Utils.swift */; };
 		67F463F62104FAB1001D5271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F463F42104FAB1001D5271 /* Utils.swift */; };
@@ -73,7 +74,7 @@
 
 /* Begin PBXFileReference section */
 		2429FC9620FBF681007533FE /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
-		2429FC98211779A7007533FE /* ArticlePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlePageViewController.swift; sourceTree = "<group>"; };
+		2429FC98211779A7007533FE /* PullUpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullUpPageViewController.swift; sourceTree = "<group>"; };
 		2429FC9A21177F4F007533FE /* ControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlViewController.swift; sourceTree = "<group>"; };
 		2433384D1FD36CD500967288 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2433384F1FD3764500967288 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		247F705A1FC2C8460072C3CE /* MilliUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilliUITests.swift; sourceTree = "<group>"; };
 		247F705C1FC2C8460072C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24A11BBB2030FB340073EB95 /* AWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSClient.swift; sourceTree = "<group>"; };
+		24D9D3EA2161570900FBBA96 /* PullUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullUpViewController.swift; sourceTree = "<group>"; };
 		67EDC73D20B2252A00135B80 /* GetURL.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = GetURL.js; sourceTree = "<group>"; };
 		67F463F42104FAB1001D5271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		784942550FCA9ADBBA94B839 /* Pods-Milli.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Milli.release.xcconfig"; path = "Pods/Target Support Files/Pods-Milli/Pods-Milli.release.xcconfig"; sourceTree = "<group>"; };
@@ -144,7 +146,8 @@
 		2429FC9C21177F59007533FE /* PageViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2429FC98211779A7007533FE /* ArticlePageViewController.swift */,
+				24D9D3EA2161570900FBBA96 /* PullUpViewController.swift */,
+				2429FC98211779A7007533FE /* PullUpPageViewController.swift */,
 				2429FC9620FBF681007533FE /* ArticleViewController.swift */,
 				2429FC9A21177F4F007533FE /* ControlViewController.swift */,
 			);
@@ -491,7 +494,8 @@
 				243338501FD3764500967288 /* MainTableViewCell.swift in Sources */,
 				2433384E1FD36CD500967288 /* HomeViewController.swift in Sources */,
 				243550AF20556B950007E21D /* Globals.swift in Sources */,
-				2429FC99211779A8007533FE /* ArticlePageViewController.swift in Sources */,
+				24D9D3EB2161570900FBBA96 /* PullUpViewController.swift in Sources */,
+				2429FC99211779A8007533FE /* PullUpPageViewController.swift in Sources */,
 				246AAC3A1FDE172800E2E708 /* Article.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
