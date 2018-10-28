@@ -27,6 +27,17 @@ class ArticleViewController: UIViewController {
 //        let webViewURL = URL(string: "https://www.google.com")
         let webViewURL = URL(string: self.articleURL)
         let webViewRequest = URLRequest(url: webViewURL!)
+        print(webView)
         webView.load(webViewRequest)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            let frame = self.view.frame
+            let yComponent = UIScreen.main.bounds.height - 200
+            self.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
+        })
     }
 }

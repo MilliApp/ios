@@ -280,8 +280,8 @@
         <!--Pull Up Page View Controller-->
         <scene sceneID="5zp-bb-yRb">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="d6y-WC-7i5" customClass="PullUpPageViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ndf-2N-ebh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="d6y-WC-7i5" customClass="PullUpPageViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController"/>
             </objects>
             <point key="canvasLocation" x="2225" y="912"/>
         </scene>
@@ -368,7 +368,7 @@
         <image name="nytimes" width="720" height="720"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3hM-Dy-uFw"/>
+        <segue reference="59t-uU-Igb"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>

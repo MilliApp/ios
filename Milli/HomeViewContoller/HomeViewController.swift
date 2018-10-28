@@ -24,6 +24,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let tagID = "[HOME_VIEW_CONTROLLER]"
     var userDefaults = UserDefaults(suiteName: "group.com.Milli1.Milli1")
     
+    var pullUpViewController = ArticleViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,9 +43,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         self.tableView.allowsMultipleSelectionDuringEditing = false;
         
+        addPullUpView()
+        
         // Assign function to media bar single tap
-        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(mediaBarSingleTapped(recognizer:)))
-        mediaBarView.addGestureRecognizer(singleTapGesture)
+//        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(mediaBarSingleTapped(recognizer:)))
+//        mediaBarView.addGestureRecognizer(singleTapGesture)
+        
+        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
+        view.addGestureRecognizer(gesture)
         
         NotificationCenter.default.addObserver(
             self,
@@ -51,6 +58,51 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             name: NSNotification.Name.UIApplicationDidBecomeActive,
             object: nil
         )
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        addPullUpView()
+    }
+    
+    @objc func panGesture(recognizer: UIPanGestureRecognizer) {
+        let pullUpView = pullUpViewController.view!
+        let translation = recognizer.translation(in: pullUpView)
+        let y = pullUpView.frame.minY
+        var pullUpTopY = y + translation.y
+        let snapY = tableView.frame.maxY
+//        pullUpTopY = (pullUpTopY < snapY) ? self.view.frame.minY : pullUpTopY
+        pullUpView.frame = CGRect(x: 0, y: pullUpTopY, width: pullUpView.frame.width, height: pullUpView.frame.height)
+        recognizer.setTranslation(CGPoint(x: 0, y: 0), in: pullUpView)
+    }
+    
+    func addPullUpView() {
+        // 1- Init pullUpViewController
+//        let pullUpViewController = ArticleViewController()
+        pullUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ArticleViewController") as! ArticleViewController
+        pullUpViewController.articleURL = getCurrentArticle().url
+        
+        // 2- Add pullUpViewController as a child view
+        self.addChildViewController(pullUpViewController)
+//        self.view.addSubview(pullUpViewController.view)
+        self.view.insertSubview(pullUpViewController.view, belowSubview: mediaBarView)
+        pullUpViewController.didMove(toParentViewController: self)
+        
+        // 3- Adjust bottomSheet frame and initial position.
+        let height = view.frame.height
+        let width = view.frame.width
+        pullUpViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+        
+        // Set relative z-index of pullUpView and mediaBar
+//        pullUpViewController.view.layer.zPosition = 1
+//        pullUpViewController.inputView?.layer.zPosition = 1
+//        mediaBarView.layer.zPosition = 2
+//        mediaBarView.inputView?.layer.zPosition = 2
+        
+//        self.view.bringSubview(toFront: mediaBarView)
+        
+        pullUpViewController.view.layer.cornerRadius = 5
+        pullUpViewController.view.layer.masksToBounds = true
     }
     
     @objc func applicationDidBecomeActive(_ notification: NSNotification) {
@@ -234,14 +286,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @objc func mediaBarSingleTapped(recognizer: UIGestureRecognizer) {
         print_debug(tagID, message: "Media Bar Single Tapped")
-//        performSegue(withIdentifier: "articleDetailSegue", sender: nil)
-        performSegue(withIdentifier: "pullUpSegue", sender: nil)
+//        performSegue(withIdentifier: "pullUpSegue", sender: nil)
         
-//        let modal = ArticleViewController()
-//        let transitionDelegate = DeckTransitioningDelegate()
-//        modal.transitioningDelegate = transitionDelegate
-//        modal.modalPresentationStyle = .custom
-//        present(modal, animated: true, completion: nil)
+        addPullUpView()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

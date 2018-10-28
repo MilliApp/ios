@@ -46,6 +46,7 @@ class PullUpPageViewController: UIPageViewController, DeckTransitionViewControll
         // Instructions for setViewControllers https://spin.atomicobject.com/2015/12/23/swift-uipageviewcontroller-tutorial/
         articleViewController.articleURL = articleURL
         setViewControllers([articleViewController], direction: .forward, animated: true, completion: nil)
+//        setViewControllers([controlViewController], direction: .forward, animated: true, completion: nil)
         viewState = .ARTICLE
     }
 }
