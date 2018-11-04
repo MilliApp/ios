@@ -190,9 +190,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Return string conveying current time out of total time
     // i.e. mm:ss/mm:ss
-    private func getTimeString(current:Double, total:Double) -> String {
-        let total_str = convertSecondsToTimeFormat(time: (Int64)(total))
-        let current_str = convertSecondsToTimeFormat(time: (Int64)(current))
+    private func getTimeString(current:Int64, total:Int64) -> String {
+        let total_str = convertSecondsToTimeFormat(time:total)
+        let current_str = convertSecondsToTimeFormat(time: current)
         let res = "(" + current_str + "/" + total_str + ")"
         return res
     }

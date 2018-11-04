@@ -25,12 +25,13 @@ class ArticleAudioPlayer {
     private var player: AVPlayer = AVPlayer()
     
     var currentTime: Double {
-        return CMTimeGetSeconds(player.currentTime())
+        let time = CMTimeGetSeconds(player.currentTime())
+        return (!time.isNaN) ? time : 0.0
     }
     
     var duration: Double {
         let duration = player.currentItem?.duration.seconds ?? 0.0
-        return (duration != Double.nan) ? duration : 0.0
+        return (!duration.isNaN) ? duration : 0.0
     }
     
     var progress: Double {
