@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6hs-qs-OjI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6hs-qs-OjI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -101,7 +101,7 @@
                                             <constraint firstAttribute="width" constant="30" id="30D-S9-U8C"/>
                                             <constraint firstAttribute="height" constant="30" id="mOl-nS-vQ7"/>
                                         </constraints>
-                                        <state key="normal" image="Rewind Filled-50"/>
+                                        <state key="normal" title="Rewind Button" image="Rewind Filled-50"/>
                                         <connections>
                                             <action selector="rewindPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="1er-za-btK"/>
                                         </connections>
@@ -119,8 +119,8 @@
                                             <action selector="playPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="0HK-wT-xJI"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-0:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bw-ZD-Vxl">
-                                        <rect key="frame" x="317" y="4" width="52" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-0:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bw-ZD-Vxl">
+                                        <rect key="frame" x="315" y="0.0" width="52" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="52" id="6CE-tp-jT8"/>
                                             <constraint firstAttribute="height" constant="21" id="Rei-9f-cq0"/>
@@ -135,10 +135,15 @@
                                             <constraint firstAttribute="width" constant="30" id="UXq-Oe-wQ9"/>
                                             <constraint firstAttribute="height" constant="30" id="XN8-y1-I5W"/>
                                         </constraints>
-                                        <state key="normal" image="Fast Forward Filled-50"/>
+                                        <state key="normal" title="Forward Button" image="Fast Forward Filled-50"/>
                                         <connections>
                                             <action selector="forwardPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="ias-ME-v6V"/>
                                         </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3q-sX-Dgu">
+                                        <rect key="frame" x="328" y="11" width="39" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Expand Button" image="collapse-arrow-filled-50"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97638529539999996" green="0.97652524709999999" blue="0.97635465860000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -186,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H1h-gy-RgJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1446" y="143"/>
+            <point key="canvasLocation" x="1445.5999999999999" y="142.57871064467767"/>
         </scene>
         <!--Article View Controller-->
         <scene sceneID="uNN-mU-HQ1">
@@ -280,8 +285,8 @@
         <!--Pull Up Page View Controller-->
         <scene sceneID="5zp-bb-yRb">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ndf-2N-ebh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="d6y-WC-7i5" customClass="PullUpPageViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ndf-2N-ebh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2225" y="912"/>
         </scene>
@@ -364,6 +369,7 @@
         <image name="Fast Forward Filled-50" width="100" height="100"/>
         <image name="Play Filled-50" width="100" height="100"/>
         <image name="Rewind Filled-50" width="100" height="100"/>
+        <image name="collapse-arrow-filled-50" width="75" height="75"/>
         <image name="icon-app" width="60" height="60"/>
         <image name="nytimes" width="720" height="720"/>
     </resources>

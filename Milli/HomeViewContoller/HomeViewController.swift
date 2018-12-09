@@ -27,6 +27,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var remoteTransportControlsSetUp = false
     
     var pullUpViewController = ArticleViewController()
+    var pullUpViewHidden = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,16 +44,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Cell formatting
         Globals.mainTableView = self.tableView
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
-        self.tableView.allowsMultipleSelectionDuringEditing = false;
+        self.tableView.allowsMultipleSelectionDuringEditing = false
         
-        addPullUpView()
+        if articleExists() {
+            addPullUpView()
+        }
         
         // Assign function to media bar single tap
-//        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(mediaBarSingleTapped(recognizer:)))
-//        mediaBarView.addGestureRecognizer(singleTapGesture)
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(mediaBarSingleTapped(recognizer:)))
+        mediaBarView.addGestureRecognizer(singleTapGesture)
         
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
-        view.addGestureRecognizer(gesture)
+        mediaBarView.addGestureRecognizer(gesture)
+//        view.addGestureRecognizer(gesture)
         
         NotificationCenter.default.addObserver(
             self,
@@ -68,10 +72,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @objc func panGesture(recognizer: UIPanGestureRecognizer) {
+        print_debug(tagID, message: "panGesture")
+        
         let pullUpView = pullUpViewController.view!
         let translation = recognizer.translation(in: pullUpView)
         let y = pullUpView.frame.minY
-        var pullUpTopY = y + translation.y
+        let pullUpTopY = y + translation.y
         let snapY = tableView.frame.maxY
 //        pullUpTopY = (pullUpTopY < snapY) ? self.view.frame.minY : pullUpTopY
         pullUpView.frame = CGRect(x: 0, y: pullUpTopY, width: pullUpView.frame.width, height: pullUpView.frame.height)
@@ -82,7 +88,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // 1- Init pullUpViewController
 //        let pullUpViewController = ArticleViewController()
         pullUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ArticleViewController") as! ArticleViewController
-        pullUpViewController.articleURL = getCurrentArticle().url
+        pullUpViewController.articleURL = getCurrentArticle()!.url
         
         // 2- Add pullUpViewController as a child view
         self.addChildViewController(pullUpViewController)
@@ -96,15 +102,38 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         pullUpViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
         
         // Set relative z-index of pullUpView and mediaBar
-//        pullUpViewController.view.layer.zPosition = 1
+//        pullUpViewController.view.layer.zPosition = 100
 //        pullUpViewController.inputView?.layer.zPosition = 1
-//        mediaBarView.layer.zPosition = 2
+//        mediaBarView.layer.zPosition = 101
 //        mediaBarView.inputView?.layer.zPosition = 2
         
+//        self.navigationController?.navigationBar.layer.zPosition = -1
+//        self.navigationController?.view.addSubview(pullUpViewController.view)
+        
+//        UIApplication.shared.keyWindow?.addSubview(pullUpViewController.view)
+//        UIApplication.shared.keyWindow?.addSubview(mediaBarView)
 //        self.view.bringSubview(toFront: mediaBarView)
         
         pullUpViewController.view.layer.cornerRadius = 5
         pullUpViewController.view.layer.masksToBounds = true
+    }
+    
+    func showPullUpView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            let frame = self.pullUpViewController.view.frame
+//            let yComponent = UIScreen.main.bounds.height - 700
+//            self.pullUpViewController.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
+            self.pullUpViewController.view.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        })
+    }
+    
+    func hidePullUpView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            let frame = self.pullUpViewController.view.frame
+            let yComponent = UIScreen.main.bounds.height
+//            self.pullUpViewController.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
+            self.pullUpViewController.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
+        })
     }
     
     @objc func applicationDidBecomeActive(_ notification: NSNotification) {
@@ -198,76 +227,85 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateProgress(time: CMTime) -> Void {
-        let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
-        // Set progress bar
-        mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress), animated: true)
-        
-        // Set time label on media panel
-        let currentTime = Int64(currentArticleAudioPlayer.currentTime)
-        let totalTime = Int64(currentArticleAudioPlayer.duration)
-        
-        timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: totalTime - currentTime))
-        
-        // Set progress string in article row
-        let indexPath = IndexPath(row: Globals.currentArticleIdx, section: 0)
-        let cell = tableView.cellForRow(at: indexPath) as! MainTableViewCell
+        if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
+            // Set progress bar
+            mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress), animated: true)
+            
+            // Set time label on media panel
+            let currentTime = Int64(currentArticleAudioPlayer.currentTime)
+            let totalTime = Int64(currentArticleAudioPlayer.duration)
+            
+            timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: totalTime - currentTime))
+            
+            // Set progress string in article row
+            let indexPath = IndexPath(row: Globals.currentArticleIdx, section: 0)
+            let cell = tableView.cellForRow(at: indexPath) as! MainTableViewCell
 
-        cell.articleInfo.text = "\(min(max(Int(floor(currentArticleAudioPlayer.progress*100)), 0), 100))% read \(getTimeString(current: currentTime, total: totalTime))"
-    }
-    
-    private func getCurrentArticleAudioPlayer() -> ArticleAudioPlayer {
-        let article = getCurrentArticle()
-        let articleID = article.articleId
-        // Initialize current ArticleAudioPlayer if it doesn't exist
-        if Globals.articleIdAudioPlayers[articleID] == nil {
-            // Attach periodic time observer
-            Globals.articleIdAudioPlayers[articleID] = ArticleAudioPlayer(article: article, callback: updateProgress)
+            cell.articleInfo.text = "\(min(max(Int(floor(currentArticleAudioPlayer.progress*100)), 0), 100))% read \(getTimeString(current: currentTime, total: totalTime))"
         }
-        return Globals.articleIdAudioPlayers[articleID]!
     }
     
-    private func getCurrentArticle() -> Article {
-        return Globals.articles[Globals.currentArticleIdx]
+    private func getCurrentArticleAudioPlayer() -> ArticleAudioPlayer? {
+        if let article = getCurrentArticle() {
+            let articleID = article.articleId
+            // Initialize current ArticleAudioPlayer if it doesn't exist
+            if Globals.articleIdAudioPlayers[articleID] == nil {
+                // Attach periodic time observer
+                Globals.articleIdAudioPlayers[articleID] = ArticleAudioPlayer(article: article, callback: updateProgress)
+            }
+            return Globals.articleIdAudioPlayers[articleID]!
+        }
+        return nil
+    }
+    
+    private func articleExists() -> Bool {
+        return Globals.articles.count != 0
+    }
+    
+    private func getCurrentArticle() -> Article? {
+        if articleExists() {
+            return Globals.articles[Globals.currentArticleIdx]
+        }
+        return nil
     }
     
     private func playSelectedArticleAudio(orPause: Bool = false) {
-        let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
-        
-        // PlayPause vs. just Play
-        if orPause {
-            currentArticleAudioPlayer.togglePlayPause()
-        } else {
-            currentArticleAudioPlayer.play()
+        if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
+            // PlayPause vs. just Play
+            if orPause {
+                currentArticleAudioPlayer.togglePlayPause()
+            } else {
+                currentArticleAudioPlayer.play()
+            }
+            
+            // Assign Play/Pause image based off audio player status
+            if currentArticleAudioPlayer.isPlaying {
+                playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
+            } else {
+                playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
+            }
+            
+            // Set media bar article logo image
+            mediaBarImage.image = getCurrentArticle()?.sourceLogo
+            updateNowPlayingInfo()
         }
-        
-        
-        // Assign Play/Pause image based off audio player status
-        if currentArticleAudioPlayer.isPlaying {
-            playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
-        } else {
-            playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
-        }
-        
-        // Set media bar article logo image
-        mediaBarImage.image = getCurrentArticle().sourceLogo
-        updateNowPlayingInfo()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print_debug(tagID, message: "didSelectRowAt \(indexPath.row)")
-        let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
-        
-        // If new article is selected, pause old article if it is playing
-        if Globals.currentArticleIdx != indexPath.row && currentArticleAudioPlayer.isPlaying {
-            print_debug(tagID, message: "Pause previous article")
-            currentArticleAudioPlayer.togglePlayPause()
+        if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
+            // If new article is selected, pause old article if it is playing
+            if Globals.currentArticleIdx != indexPath.row && currentArticleAudioPlayer.isPlaying {
+                print_debug(tagID, message: "Pause previous article")
+                currentArticleAudioPlayer.togglePlayPause()
+            }
+            
+            // Play newly selected article
+            print_debug(tagID, message: "Play current article")
+            Globals.currentArticleIdx = indexPath.row
+            playSelectedArticleAudio()
+            setupRemoteTransportControls()
         }
-        
-        // Play newly selected article
-        print_debug(tagID, message: "Play current article")
-        Globals.currentArticleIdx = indexPath.row
-        playSelectedArticleAudio()
-        setupRemoteTransportControls()
     }
     
     @IBAction func playPressed(_ sender: Any) {
@@ -277,41 +315,52 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func rewindPressed(_ sender: Any) {
         print_debug(tagID, message: "Rewind pressed")
-        getCurrentArticleAudioPlayer().seek(to: -30, completion: updateNowPlayingInfo)
+        if let articleAudioPlayer = getCurrentArticleAudioPlayer() {
+            articleAudioPlayer.seek(to: -30, completion: updateNowPlayingInfo)
+        }
     }
     
     @IBAction func forwardPressed(_ sender: Any) {
         print_debug(tagID, message: "Forward pressed")
-        getCurrentArticleAudioPlayer().seek(to: 30, completion: updateNowPlayingInfo)
+        if let articleAudioPlayer = getCurrentArticleAudioPlayer() {
+            articleAudioPlayer.seek(to: 30, completion: updateNowPlayingInfo)
+        }
     }
     
     @objc func mediaBarSingleTapped(recognizer: UIGestureRecognizer) {
         print_debug(tagID, message: "Media Bar Single Tapped")
 //        performSegue(withIdentifier: "pullUpSegue", sender: nil)
         
-        addPullUpView()
+        if (pullUpViewHidden) {
+            showPullUpView()
+            pullUpViewHidden = false
+        } else {
+            hidePullUpView()
+            pullUpViewHidden = true
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? PullUpViewController {
             // Pass on current playing article URL
-            vc.articleURL = getCurrentArticle().url
+            vc.articleURL = getCurrentArticle()!.url
         }
     }
     
     private func updateNowPlayingInfo() {
-        let currentArticle = getCurrentArticle()
-        let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()
-        
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: currentArticle.title,
-            MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: currentArticle.sourceLogo.size, requestHandler: {  (_) -> UIImage in
-                return currentArticle.sourceLogo
-            }),
-            MPNowPlayingInfoPropertyElapsedPlaybackTime: currentArticleAudioPlayer.currentTime,
-            MPMediaItemPropertyPlaybackDuration: currentArticleAudioPlayer.duration,
-            MPNowPlayingInfoPropertyPlaybackRate: currentArticleAudioPlayer.rate
-        ]
+        if let currentArticle = getCurrentArticle() {
+            let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()!
+            
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                MPMediaItemPropertyTitle: currentArticle.title,
+                MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: currentArticle.sourceLogo.size, requestHandler: {  (_) -> UIImage in
+                    return currentArticle.sourceLogo
+                }),
+                MPNowPlayingInfoPropertyElapsedPlaybackTime: currentArticleAudioPlayer.currentTime,
+                MPMediaItemPropertyPlaybackDuration: currentArticleAudioPlayer.duration,
+                MPNowPlayingInfoPropertyPlaybackRate: currentArticleAudioPlayer.rate
+            ]
+        }
     }
     
     private func setupRemoteTransportControls() {
