@@ -141,38 +141,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         loadSampleArticles()
     }
     
-    func loadArticles() -> [Article]? {
-        return NSKeyedUnarchiver.unarchiveObject(withFile: Article.ArchiveURL.path) as? [Article]
-    }
-    
-    func saveArticles(articleArray: [Article]) {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(articleArray, toFile: Article.ArchiveURL.path)
-        
-        if !isSuccessfulSave {
-            print("Failed to save articles...")
-        }
-    }
-    
     func loadSampleArticles() {
         print_debug(tagID, message: "loadSampleArticles")
         convertURLstoArticles()
         
         // Uncomment if you need to clear the archived object
 //        saveArticles(articleArray: [Article]())
-        
-        var articles = [Article]()
-        if let storedArray = loadArticles() {
-            articles = storedArray.reversed()
-        }
-        Globals.articles = articles // Set global array - only needs to be set on add or delete
-        
+
+        Globals.articles = loadArticles() ?? [Article]() // Set global array - only needs to be set on add or delete
+        print(Globals.articles)
         self.tableView.reloadData()
     }
     
     func convertURLstoArticles(){
         let articleBuffer = getShareBuffer()
         for article in articleBuffer.reversed() {
-            AWSClient.addArticle(data: article, tableView: self.tableView)
+            AWSClient.addArticle(rawArticle: article, tableView: self.tableView)
         }
         setShareBuffer(with: [NSDictionary]())
     }
@@ -191,13 +175,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             formatter.dateFormat = "dd-MMM-yyyy"
             dateStr = formatter.string(from: date)
         }
-        
+        cell.articleText.text = article.content ?? ""
         cell.articleSource.text = article.source + " | " + dateStr
-        cell.articleInfo.text = "0% read"
-        
-        // Store image in article object archive
         cell.articleImage.image = article.sourceLogo
-        
+        cell.articleInfo.text = "Downloading"
+
         return cell
     }
     
@@ -232,16 +214,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress), animated: true)
             
             // Set time label on media panel
-            let currentTime = Int64(currentArticleAudioPlayer.currentTime)
-            let totalTime = Int64(currentArticleAudioPlayer.duration)
+            let timeLeft = Int64(currentArticleAudioPlayer.duration - currentArticleAudioPlayer.currentTime)
             
-            timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: totalTime - currentTime))
+            timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: timeLeft))
             
             // Set progress string in article row
             let indexPath = IndexPath(row: Globals.currentArticleIdx, section: 0)
             let cell = tableView.cellForRow(at: indexPath) as! MainTableViewCell
 
-            cell.articleInfo.text = "\(min(max(Int(floor(currentArticleAudioPlayer.progress*100)), 0), 100))% read \(getTimeString(current: currentTime, total: totalTime))"
+            cell.articleInfo.text = "\(timeLeft / 60) of \(Int64(currentArticleAudioPlayer.duration) / 60) min remaining"
         }
     }
     

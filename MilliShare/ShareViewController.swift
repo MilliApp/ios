@@ -10,19 +10,10 @@ import UIKit
 import Social
 import MobileCoreServices
 
-class ShareViewController: SLComposeServiceViewController {
-    
-    let tagID = "[SHARE_VIEW_CONTROLLER]"
-    
-    override func didSelectPost() {
-        print(tagID, "didSelectPost...")
-        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-    }
-    
-    override func configurationItems() -> [Any]! {
+class ShareViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         shareArticle()
-        sleep(3)
-        return []
     }
     
     func shareArticle() {
@@ -30,23 +21,14 @@ class ShareViewController: SLComposeServiceViewController {
         let itemProvider = item.attachments?.first as! NSItemProvider
         let propertyList = String(kUTTypePropertyList)
         
-        if !itemProvider.hasItemConformingToTypeIdentifier(propertyList) {
-            return
-        }
-        
-        itemProvider.loadItem(forTypeIdentifier: propertyList, completionHandler: {(item, error) -> Void in
-            
-            guard let processedResults = item as? NSDictionary else { return }
-            OperationQueue.main.addOperation {
-                if let article = processedResults[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary {
-                    var articleBuffer = getShareBuffer()
-                    articleBuffer.append(article)
-                    setShareBuffer(with: articleBuffer)
-                    
-                    self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+        if itemProvider.hasItemConformingToTypeIdentifier(propertyList) {
+            itemProvider.loadItem(forTypeIdentifier: propertyList) {(item, _) -> Void in
+                if let processedResults = item as? NSDictionary, let article = processedResults[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary {
+                    AWSClient.addArticle(rawArticle: article, tableView: nil)
+                    self.extensionContext?.completeRequest(returningItems: nil)
                 }
             }
-        })
+        }
     }
 }
 

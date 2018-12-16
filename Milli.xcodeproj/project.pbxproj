@@ -24,10 +24,13 @@
 		247F70401FC2C8460072C3CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247F703E1FC2C8460072C3CE /* Main.storyboard */; };
 		247F70421FC2C8460072C3CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 247F70411FC2C8460072C3CE /* Assets.xcassets */; };
 		247F70451FC2C8460072C3CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 247F70431FC2C8460072C3CE /* LaunchScreen.storyboard */; };
-		247F70501FC2C8460072C3CE /* MilliTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F704F1FC2C8460072C3CE /* MilliTests.swift */; };
-		247F705B1FC2C8460072C3CE /* MilliUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247F705A1FC2C8460072C3CE /* MilliUITests.swift */; };
 		24A11BBC2030FB340073EB95 /* AWSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A11BBB2030FB340073EB95 /* AWSClient.swift */; };
 		24D9D3EB2161570900FBBA96 /* PullUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D9D3EA2161570900FBBA96 /* PullUpViewController.swift */; };
+		6782BFED21C6EFC100E3EE34 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AAC391FDE172800E2E708 /* Article.swift */; };
+		6782BFEF21C6F34B00E3EE34 /* AWSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A11BBB2030FB340073EB95 /* AWSClient.swift */; };
+		6782BFF021C6F3D600E3EE34 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246AAC371FDE15BD00E2E708 /* Utility.swift */; };
+		6782BFF221C6FA0000E3EE34 /* ArticleAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245E18E3209680FA008B7E5A /* ArticleAudioPlayer.swift */; };
+		6782BFF321C6FA1800E3EE34 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243550AE20556B950007E21D /* Globals.swift */; };
 		67EDC73E20B2252A00135B80 /* GetURL.js in Resources */ = {isa = PBXBuildFile; fileRef = 67EDC73D20B2252A00135B80 /* GetURL.js */; };
 		67F463F52104FAB1001D5271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F463F42104FAB1001D5271 /* Utils.swift */; };
 		67F463F62104FAB1001D5271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F463F42104FAB1001D5271 /* Utils.swift */; };
@@ -98,11 +101,7 @@
 		247F70441FC2C8460072C3CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		247F70461FC2C8460072C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		247F704B1FC2C8460072C3CE /* MilliTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MilliTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		247F704F1FC2C8460072C3CE /* MilliTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilliTests.swift; sourceTree = "<group>"; };
-		247F70511FC2C8460072C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		247F70561FC2C8460072C3CE /* MilliUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MilliUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		247F705A1FC2C8460072C3CE /* MilliUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilliUITests.swift; sourceTree = "<group>"; };
-		247F705C1FC2C8460072C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24A11BBB2030FB340073EB95 /* AWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSClient.swift; sourceTree = "<group>"; };
 		24D9D3EA2161570900FBBA96 /* PullUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullUpViewController.swift; sourceTree = "<group>"; };
 		67EDC73D20B2252A00135B80 /* GetURL.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = GetURL.js; sourceTree = "<group>"; };
@@ -203,8 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				247F70391FC2C8460072C3CE /* Milli */,
-				247F704E1FC2C8460072C3CE /* MilliTests */,
-				247F70591FC2C8460072C3CE /* MilliUITests */,
 				247F149520061F4F00C2D686 /* MilliShare */,
 				247F70381FC2C8460072C3CE /* Products */,
 				F625A32AB03E099CFC65707F /* Pods */,
@@ -238,24 +235,6 @@
 				247F70411FC2C8460072C3CE /* Assets.xcassets */,
 			);
 			path = Milli;
-			sourceTree = "<group>";
-		};
-		247F704E1FC2C8460072C3CE /* MilliTests */ = {
-			isa = PBXGroup;
-			children = (
-				247F704F1FC2C8460072C3CE /* MilliTests.swift */,
-				247F70511FC2C8460072C3CE /* Info.plist */,
-			);
-			path = MilliTests;
-			sourceTree = "<group>";
-		};
-		247F70591FC2C8460072C3CE /* MilliUITests */ = {
-			isa = PBXGroup;
-			children = (
-				247F705A1FC2C8460072C3CE /* MilliUITests.swift */,
-				247F705C1FC2C8460072C3CE /* Info.plist */,
-			);
-			path = MilliUITests;
 			sourceTree = "<group>";
 		};
 		B974F23A55DF52541AA6FAA0 /* Frameworks */ = {
@@ -478,8 +457,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6782BFF221C6FA0000E3EE34 /* ArticleAudioPlayer.swift in Sources */,
+				6782BFF021C6F3D600E3EE34 /* Utility.swift in Sources */,
+				6782BFEF21C6F34B00E3EE34 /* AWSClient.swift in Sources */,
 				247F149720061F4F00C2D686 /* ShareViewController.swift in Sources */,
 				67F463F62104FAB1001D5271 /* Utils.swift in Sources */,
+				6782BFF321C6FA1800E3EE34 /* Globals.swift in Sources */,
+				6782BFED21C6EFC100E3EE34 /* Article.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +492,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				247F70501FC2C8460072C3CE /* MilliTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,7 +499,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				247F705B1FC2C8460072C3CE /* MilliUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
