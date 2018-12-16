@@ -20,6 +20,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var playPauseButton: UIButton!
     @IBOutlet var mediaBarProgressView: UIProgressView!
+    @IBOutlet var expandCollapseButton: UIButton!
     
     // Setting initial variables
     private let tagID = "[HOME_VIEW_CONTROLLER]"
@@ -28,15 +29,29 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var pullUpViewController = ArticleViewController()
     var pullUpViewHidden = true
+    var pullUpViewCollapseY = CGFloat()
+    var pullUpViewExpandY = CGFloat()
+    var pullUpViewHeight = CGFloat()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         print_debug(tagID, message: "viewDidLoad")
         
         // Set tableview delegate and datasource
         tableView.delegate = self
         tableView.dataSource = self
+        
+//        self.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
+        edgesForExtendedLayout = []
+        self.navigationController?.navigationBar.layer.zPosition = -1
+        
+        // Initialize variables
+        pullUpViewCollapseY = self.mediaBarView.frame.origin.y
+        pullUpViewExpandY = self.navigationController!.navigationBar.frame.height / -2
+        // TODO(chwang): this height calculation doesn't make sense. I think
+        // the article view controller should just be turned into a view with a
+        // tha navigation bar is throwing this off webview
+        pullUpViewHeight = pullUpViewCollapseY - pullUpViewExpandY + self.navigationController!.navigationBar.frame.height - pullUpViewExpandY
         
         // Load sample articles
         loadSampleArticles()
@@ -46,17 +61,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         self.tableView.allowsMultipleSelectionDuringEditing = false
         
+        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
+        mediaBarView.addGestureRecognizer(gesture)
+
         if articleExists() {
             addPullUpView()
         }
-        
-        // Assign function to media bar single tap
-        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(mediaBarSingleTapped(recognizer:)))
-        mediaBarView.addGestureRecognizer(singleTapGesture)
-        
-        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
-        mediaBarView.addGestureRecognizer(gesture)
-//        view.addGestureRecognizer(gesture)
         
         NotificationCenter.default.addObserver(
             self,
@@ -81,38 +91,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let snapY = tableView.frame.maxY
 //        pullUpTopY = (pullUpTopY < snapY) ? self.view.frame.minY : pullUpTopY
         pullUpView.frame = CGRect(x: 0, y: pullUpTopY, width: pullUpView.frame.width, height: pullUpView.frame.height)
+        print_debug(tagID, message: "\(pullUpTopY)")
         recognizer.setTranslation(CGPoint(x: 0, y: 0), in: pullUpView)
     }
     
     func addPullUpView() {
         // 1- Init pullUpViewController
-//        let pullUpViewController = ArticleViewController()
         pullUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ArticleViewController") as! ArticleViewController
         pullUpViewController.articleURL = getCurrentArticle()!.url
         
         // 2- Add pullUpViewController as a child view
         self.addChildViewController(pullUpViewController)
-//        self.view.addSubview(pullUpViewController.view)
         self.view.insertSubview(pullUpViewController.view, belowSubview: mediaBarView)
         pullUpViewController.didMove(toParentViewController: self)
         
         // 3- Adjust bottomSheet frame and initial position.
-        let height = view.frame.height
+        let height = pullUpViewHeight
+//        let height = pullUpViewCollapseY - pullUpViewExpandY + pullUpViewController.navigationController!.navigationBar.frame.height
         let width = view.frame.width
-        pullUpViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
-        
-        // Set relative z-index of pullUpView and mediaBar
-//        pullUpViewController.view.layer.zPosition = 100
-//        pullUpViewController.inputView?.layer.zPosition = 1
-//        mediaBarView.layer.zPosition = 101
-//        mediaBarView.inputView?.layer.zPosition = 2
-        
-//        self.navigationController?.navigationBar.layer.zPosition = -1
-//        self.navigationController?.view.addSubview(pullUpViewController.view)
-        
-//        UIApplication.shared.keyWindow?.addSubview(pullUpViewController.view)
-//        UIApplication.shared.keyWindow?.addSubview(mediaBarView)
-//        self.view.bringSubview(toFront: mediaBarView)
+        pullUpViewController.view.frame = CGRect(x: 0, y: pullUpViewCollapseY, width: width, height: height)
         
         pullUpViewController.view.layer.cornerRadius = 5
         pullUpViewController.view.layer.masksToBounds = true
@@ -121,23 +118,23 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func showPullUpView() {
         UIView.animate(withDuration: 0.3, animations: {
             let frame = self.pullUpViewController.view.frame
-//            let yComponent = UIScreen.main.bounds.height - 700
-//            self.pullUpViewController.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
-            self.pullUpViewController.view.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+            self.pullUpViewController.view.frame = CGRect(x: 0, y: self.pullUpViewExpandY, width: frame.width, height: frame.height)
         })
+        pullUpViewHidden = false
+        expandCollapseButton.setImage(UIImage(named: "expand-arrow-filled-50"), for: .normal)
     }
     
     func hidePullUpView() {
         UIView.animate(withDuration: 0.3, animations: {
             let frame = self.pullUpViewController.view.frame
-            let yComponent = UIScreen.main.bounds.height
-//            self.pullUpViewController.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
-            self.pullUpViewController.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
+            self.pullUpViewController.view.frame = CGRect(x: 0, y: self.pullUpViewCollapseY, width: frame.width, height: frame.height)
         })
+        pullUpViewHidden = true
+        expandCollapseButton.setImage(UIImage(named: "collapse-arrow-filled-50"), for: .normal)
     }
     
     @objc func applicationDidBecomeActive(_ notification: NSNotification) {
-//        print_debug(tagID, message: "applicationDidBecomeActive")
+        print_debug(tagID, message: "applicationDidBecomeActive")
         loadSampleArticles()
     }
     
@@ -327,16 +324,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    @objc func mediaBarSingleTapped(recognizer: UIGestureRecognizer) {
-        print_debug(tagID, message: "Media Bar Single Tapped")
-//        performSegue(withIdentifier: "pullUpSegue", sender: nil)
-        
+    @IBAction func expandCollapsePressed(_ sender: Any) {
+        print_debug(tagID, message: "Expand collapse pressed")
         if (pullUpViewHidden) {
             showPullUpView()
-            pullUpViewHidden = false
         } else {
             hidePullUpView()
-            pullUpViewHidden = true
         }
     }
     

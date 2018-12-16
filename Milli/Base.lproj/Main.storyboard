@@ -15,11 +15,11 @@
             <objects>
                 <viewController title="Milli" id="ek0-nw-3Tb" customClass="HomeViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zE7-LD-udM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-Sy-kmT">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MainTableViewCell" rowHeight="90" id="flk-wC-3pe" customClass="MainTableViewCell" customModule="Milli" customModuleProvider="target">
@@ -82,8 +82,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gpa-5x-FiF">
-                                <rect key="frame" x="0.0" y="619" width="375" height="47"/>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gpa-5x-FiF">
+                                <rect key="frame" x="0.0" y="556" width="375" height="47"/>
                                 <subviews>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DVv-6P-W6N">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
@@ -119,16 +119,6 @@
                                             <action selector="playPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="0HK-wT-xJI"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-0:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bw-ZD-Vxl">
-                                        <rect key="frame" x="315" y="0.0" width="52" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="52" id="6CE-tp-jT8"/>
-                                            <constraint firstAttribute="height" constant="21" id="Rei-9f-cq0"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.57248467209999998" green="0.57258617879999996" blue="0.57247823480000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Mo-LP-Wxk">
                                         <rect key="frame" x="262.5" y="8.5" width="30" height="30"/>
                                         <constraints>
@@ -141,10 +131,23 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3q-sX-Dgu">
-                                        <rect key="frame" x="328" y="11" width="39" height="37"/>
+                                        <rect key="frame" x="339" y="14" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Expand Button" image="collapse-arrow-filled-50"/>
+                                        <connections>
+                                            <action selector="expandCollapsePressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="NKp-g5-xaY"/>
+                                        </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bw-ZD-Vxl">
+                                        <rect key="frame" x="53" y="4" width="52" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="52" id="6CE-tp-jT8"/>
+                                            <constraint firstAttribute="height" constant="21" id="Rei-9f-cq0"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.57248467209999998" green="0.57258617879999996" blue="0.57247823480000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97638529539999996" green="0.97652524709999999" blue="0.97635465860000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -153,8 +156,8 @@
                                     <constraint firstAttribute="trailing" secondItem="DVv-6P-W6N" secondAttribute="trailing" id="8og-RX-aJS"/>
                                     <constraint firstItem="1Mo-LP-Wxk" firstAttribute="leading" secondItem="jSz-9E-iCR" secondAttribute="trailing" constant="45" id="EhH-oB-dQG"/>
                                     <constraint firstAttribute="bottom" secondItem="ZAH-y1-583" secondAttribute="bottom" id="Gau-im-8rv"/>
+                                    <constraint firstItem="1Bw-ZD-Vxl" firstAttribute="leading" secondItem="ZAH-y1-583" secondAttribute="trailing" constant="8" id="Q1Z-NQ-6kk"/>
                                     <constraint firstItem="ZAH-y1-583" firstAttribute="leading" secondItem="Gpa-5x-FiF" secondAttribute="leading" id="WSS-N4-mzl"/>
-                                    <constraint firstAttribute="trailing" secondItem="1Bw-ZD-Vxl" secondAttribute="trailing" constant="6" id="WhK-yM-AN1"/>
                                     <constraint firstItem="1Bw-ZD-Vxl" firstAttribute="top" secondItem="DVv-6P-W6N" secondAttribute="bottom" constant="2" id="bwz-gU-BF6"/>
                                     <constraint firstItem="3t3-YX-gv2" firstAttribute="centerY" secondItem="Gpa-5x-FiF" secondAttribute="centerY" id="gzU-oh-On0"/>
                                     <constraint firstItem="DVv-6P-W6N" firstAttribute="leading" secondItem="Gpa-5x-FiF" secondAttribute="leading" id="hwh-Ye-d1R"/>
@@ -179,12 +182,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="milli" id="m3L-kf-5GV"/>
                     <connections>
+                        <outlet property="expandCollapseButton" destination="m3q-sX-Dgu" id="tSS-Xb-i4e"/>
                         <outlet property="mediaBarImage" destination="ZAH-y1-583" id="b4R-YL-8cQ"/>
                         <outlet property="mediaBarProgressView" destination="DVv-6P-W6N" id="2QC-32-rck"/>
                         <outlet property="mediaBarView" destination="Gpa-5x-FiF" id="2KT-89-AWX"/>
                         <outlet property="playPauseButton" destination="jSz-9E-iCR" id="54q-iu-YCi"/>
                         <outlet property="tableView" destination="T9w-Sy-kmT" id="9sy-Es-ckf"/>
                         <outlet property="timeLabel" destination="1Bw-ZD-Vxl" id="WCa-Wy-MX2"/>
+                        <outlet property="view" destination="zE7-LD-udM" id="vp0-d3-Ams"/>
                         <segue destination="d6y-WC-7i5" kind="custom" identifier="articleDetailPageSegue" customClass="DeckSegue" customModule="DeckTransition" id="59t-uU-Igb"/>
                         <segue destination="9LS-ih-9pH" kind="custom" identifier="pullUpSegue" customClass="DeckSegue" customModule="DeckTransition" id="fVr-8G-s38"/>
                     </connections>
@@ -295,9 +300,10 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6hs-qs-OjI" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KNz-d0-c9w">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="KNz-d0-c9w">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                             <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
