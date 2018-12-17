@@ -60,6 +60,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         Globals.mainTableView = self.tableView
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         self.tableView.allowsMultipleSelectionDuringEditing = false
+        self.tableView.estimatedRowHeight = 80
+        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
         mediaBarView.addGestureRecognizer(gesture)
