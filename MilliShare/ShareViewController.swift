@@ -11,10 +11,22 @@ import Social
 import MobileCoreServices
 
 class ShareViewController: UIViewController {
+    @IBOutlet weak var savedDialog: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpDialog()
         shareArticle()
+        
+        _ = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { _ in
+            self.complete()
+        })
     }
+    
+    func complete() {
+        self.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+    }
+    
     
     func shareArticle() {
         let item = self.extensionContext?.inputItems.first as! NSExtensionItem
@@ -24,11 +36,30 @@ class ShareViewController: UIViewController {
         if itemProvider.hasItemConformingToTypeIdentifier(propertyList) {
             itemProvider.loadItem(forTypeIdentifier: propertyList) {(item, _) -> Void in
                 if let processedResults = item as? NSDictionary, let article = processedResults[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary {
-                    AWSClient.addArticle(rawArticle: article, tableView: nil)
-                    self.extensionContext?.completeRequest(returningItems: nil)
+                    var articleBuffer = getShareBuffer()
+                    articleBuffer.append(article)
+                    setShareBuffer(with: articleBuffer)
                 }
             }
         }
     }
+    
+    func setUpDialog() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ShareViewController.tapped(recognizer:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        tapGestureRecognizer.numberOfTouchesRequired = 1
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+        savedDialog.layer.cornerRadius = 5;
+        savedDialog.layer.masksToBounds = true;
+        
+        // TODO: Animate Dialog Popup
+    }
+    
+    @objc func tapped(recognizer: UITapGestureRecognizer) {
+        print("tapped")
+        complete()
+    }
+    
+    
 }
 

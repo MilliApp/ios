@@ -55,9 +55,7 @@ class ArticleAudioPlayer {
     
     private func loadPlayArticleAudioPlayer() {
         print_debug(tagID, message: "[GET_ARTICLE_AUDIO]")
-        if let articleAudioURL = article.audioURL as String? {
-            let url = URL(string: articleAudioURL)!
-            
+        if let url = article.audioUrl {
             print(url)
             // Load the AudioPlayer
             self.player = AVPlayer.init(url: url)
@@ -71,7 +69,7 @@ class ArticleAudioPlayer {
             setProgressCallback()
         } else {
             print_debug(tagID, message: "[GET_ARTICLE_AUDIO] Audio URL not loaded yet")
-            AWSClient.getArticleAudioMeta(article: article)
+            AWSClient.getArticle(article: article)
         }
     }
     
@@ -81,7 +79,7 @@ class ArticleAudioPlayer {
             loadPlayArticleAudioPlayer()
             return
         }
-        print_debug(tagID, message: "[PLAY] Playing \(String(describing: article.audioURL))")
+        print_debug(tagID, message: "[PLAY] Playing \(String(describing: article.audioUrl))")
         
         player.play()
     }

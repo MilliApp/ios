@@ -54,7 +54,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         pullUpViewHeight = pullUpViewCollapseY - pullUpViewExpandY + self.navigationController!.navigationBar.frame.height - pullUpViewExpandY
         
         // Load sample articles
-        loadSampleArticles()
+        loadArticles()
         
         // Cell formatting
         Globals.mainTableView = self.tableView
@@ -100,7 +100,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func addPullUpView() {
         // 1- Init pullUpViewController
         pullUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ArticleViewController") as! ArticleViewController
-        pullUpViewController.articleURL = getCurrentArticle()!.url
+        pullUpViewController.articleURL = getCurrentArticle()!.articleUrl.absoluteString
         
         // 2- Add pullUpViewController as a child view
         self.addChildViewController(pullUpViewController)
@@ -137,27 +137,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @objc func applicationDidBecomeActive(_ notification: NSNotification) {
         print_debug(tagID, message: "applicationDidBecomeActive")
-        loadSampleArticles()
+        loadArticles()
     }
     
-    func loadSampleArticles() {
-        print_debug(tagID, message: "loadSampleArticles")
-        convertURLstoArticles()
+    func loadArticles() {
+        print_debug(tagID, message: "loadArticles")
         
-        // Uncomment if you need to clear the archived object
-//        saveArticles(articleArray: [Article]())
-
-        Globals.articles = loadArticles() ?? [Article]() // Set global array - only needs to be set on add or delete
-        print(Globals.articles)
-        self.tableView.reloadData()
-    }
-    
-    func convertURLstoArticles(){
         let articleBuffer = getShareBuffer()
         for article in articleBuffer.reversed() {
             AWSClient.addArticle(rawArticle: article, tableView: self.tableView)
         }
         setShareBuffer(with: [NSDictionary]())
+        
+        Globals.articles = unarchiveArticles() ?? [Article]() // Set global array - only needs to be set on add or delete
+        self.tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -166,17 +159,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Configure the cell...
         cell.articleTitle.text = article.title
-        
-        var dateStr: String = "No date"
-        if let date = article.date {
-            let formatter = DateFormatter()
-            // initially set the format based on your datepicker date
-            formatter.dateFormat = "dd-MMM-yyyy"
-            dateStr = formatter.string(from: date)
-        }
+        let dateStr = article.publishDate?.string ?? "No Date"
         cell.articleText.text = article.content ?? ""
         cell.articleSource.text = article.source + " | " + dateStr
-        cell.articleImage.image = article.sourceLogo
+        cell.articleImage.image = article.topImage.image
         cell.articleInfo.text = "Downloading"
 
         return cell
@@ -190,7 +176,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if editingStyle == .delete {
             // Delete the row from the data source
             Globals.articles.remove(at: indexPath.row)
-            saveArticles(articleArray: Globals.articles.reversed())
+            archive(articles: Globals.articles.reversed())
             tableView.deleteRows(at: [indexPath], with: .fade)
             self.tableView.reloadData()
         } else if editingStyle == .insert {
@@ -266,7 +252,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             // Set media bar article logo image
-            mediaBarImage.image = getCurrentArticle()?.sourceLogo
+            mediaBarImage.image = getCurrentArticle()?.sourceLogo.image
             updateNowPlayingInfo()
         }
     }
@@ -319,18 +305,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? PullUpViewController {
             // Pass on current playing article URL
-            vc.articleURL = getCurrentArticle()!.url
+            vc.articleURL = getCurrentArticle()!.articleUrl.absoluteString
         }
     }
     
     private func updateNowPlayingInfo() {
         if let currentArticle = getCurrentArticle() {
             let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()!
-            
+            let image = currentArticle.sourceLogo.image?.size ?? CGSize(width: 64, height: 64)
             MPNowPlayingInfoCenter.default().nowPlayingInfo = [
                 MPMediaItemPropertyTitle: currentArticle.title,
-                MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: currentArticle.sourceLogo.size, requestHandler: {  (_) -> UIImage in
-                    return currentArticle.sourceLogo
+                MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: image, requestHandler: {  (_) -> UIImage in
+                    return currentArticle.sourceLogo.image ?? UIImage()
                 }),
                 MPNowPlayingInfoPropertyElapsedPlaybackTime: currentArticleAudioPlayer.currentTime,
                 MPMediaItemPropertyPlaybackDuration: currentArticleAudioPlayer.duration,
