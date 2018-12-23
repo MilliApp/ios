@@ -43,7 +43,12 @@ class ArticleAudioPlayer {
     }
     
     var rate: Float {
-        return player.rate
+        get {
+           return player.rate
+        }
+        set {
+            player.rate = newValue
+        }
     }
     
     init?(article:Article, callback:@escaping CallbackHandler) {
@@ -63,7 +68,7 @@ class ArticleAudioPlayer {
             self.state = .AUDIO_LOADED
             
             // Play the audio
-            self.player.play()
+            player.play()
             
             print_debug(tagID, message: "Loading Player...")
             setProgressCallback()
@@ -93,14 +98,14 @@ class ArticleAudioPlayer {
     }
     
     func seek(to time: Double, completion: @escaping () -> ()) {
-        player.seek(to: CMTimeMakeWithSeconds(time + currentTime, 1)) { _ in
+        player.seek(to: CMTimeMakeWithSeconds(time + currentTime, preferredTimescale: 1)) { _ in
             completion()
         }
     }
     
     private func setProgressCallback() {
         print_debug(tagID, message: "setProgressCallback called")
-        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1,2), queue: nil, using: updateProgressCallback)
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1,timescale: 2), queue: nil, using: updateProgressCallback)
     }
     
     func setRate(rate:Float) {

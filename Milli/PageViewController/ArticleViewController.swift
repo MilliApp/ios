@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import DeckTransition
 
 class ArticleViewController: UIViewController {
     

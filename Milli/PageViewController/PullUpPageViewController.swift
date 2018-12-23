@@ -56,7 +56,7 @@ extension PullUpPageViewController: UIPageViewControllerDataSource {
     private func pageUpdate(newViewState: ViewState, forwardAnimation:Bool) {
         pageControl.currentPage = newViewState.rawValue
         viewState = newViewState
-        let directionAnimation = forwardAnimation ? NavigationDirection.forward : NavigationDirection.reverse
+        let directionAnimation = forwardAnimation ? UIPageViewController.NavigationDirection.forward : UIPageViewController.NavigationDirection.reverse
         switch viewState {
         case .ARTICLE:
             print_debug(tagID, message: "here1")

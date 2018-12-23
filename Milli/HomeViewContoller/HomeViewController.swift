@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-import DeckTransition
 import MediaPlayer
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -24,7 +23,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Setting initial variables
     private let tagID = "[HOME_VIEW_CONTROLLER]"
-    private var userDefaults = UserDefaults(suiteName: "group.com.Milli1.Milli1")
+    private var userDefaults = UserDefaults(suiteName: "group.com.Milli4.Milli4")
     private var remoteTransportControlsSetUp = false
     
     var pullUpViewController = ArticleViewController()
@@ -41,7 +40,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
-//        self.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
+        //        self.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
         edgesForExtendedLayout = []
         self.navigationController?.navigationBar.layer.zPosition = -1
         
@@ -61,11 +60,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         self.tableView.allowsMultipleSelectionDuringEditing = false
         self.tableView.estimatedRowHeight = 80
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
         mediaBarView.addGestureRecognizer(gesture)
-
+        
         if articleExists() {
             addPullUpView()
         }
@@ -73,14 +72,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.applicationDidBecomeActive(_:)),
-            name: NSNotification.Name.UIApplicationDidBecomeActive,
+            name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        addPullUpView()
+        //        addPullUpView()
     }
     
     @objc func panGesture(recognizer: UIPanGestureRecognizer) {
@@ -91,7 +90,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let y = pullUpView.frame.minY
         let pullUpTopY = y + translation.y
         let snapY = tableView.frame.maxY
-//        pullUpTopY = (pullUpTopY < snapY) ? self.view.frame.minY : pullUpTopY
+        //        pullUpTopY = (pullUpTopY < snapY) ? self.view.frame.minY : pullUpTopY
         pullUpView.frame = CGRect(x: 0, y: pullUpTopY, width: pullUpView.frame.width, height: pullUpView.frame.height)
         print_debug(tagID, message: "\(pullUpTopY)")
         recognizer.setTranslation(CGPoint(x: 0, y: 0), in: pullUpView)
@@ -103,13 +102,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         pullUpViewController.articleURL = getCurrentArticle()!.articleUrl.absoluteString
         
         // 2- Add pullUpViewController as a child view
-        self.addChildViewController(pullUpViewController)
+        self.addChild(pullUpViewController)
         self.view.insertSubview(pullUpViewController.view, belowSubview: mediaBarView)
-        pullUpViewController.didMove(toParentViewController: self)
+        pullUpViewController.didMove(toParent: self)
         
         // 3- Adjust bottomSheet frame and initial position.
         let height = pullUpViewHeight
-//        let height = pullUpViewCollapseY - pullUpViewExpandY + pullUpViewController.navigationController!.navigationBar.frame.height
+        //        let height = pullUpViewCollapseY - pullUpViewExpandY + pullUpViewController.navigationController!.navigationBar.frame.height
         let width = view.frame.width
         pullUpViewController.view.frame = CGRect(x: 0, y: pullUpViewCollapseY, width: width, height: height)
         
@@ -141,13 +140,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func loadArticles() {
-        print_debug(tagID, message: "loadArticles")
-        
-        let articleBuffer = getShareBuffer()
-        for article in articleBuffer.reversed() {
-            AWSClient.addArticle(rawArticle: article, tableView: self.tableView)
+        for article in shareBuffer.reversed() {
+            if let articleDict = article as? [String: String] {
+                if articleDict.count > 1 {
+                    // Only worthwhile to show articles shared from safari where preproccessing is possible
+                    let partialArticle = Article(response: articleDict)
+                    putArticleInModel(article: partialArticle)
+                }
+            }
+            AWSClient.addArticle(rawArticle: article) { [weak self] in
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+                
+            }
         }
-        setShareBuffer(with: [NSDictionary]())
+        shareBuffer = []
         
         Globals.articles = unarchiveArticles() ?? [Article]() // Set global array - only needs to be set on add or delete
         self.tableView.reloadData()
@@ -160,11 +168,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Configure the cell...
         cell.articleTitle.text = article.title
         let dateStr = article.publishDate?.string ?? "No Date"
-        cell.articleText.text = article.content ?? ""
+        cell.articleText.text = article.content ?? " "
         cell.articleSource.text = article.source + " | " + dateStr
-        cell.articleImage.image = article.topImage.image
+        cell.articleImage.image = article.topImage?.image ?? UIImage()
         cell.articleInfo.text = "Downloading"
-
+        
         return cell
     }
     
@@ -172,7 +180,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return Globals.articles.count
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
             Globals.articles.remove(at: indexPath.row)
@@ -206,7 +214,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             // Set progress string in article row
             let indexPath = IndexPath(row: Globals.currentArticleIdx, section: 0)
             let cell = tableView.cellForRow(at: indexPath) as! MainTableViewCell
-
+            
             cell.articleInfo.text = "\(timeLeft / 60) of \(Int64(currentArticleAudioPlayer.duration) / 60) min remaining"
         }
     }
@@ -252,7 +260,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             // Set media bar article logo image
-            mediaBarImage.image = getCurrentArticle()?.sourceLogo.image
+            mediaBarImage.image = getCurrentArticle()?.sourceLogo?.image ?? UIImage()
             updateNowPlayingInfo()
         }
     }
@@ -312,11 +320,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func updateNowPlayingInfo() {
         if let currentArticle = getCurrentArticle() {
             let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()!
-            let image = currentArticle.sourceLogo.image?.size ?? CGSize(width: 64, height: 64)
+            let image = currentArticle.sourceLogo?.image?.size ?? CGSize(width: 64, height: 64)
             MPNowPlayingInfoCenter.default().nowPlayingInfo = [
                 MPMediaItemPropertyTitle: currentArticle.title,
                 MPMediaItemPropertyArtwork: MPMediaItemArtwork(boundsSize: image, requestHandler: {  (_) -> UIImage in
-                    return currentArticle.sourceLogo.image ?? UIImage()
+                    return currentArticle.sourceLogo?.image ?? UIImage()
                 }),
                 MPNowPlayingInfoPropertyElapsedPlaybackTime: currentArticleAudioPlayer.currentTime,
                 MPMediaItemPropertyPlaybackDuration: currentArticleAudioPlayer.duration,
@@ -330,7 +338,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return
         }
         let commandCenter = MPRemoteCommandCenter.shared()
-
+        
         commandCenter.playCommand.addTarget { [unowned self] event in
             self.playPressed(self)
             return .success

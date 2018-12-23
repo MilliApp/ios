@@ -10,73 +10,46 @@ import UIKit
 
 class Article: Codable, Equatable {
     // Basic Variables
-    let articleId: String
     let articleUrl: URL
     let title: String
     let source: String
-    let sourceLogo: ImageWrapper
+    let sourceLogo: ImageWrapper?
 
     // Processed Variables
+    var articleId: String
     var publishDate: Date?
     var audioUrl: URL?
     var content: String?
-    var topImage: ImageWrapper
+    var topImage: ImageWrapper?
 
     init(response: [String: String]) {
-        articleId = response["articleId"]!
-        articleUrl = Article.getUrl(from: response["articleUrl"])!
+        articleId = response["articleId"] ?? ""
+        articleUrl = URL(string: response["articleUrl"])!
         title = response["title"]!
         source = articleUrl.host!
         sourceLogo = ImageWrapper(url: URL(string: "https://logo.clearbit.com/" + source))
         
         publishDate = convertDate(fromISO: response["publishDate"])
-        audioUrl = Article.getUrl(from: response["audioUrl"])
+        audioUrl = URL(string: response["audioUrl"])
         content = response["content"]
-        topImage = ImageWrapper(url: Article.getUrl(from: response["topImage"]))
-    }
-    
-    static let LogoPath = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("logos")
-    
-    static private func getUrl(from responseUrl:String?) -> URL? {
-        if let url = responseUrl {
-            return URL(string: url)
-        }
-        return nil;
+        topImage = ImageWrapper(url: URL(string: response["topImage"]))
     }
     
     static func == (lhs: Article, rhs: Article) -> Bool {
-        return lhs.articleId == rhs.articleId
+        if lhs.articleId != "" && rhs.articleId != "" {
+            return lhs.articleId == rhs.articleId
+        } else {
+            return lhs.articleUrl == rhs.articleUrl
+        }
     }
 }
 
-struct ImageWrapper: Codable {
-    let url: URL?
-    private(set) var path: URL?
-    var image: UIImage? {
-        get {
-            if let path = path, let data = try? Data(contentsOf: path) {
-                return UIImage(data: data)
-            }
-            return nil
+extension URL {
+    init?(string: String?) {
+        if let url = string {
+            self = URL(string: url)!
         }
-    }
-    
-    init(url: URL?) {
-        self.url = url
-        self.path = nil
-        if let url = url {
-            let path = documentURL.appendingPathComponent(String(url.hashValue))
-            print(path)
-            if !FileManager.default.fileExists(atPath: path.absoluteString) {
-                let data = try? Data(contentsOf: url)
-                do {
-                    try data!.write(to: path)
-                    self.path = path
-                } catch {
-                    print("storing image failed: \(error)")
-                }
-            }
-        }
+        return nil
     }
 }
 
@@ -90,29 +63,4 @@ extension Date {
         }
     }
 }
-
-let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-let ArchiveURL = FileManager().containerURL(forSecurityApplicationGroupIdentifier: "group.com.Milli1.Milli1")!.appendingPathComponent("articles")
-
-func archive(articles: [Article]) {
-    do {
-        let jsonData = try JSONEncoder().encode(articles)
-        try jsonData.write(to: ArchiveURL)
-    } catch {
-        print("archiving failed!")
-    }
-    
-}
-
-func unarchiveArticles() -> [Article]? {
-    do {
-        let data = try Data(contentsOf: ArchiveURL)
-        let articles = try? JSONDecoder().decode([Article].self, from: data)
-        return articles
-    } catch {
-        print("loading failed")
-    }
-    return nil
-}
-
 

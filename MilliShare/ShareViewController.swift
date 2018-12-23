@@ -29,19 +29,27 @@ class ShareViewController: UIViewController {
     
     
     func shareArticle() {
-        let item = self.extensionContext?.inputItems.first as! NSExtensionItem
-        let itemProvider = item.attachments?.first as! NSItemProvider
-        let propertyList = String(kUTTypePropertyList)
+        guard let item = self.extensionContext?.inputItems.first as? NSExtensionItem else { return }
+        guard let itemProvider = item.attachments?.first else { return }
         
-        if itemProvider.hasItemConformingToTypeIdentifier(propertyList) {
-            itemProvider.loadItem(forTypeIdentifier: propertyList) {(item, _) -> Void in
-                if let processedResults = item as? NSDictionary, let article = processedResults[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary {
-                    var articleBuffer = getShareBuffer()
-                    articleBuffer.append(article)
-                    setShareBuffer(with: articleBuffer)
+        if itemProvider.hasItemConformingToTypeIdentifier(kUTTypePropertyList as String) {
+            itemProvider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) { item, _ in
+                if let response = item as? NSDictionary, let article = response[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary {
+                    self.shareArticle(article: article)
+                }
+            }
+        } else if itemProvider.hasItemConformingToTypeIdentifier("public.url") {
+            itemProvider.loadItem(forTypeIdentifier: "public.url") { item, _ in
+                if let url = item as? URL {
+                    self.shareArticle(article: ["articleUrl": url.absoluteString])
                 }
             }
         }
+    }
+    
+    func shareArticle(article: NSDictionary) {
+        shareBuffer += [article]
+        AWSClient.addArticle(rawArticle: article, completion: nil)
     }
     
     func setUpDialog() {
