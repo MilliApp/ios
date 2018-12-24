@@ -32,14 +32,3 @@ func convertSecondsToTimeFormat(time: Int64) -> String {
     
     return res
 }
-
-func convertDate(fromISO date:String?) -> Date? {
-    if let dateStr = date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-        return dateFormatter.date(from:String(dateStr.prefix(19)))
-    }
-    return nil
-    
-}

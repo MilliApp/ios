@@ -48,7 +48,7 @@ class ControlViewController: UIViewController {
         
         // Set audio rate using snapped value
         let currentArticleAudioPlayer = ArticleAudioPlayerManager.getCurrentArticleAudioPlayer()
-        currentArticleAudioPlayer.setRate(rate: snappedValue)
+        currentArticleAudioPlayer.rate = snappedValue
     }
     
 }

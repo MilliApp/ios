@@ -29,7 +29,7 @@ class Article: Codable, Equatable {
         source = articleUrl.host!
         sourceLogo = ImageWrapper(url: URL(string: "https://logo.clearbit.com/" + source))
         
-        publishDate = convertDate(fromISO: response["publishDate"])
+        publishDate = Date(iso: response["publishDate"])
         audioUrl = URL(string: response["audioUrl"])
         content = response["content"]
         topImage = ImageWrapper(url: URL(string: response["topImage"]))
@@ -48,19 +48,29 @@ extension URL {
     init?(string: String?) {
         if let url = string {
             self = URL(string: url)!
+        } else {
+            return nil
         }
-        return nil
     }
 }
 
 extension Date {
-    var string: String {
-        get {
-            let formatter = DateFormatter()
-            // initially set the format based on your datepicker date
-            formatter.dateFormat = "dd-MMM-yyyy"
-            return formatter.string(from: self)
+    init?(iso: String?) {
+        guard let dateStr = iso else { return nil }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        if let date = dateFormatter.date(from:String(dateStr.prefix(19))) {
+            self = date
+        } else {
+            return nil
         }
+    }
+    var string: String {
+        let formatter = DateFormatter()
+        // initially set the format based on your datepicker date
+        formatter.dateFormat = "dd-MMM-yyyy"
+        return formatter.string(from: self)
     }
 }
 
