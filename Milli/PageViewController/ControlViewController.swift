@@ -47,7 +47,7 @@ class ControlViewController: UIViewController {
         slider.setValue(snappedValue, animated: true)
         
         // Set audio rate using snapped value
-        let currentArticleAudioPlayer = ArticleAudioPlayerManager.getCurrentArticleAudioPlayer()
+        let currentArticleAudioPlayer = ArticleManager.currentArticle!.audioPlayer!.player!
         currentArticleAudioPlayer.rate = snappedValue
     }
     

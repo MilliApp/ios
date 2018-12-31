@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import AVFoundation
 
 class Article: Codable, Equatable {
     // Basic Variables
@@ -18,9 +19,10 @@ class Article: Codable, Equatable {
     // Processed Variables
     var articleId: String
     var publishDate: Date?
-    var audioUrl: URL?
+    var invalid: Bool = false
     var content: String?
     var topImage: ImageWrapper?
+    var audioPlayer: AudioWrapper?
 
     init(response: [String: String]) {
         articleId = response["articleId"] ?? ""
@@ -30,9 +32,9 @@ class Article: Codable, Equatable {
         sourceLogo = ImageWrapper(url: URL(string: "https://logo.clearbit.com/" + source))
         
         publishDate = Date(iso: response["publishDate"])
-        audioUrl = URL(string: response["audioUrl"])
         content = response["content"]
         topImage = ImageWrapper(url: URL(string: response["topImage"]))
+        audioPlayer = AudioWrapper(url: URL(string: response["audioUrl"]))
     }
     
     static func == (lhs: Article, rhs: Article) -> Bool {
@@ -41,6 +43,12 @@ class Article: Codable, Equatable {
         } else {
             return lhs.articleUrl == rhs.articleUrl
         }
+    }
+}
+
+extension AVAudioPlayer {
+    var progress: Double {
+        return (duration != 0) ? currentTime / duration : 0.0
     }
 }
 

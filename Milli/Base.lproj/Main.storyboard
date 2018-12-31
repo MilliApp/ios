@@ -21,7 +21,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-Sy-kmT">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="jSC-dC-526">
+                                <view key="tableFooterView" contentMode="scaleToFill" id="2t6-W2-bVZ">
                                     <rect key="frame" x="0.0" y="118" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -102,20 +102,21 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                 </prototypes>
                             </tableView>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gpa-5x-FiF">
-                                <rect key="frame" x="0.0" y="556" width="375" height="47"/>
+                                <rect key="frame" x="0.0" y="557" width="375" height="46"/>
                                 <subviews>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DVv-6P-W6N">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="DVv-6P-W6N">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <color key="progressTintColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </progressView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-app" translatesAutoresizingMaskIntoConstraints="NO" id="ZAH-y1-583">
-                                        <rect key="frame" x="0.0" y="2" width="45" height="45"/>
+                                        <rect key="frame" x="0.0" y="1" width="45" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ZAH-y1-583" secondAttribute="height" multiplier="1:1" id="1ZO-qE-tly"/>
                                             <constraint firstAttribute="height" constant="45" id="Jb4-mJ-A8H"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3q-sX-Dgu">
-                                        <rect key="frame" x="338" y="12" width="21" height="22"/>
+                                        <rect key="frame" x="339" y="12" width="20" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="m3q-sX-Dgu" secondAttribute="height" multiplier="20:21" id="ALC-Cd-5zo"/>
                                         </constraints>
@@ -134,10 +135,10 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="YyG-cQ-awH">
-                                        <rect key="frame" x="123" y="12" width="129" height="23"/>
+                                        <rect key="frame" x="124.5" y="12" width="126" height="22"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3t3-YX-gv2">
-                                                <rect key="frame" x="0.0" y="0.0" width="23" height="23"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="22" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="3t3-YX-gv2" secondAttribute="height" multiplier="1:1" id="z4z-9N-3rT"/>
                                                 </constraints>
@@ -147,7 +148,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jSz-9E-iCR">
-                                                <rect key="frame" x="53" y="0.0" width="23" height="23"/>
+                                                <rect key="frame" x="52" y="0.0" width="22" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="jSz-9E-iCR" secondAttribute="height" multiplier="1:1" id="hbr-lF-EBH"/>
                                                 </constraints>
@@ -159,7 +160,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Mo-LP-Wxk">
-                                                <rect key="frame" x="106" y="0.0" width="23" height="23"/>
+                                                <rect key="frame" x="104" y="0.0" width="22" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="1Mo-LP-Wxk" secondAttribute="height" multiplier="1:1" id="oiA-XX-W6b"/>
                                                 </constraints>
@@ -188,7 +189,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                     <constraint firstItem="1Bw-ZD-Vxl" firstAttribute="top" secondItem="DVv-6P-W6N" secondAttribute="bottom" constant="2" id="bwz-gU-BF6"/>
                                     <constraint firstItem="DVv-6P-W6N" firstAttribute="leading" secondItem="Gpa-5x-FiF" secondAttribute="leading" id="hwh-Ye-d1R"/>
                                     <constraint firstItem="YyG-cQ-awH" firstAttribute="centerX" secondItem="Gpa-5x-FiF" secondAttribute="centerX" id="mYK-hp-5zD"/>
-                                    <constraint firstAttribute="height" constant="47" id="pw7-bn-NTc"/>
+                                    <constraint firstAttribute="height" constant="46" id="pw7-bn-NTc"/>
                                     <constraint firstAttribute="trailing" secondItem="m3q-sX-Dgu" secondAttribute="trailing" constant="16" id="sad-Zn-2Au"/>
                                     <constraint firstItem="DVv-6P-W6N" firstAttribute="top" secondItem="Gpa-5x-FiF" secondAttribute="top" id="sjd-7m-uwv"/>
                                     <constraint firstItem="m3q-sX-Dgu" firstAttribute="top" secondItem="DVv-6P-W6N" secondAttribute="bottom" constant="12" id="xB0-rM-Bvu"/>

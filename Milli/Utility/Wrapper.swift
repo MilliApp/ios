@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class Wrapper: Codable {
+class Wrapper: Codable, Hashable, Equatable {
     fileprivate let url: URL
     fileprivate var path: URL {
         return documentURL.appendingPathComponent(String(url.hashValue))
@@ -28,6 +28,14 @@ class Wrapper: Codable {
             }
         }
     }
+    
+    static func == (lhs: Wrapper, rhs: Wrapper) -> Bool {
+        return lhs.url == rhs.url
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(url)
+    }
 }
 
 class ImageWrapper: Wrapper {
@@ -43,16 +51,15 @@ class ImageWrapper: Wrapper {
     }
 }
 
-//class AudioWrapper: Wrapper {
-//    var player: ArticleAudioPlayer? {
-//        if let articleAudioPlayer = Globals.articleIdAudioPlayers[url.absoluteString] {
-//            return articleAudioPlayer
-//        } else if let data = try? Data(contentsOf: path){
-//            guard let audioPlayer = try? AVAudioPlayer(data: data) else { return nil }
-//            let articleAudioPlayer = 
-//            Globals.articleIdAudioPlayers[url.absoluteString] = audioPlayer
-//            return audioPlayer
-//        }
-//        return nil
-//    }
-//}
+class AudioWrapper: Wrapper {
+    var player: AVAudioPlayer? {
+        if let articleAudioPlayer = ArticleManager.audioCache[self] {
+            return articleAudioPlayer
+        } else if let data = try? Data(contentsOf: path){
+            guard let audioPlayer = try? AVAudioPlayer(data: data) else { return nil }
+            ArticleManager.audioCache[self] = audioPlayer
+            return audioPlayer
+        }
+        return nil
+    }
+}

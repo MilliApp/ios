@@ -40,6 +40,6 @@ func putArticleInModel(article: Article) {
     } else {
         articleArray.insert(article, at: 0)
     }
-    Globals.articles = articleArray
+    ArticleManager.articles = articleArray
     archive(articles: articleArray)
 }

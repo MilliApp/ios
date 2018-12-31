@@ -23,7 +23,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Setting initial variables
     private let tagID = "[HOME_VIEW_CONTROLLER]"
-    private var userDefaults = UserDefaults(suiteName: "group.com.Milli4.Milli4")
     private var remoteTransportControlsSetUp = false
     
     var pullUpViewController = ArticleViewController()
@@ -31,6 +30,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var pullUpViewCollapseY = CGFloat()
     var pullUpViewExpandY = CGFloat()
     var pullUpViewHeight = CGFloat()
+    
+    var playbackTimer = Timer()
+    private let refreshControl = UIRefreshControl()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +59,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         loadArticles()
         
         // Cell formatting
-        Globals.mainTableView = self.tableView
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         self.tableView.allowsMultipleSelectionDuringEditing = false
         self.tableView.estimatedRowHeight = 80
@@ -65,16 +67,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
         mediaBarView.addGestureRecognizer(gesture)
         
-        if articleExists() {
-            addPullUpView()
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
         }
-        
+        refreshControl.addTarget(self, action: #selector(refreshArticles(_:)), for: .valueChanged)
+
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.applicationDidBecomeActive(_:)),
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
+    }
+    
+    @objc private func refreshArticles(_ sender: Any) {
+        loadArticles()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -99,7 +110,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func addPullUpView() {
         // 1- Init pullUpViewController
         pullUpViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ArticleViewController") as! ArticleViewController
-        pullUpViewController.articleURL = getCurrentArticle()!.articleUrl.absoluteString
+        pullUpViewController.articleURL = ArticleManager.currentArticle!.articleUrl.absoluteString
         
         // 2- Add pullUpViewController as a child view
         self.addChild(pullUpViewController)
@@ -157,14 +168,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         shareBuffer = []
         
-        Globals.articles = unarchiveArticles() ?? [Article]() // Set global array - only needs to be set on add or delete
-        self.tableView.reloadData()
+        ArticleManager.articles = unarchiveArticles() ?? [Article]() // Set global array - only needs to be set on add or delete
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableViewCell", for: indexPath) as! MainTableViewCell
-        let article = Globals.articles[indexPath.row]
-        
+        let article = ArticleManager.articles[indexPath.row]
+        // TODO: show warning on invalid articles
         // Configure the cell...
         cell.articleTitle.text = article.title
         let dateStr = article.publishDate?.string ?? "No Date"
@@ -177,14 +192,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Globals.articles.count
+        return ArticleManager.articles.count
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            Globals.articles.remove(at: indexPath.row)
-            archive(articles: Globals.articles.reversed())
+            ArticleManager.articles.remove(at: indexPath.row)
+            archive(articles: ArticleManager.articles.reversed())
             tableView.deleteRows(at: [indexPath], with: .fade)
             self.tableView.reloadData()
         } else if editingStyle == .insert {
@@ -192,18 +207,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    // Return string conveying current time out of total time
-    // i.e. mm:ss/mm:ss
-    private func getTimeString(current:Int64, total:Int64) -> String {
-        let total_str = convertSecondsToTimeFormat(time:total)
-        let current_str = convertSecondsToTimeFormat(time: current)
-        let res = "(" + current_str + "/" + total_str + ")"
-        return res
-    }
-    
-    func updateProgress(time: CMTime) -> Void {
+    func updateProgress() {
+        print("updaitng progress")
         if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
             // Set progress bar
+            
             mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress), animated: true)
             
             // Set time label on media panel
@@ -212,55 +220,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: timeLeft))
             
             // Set progress string in article row
-            let indexPath = IndexPath(row: Globals.currentArticleIdx, section: 0)
+            let indexPath = IndexPath(row: ArticleManager.currentArticleIdx, section: 0)
             let cell = tableView.cellForRow(at: indexPath) as! MainTableViewCell
             
             cell.articleInfo.text = "\(timeLeft / 60) of \(Int64(currentArticleAudioPlayer.duration) / 60) min remaining"
         }
     }
     
-    private func getCurrentArticleAudioPlayer() -> ArticleAudioPlayer? {
-        if let article = getCurrentArticle() {
-            let articleID = article.articleId
-            // Initialize current ArticleAudioPlayer if it doesn't exist
-            if Globals.articleIdAudioPlayers[articleID] == nil {
-                // Attach periodic time observer
-                Globals.articleIdAudioPlayers[articleID] = ArticleAudioPlayer(article: article, callback: updateProgress)
-            }
-            return Globals.articleIdAudioPlayers[articleID]!
-        }
-        return nil
-    }
-    
-    private func articleExists() -> Bool {
-        return Globals.articles.count != 0
-    }
-    
-    private func getCurrentArticle() -> Article? {
-        if articleExists() {
-            return Globals.articles[Globals.currentArticleIdx]
-        }
-        return nil
+    private func getCurrentArticleAudioPlayer() -> AVAudioPlayer? {
+        return ArticleManager.currentArticle?.audioPlayer?.player
     }
     
     private func playSelectedArticleAudio(orPause: Bool = false) {
         if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
             // PlayPause vs. just Play
-            if orPause {
-                currentArticleAudioPlayer.togglePlayPause()
+            if currentArticleAudioPlayer.isPlaying {
+                playbackTimer.invalidate()
+                currentArticleAudioPlayer.pause()
+                playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
+                
             } else {
                 currentArticleAudioPlayer.play()
-            }
-            
-            // Assign Play/Pause image based off audio player status
-            if currentArticleAudioPlayer.isPlaying {
+                playbackTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                    self.updateProgress()
+                }
                 playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
-            } else {
-                playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
             }
             
             // Set media bar article logo image
-            mediaBarImage.image = getCurrentArticle()?.sourceLogo?.image ?? UIImage()
+            mediaBarImage.image = ArticleManager.currentArticle?.sourceLogo?.image ?? UIImage()
             updateNowPlayingInfo()
         }
     }
@@ -269,16 +257,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         print_debug(tagID, message: "didSelectRowAt \(indexPath.row)")
         if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
             // If new article is selected, pause old article if it is playing
-            if Globals.currentArticleIdx != indexPath.row && currentArticleAudioPlayer.isPlaying {
+            if ArticleManager.currentArticleIdx != indexPath.row && currentArticleAudioPlayer.isPlaying {
                 print_debug(tagID, message: "Pause previous article")
-                currentArticleAudioPlayer.togglePlayPause()
+                currentArticleAudioPlayer.pause()
+                playbackTimer.invalidate()
             }
             
             // Play newly selected article
             print_debug(tagID, message: "Play current article")
-            Globals.currentArticleIdx = indexPath.row
+            ArticleManager.currentArticleIdx = indexPath.row
             playSelectedArticleAudio()
             setupRemoteTransportControls()
+        } else {
+            ArticleManager.checkForAudioUrls()
         }
     }
     
@@ -290,14 +281,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func rewindPressed(_ sender: Any) {
         print_debug(tagID, message: "Rewind pressed")
         if let articleAudioPlayer = getCurrentArticleAudioPlayer() {
-            articleAudioPlayer.seek(to: -30, completion: updateNowPlayingInfo)
+            articleAudioPlayer.currentTime -= 30
+            updateNowPlayingInfo()
+            playbackTimer.fire()
         }
     }
     
     @IBAction func forwardPressed(_ sender: Any) {
         print_debug(tagID, message: "Forward pressed")
         if let articleAudioPlayer = getCurrentArticleAudioPlayer() {
-            articleAudioPlayer.seek(to: 30, completion: updateNowPlayingInfo)
+            articleAudioPlayer.currentTime += 30
+            updateNowPlayingInfo()
+            playbackTimer.fire()
         }
     }
     
@@ -313,12 +308,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? PullUpViewController {
             // Pass on current playing article URL
-            vc.articleURL = getCurrentArticle()!.articleUrl.absoluteString
+            vc.articleURL = ArticleManager.currentArticle!.articleUrl.absoluteString
         }
     }
     
     private func updateNowPlayingInfo() {
-        if let currentArticle = getCurrentArticle() {
+        if let currentArticle = ArticleManager.currentArticle {
             let currentArticleAudioPlayer = getCurrentArticleAudioPlayer()!
             let image = currentArticle.sourceLogo?.image?.size ?? CGSize(width: 64, height: 64)
             MPNowPlayingInfoCenter.default().nowPlayingInfo = [

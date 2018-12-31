@@ -32,3 +32,12 @@ func convertSecondsToTimeFormat(time: Int64) -> String {
     
     return res
 }
+
+// Return string conveying current time out of total time
+// i.e. mm:ss/mm:ss
+func getTimeString(current:Int64, total:Int64) -> String {
+    let total_str = convertSecondsToTimeFormat(time:total)
+    let current_str = convertSecondsToTimeFormat(time: current)
+    let res = "(" + current_str + "/" + total_str + ")"
+    return res
+}
