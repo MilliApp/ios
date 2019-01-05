@@ -16,10 +16,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var tableView: UITableView!
     @IBOutlet var mediaBarView: UIView!
     @IBOutlet var mediaBarImage: UIImageView!
-    @IBOutlet var timeLabel: UILabel!
     @IBOutlet var playPauseButton: UIButton!
     @IBOutlet var mediaBarProgressView: UIProgressView!
-    @IBOutlet var expandCollapseButton: UIButton!
     
     // Setting initial variables
     private let tagID = "[HOME_VIEW_CONTROLLER]"
@@ -85,12 +83,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @objc private func refreshArticles(_ sender: Any) {
         loadArticles()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //        addPullUpView()
+//        addPullUpView()
     }
     
     @objc func panGesture(recognizer: UIPanGestureRecognizer) {
@@ -133,7 +130,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.pullUpViewController.view.frame = CGRect(x: 0, y: self.pullUpViewExpandY, width: frame.width, height: frame.height)
         })
         pullUpViewHidden = false
-        expandCollapseButton.setImage(UIImage(named: "expand-arrow-filled-50"), for: .normal)
+//        expandCollapseButton.setImage(UIImage(named: "expand-arrow-filled-50"), for: .normal)
     }
     
     func hidePullUpView() {
@@ -142,7 +139,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.pullUpViewController.view.frame = CGRect(x: 0, y: self.pullUpViewCollapseY, width: frame.width, height: frame.height)
         })
         pullUpViewHidden = true
-        expandCollapseButton.setImage(UIImage(named: "collapse-arrow-filled-50"), for: .normal)
+//        expandCollapseButton.setImage(UIImage(named: "collapse-arrow-filled-50"), for: .normal)
     }
     
     @objc func applicationDidBecomeActive(_ notification: NSNotification) {
@@ -217,7 +214,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             // Set time label on media panel
             let timeLeft = Int64(currentArticleAudioPlayer.duration - currentArticleAudioPlayer.currentTime)
             
-            timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: timeLeft))
+//            timeLabel.text = "-" + String(convertSecondsToTimeFormat(time: timeLeft))
             
             // Set progress string in article row
             let indexPath = IndexPath(row: ArticleManager.currentArticleIdx, section: 0)
@@ -293,15 +290,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             articleAudioPlayer.currentTime += 30
             updateNowPlayingInfo()
             playbackTimer.fire()
-        }
-    }
-    
-    @IBAction func expandCollapsePressed(_ sender: Any) {
-        print_debug(tagID, message: "Expand collapse pressed")
-        if (pullUpViewHidden) {
-            showPullUpView()
-        } else {
-            hidePullUpView()
         }
     }
     

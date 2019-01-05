@@ -115,27 +115,8 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                             <constraint firstAttribute="height" constant="45" id="Jb4-mJ-A8H"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3q-sX-Dgu">
-                                        <rect key="frame" x="339" y="12" width="20" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="m3q-sX-Dgu" secondAttribute="height" multiplier="20:21" id="ALC-Cd-5zo"/>
-                                        </constraints>
-                                        <state key="normal" title="Expand Button" image="collapse-arrow-filled-50"/>
-                                        <connections>
-                                            <action selector="expandCollapsePressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="NKp-g5-xaY"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bw-ZD-Vxl">
-                                        <rect key="frame" x="53" y="2" width="32" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="Rei-9f-cq0"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.57248467209999998" green="0.57258617879999996" blue="0.57247823480000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="YyG-cQ-awH">
-                                        <rect key="frame" x="124.5" y="12" width="126" height="22"/>
+                                        <rect key="frame" x="241.5" y="12" width="126" height="22"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3t3-YX-gv2">
                                                 <rect key="frame" x="0.0" y="0.0" width="22" height="22"/>
@@ -174,25 +155,16 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                 </subviews>
                                 <color key="backgroundColor" red="0.97638529539999996" green="0.97652524709999999" blue="0.97635465860000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="m3q-sX-Dgu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YyG-cQ-awH" secondAttribute="trailing" constant="8" symbolic="YES" id="2Q3-FA-N6V"/>
-                                    <constraint firstItem="YyG-cQ-awH" firstAttribute="centerX" secondItem="Gpa-5x-FiF" secondAttribute="centerX" id="89u-fK-s1w"/>
                                     <constraint firstAttribute="trailing" secondItem="DVv-6P-W6N" secondAttribute="trailing" id="8og-RX-aJS"/>
                                     <constraint firstItem="YyG-cQ-awH" firstAttribute="centerY" secondItem="Gpa-5x-FiF" secondAttribute="centerY" id="Eh2-pP-Ega"/>
                                     <constraint firstAttribute="bottom" secondItem="ZAH-y1-583" secondAttribute="bottom" id="Gau-im-8rv"/>
+                                    <constraint firstAttribute="trailing" secondItem="YyG-cQ-awH" secondAttribute="trailing" constant="7.5" id="H0G-IK-iNe"/>
                                     <constraint firstItem="YyG-cQ-awH" firstAttribute="top" secondItem="DVv-6P-W6N" secondAttribute="bottom" constant="12" id="KV2-2l-H3J"/>
-                                    <constraint firstItem="YyG-cQ-awH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1Bw-ZD-Vxl" secondAttribute="trailing" constant="8" symbolic="YES" id="L6K-ZS-WNY"/>
-                                    <constraint firstItem="1Bw-ZD-Vxl" firstAttribute="leading" secondItem="ZAH-y1-583" secondAttribute="trailing" constant="8" id="Q1Z-NQ-6kk"/>
                                     <constraint firstAttribute="bottom" secondItem="YyG-cQ-awH" secondAttribute="bottom" constant="12" id="Vdc-8g-bVn"/>
-                                    <constraint firstAttribute="trailing" secondItem="m3q-sX-Dgu" secondAttribute="trailing" constant="16" id="Vsf-f0-cWe"/>
                                     <constraint firstItem="ZAH-y1-583" firstAttribute="leading" secondItem="Gpa-5x-FiF" secondAttribute="leading" id="WSS-N4-mzl"/>
-                                    <constraint firstAttribute="bottom" secondItem="m3q-sX-Dgu" secondAttribute="bottom" constant="13" id="Xl5-9b-iGj"/>
-                                    <constraint firstItem="1Bw-ZD-Vxl" firstAttribute="top" secondItem="DVv-6P-W6N" secondAttribute="bottom" constant="2" id="bwz-gU-BF6"/>
                                     <constraint firstItem="DVv-6P-W6N" firstAttribute="leading" secondItem="Gpa-5x-FiF" secondAttribute="leading" id="hwh-Ye-d1R"/>
-                                    <constraint firstItem="YyG-cQ-awH" firstAttribute="centerX" secondItem="Gpa-5x-FiF" secondAttribute="centerX" id="mYK-hp-5zD"/>
                                     <constraint firstAttribute="height" constant="46" id="pw7-bn-NTc"/>
-                                    <constraint firstAttribute="trailing" secondItem="m3q-sX-Dgu" secondAttribute="trailing" constant="16" id="sad-Zn-2Au"/>
                                     <constraint firstItem="DVv-6P-W6N" firstAttribute="top" secondItem="Gpa-5x-FiF" secondAttribute="top" id="sjd-7m-uwv"/>
-                                    <constraint firstItem="m3q-sX-Dgu" firstAttribute="top" secondItem="DVv-6P-W6N" secondAttribute="bottom" constant="12" id="xB0-rM-Bvu"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -210,13 +182,11 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                     </view>
                     <navigationItem key="navigationItem" id="m3L-kf-5GV"/>
                     <connections>
-                        <outlet property="expandCollapseButton" destination="m3q-sX-Dgu" id="tSS-Xb-i4e"/>
                         <outlet property="mediaBarImage" destination="ZAH-y1-583" id="b4R-YL-8cQ"/>
                         <outlet property="mediaBarProgressView" destination="DVv-6P-W6N" id="2QC-32-rck"/>
                         <outlet property="mediaBarView" destination="Gpa-5x-FiF" id="2KT-89-AWX"/>
                         <outlet property="playPauseButton" destination="jSz-9E-iCR" id="54q-iu-YCi"/>
                         <outlet property="tableView" destination="T9w-Sy-kmT" id="9sy-Es-ckf"/>
-                        <outlet property="timeLabel" destination="1Bw-ZD-Vxl" id="WCa-Wy-MX2"/>
                         <outlet property="view" destination="zE7-LD-udM" id="vp0-d3-Ams"/>
                         <segue destination="d6y-WC-7i5" kind="custom" identifier="articleDetailPageSegue" customClass="DeckSegue" customModule="DeckTransition" id="59t-uU-Igb"/>
                         <segue destination="9LS-ih-9pH" kind="custom" identifier="pullUpSegue" customClass="DeckSegue" customModule="DeckTransition" id="fVr-8G-s38"/>
@@ -253,7 +223,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                         <viewLayoutGuide key="safeArea" id="I6i-vZ-tzp"/>
                     </view>
                     <connections>
-                        <outlet property="webView" destination="hvX-43-RCo" id="Mw9-oQ-IDg"/>
+                        <outlet property="webView" destination="hvX-43-RCo" id="luJ-yH-Oly"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PUP-SY-g4d" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -403,7 +373,6 @@ Let’s say for a moment that you want to become a successful mixed martial arts
         <image name="Fast Forward Filled-50" width="100" height="100"/>
         <image name="Play Filled-50" width="100" height="100"/>
         <image name="Rewind Filled-50" width="100" height="100"/>
-        <image name="collapse-arrow-filled-50" width="75" height="75"/>
         <image name="icon-app" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
