@@ -7,114 +7,65 @@
 //
 
 import Foundation
-import UIKit
 
 class AWSClient {
     
-    static let tagID = "[AWS_CLIENT]"
+    private static let tagID = "[AWS_CLIENT]"
+    private static let API_URL = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio"
     
-    class func getArticleAudioMeta(article:Article) {
-        print_debug(tagID, message: "[GET_ARTICLE_AUDIO_META] Loading Audio URL...")
-        
-        let articleMetaURL = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio?articleId=" + article.articleId
-        var request = URLRequest(url: URL(string: articleMetaURL)!)
+    class func getArticles(articles: [Article], completion: (() -> ())?) {
+        let articleIds = articles.filter{ !$0.invalid }.map{ $0.articleId }
+        let requestString = "\(API_URL)?articleId=\(articleIds.joined(separator: ","))"
+        var request = URLRequest(url: URL(string: requestString)!)
         request.httpMethod = "GET"
         
-        // Execute HTTP Request
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {data, response, error  in
-            // Check for error
-            if error != nil {
-                print("error=\(String(describing: error))")
-                return
-            }
-            
-            let str = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-            print_debug(tagID, message: str as String)
-            
-            do {
-                if let convertedJsonIntoDict = try JSONSerialization.jsonObject(with: data!, options: []) as? [NSDictionary] {
-                    print(convertedJsonIntoDict)
-                    //TODO(chwang): ask alex to change this endpoint to return just single JSON object instead of array of one object
-                    if let audioURL = convertedJsonIntoDict[0]["url"] as? String {
-                        article.audioURL = audioURL
-                        print_debug(tagID, message: "[GET_ARTICLE_AUDIO_META] Article AudioURL retrieved: " + article.audioURL!)
+        dataTask(with: request) { response in
+            if let response = try? JSONSerialization.jsonObject(with: response, options: []) as! [[String: String]] {
+                let articleSequence = response.compactMap { $0["articleId"] != nil ? ($0["articleId"]!, $0) : nil }
+                let articleDictionary = Dictionary(uniqueKeysWithValues: articleSequence)
+                
+                for article in articles {
+                    if let resp = articleDictionary[article.articleId] {
+                        article.audioPlayer = AudioWrapper(url: URL(string: resp["audioUrl"]))
                     } else {
-                        print_debug(tagID, message: "[GET_ARTICLE_AUDIO_META] Audio URL not ready yet on backend...")
+                        article.invalid = true
                     }
-//                    getArticleAudio(article: article)
                 }
-            } catch let error as NSError {
-                print(error.localizedDescription)
+                completion?()
             }
-        })
-        task.resume()
+        }
     }
     
-    class func addArticle(data: NSDictionary, tableView:UITableView) {
-        guard let url = data["url"] as? String else {
-            print("[data doesn't contain url]", data)
-            return
-        }
-        print_debug(tagID, message: "[ADDING ARTICLE] \(url)")
-
-        var request = URLRequest(url: handleArticleEndpoint(url))
+    class func addArticle(rawArticle: NSDictionary, completion: (() -> ())?) {
+        print("grabbing article: \(rawArticle["articleUrl"] as! String)")
+        
+        // TODO: Add validation for all keys in data
+        var request = URLRequest(url: URL(string: API_URL)!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONSerialization.data(withJSONObject: data)
+        request.httpBody = try? JSONSerialization.data(withJSONObject: rawArticle)
         
-        // Execute HTTP Request
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: {data, response, error in
-            do {
-                if let response = try JSONSerialization.jsonObject(with: (data!), options: []) as? [String: Any] {
-                    let article = Article(url: url, response: response)
-                    getArticleAudioMeta(article: article)
-                    
-                    // Loading from stored data
-                    var articleArray = [Article]()
-                    if let storedArray = loadArticles() {
-                        articleArray = storedArray
-                    }
-                    
-                    // Add new article to it
-                    articleArray.append(article)
-                    Globals.articles.insert(article, at: 0)
-                    
-                    // Update the stored array
-                    saveArticles(articleArray: articleArray)
-                    print_debug(tagID, message: "Done saving new article.")
-                    
-                    DispatchQueue.main.async {
-                        print_debug(tagID, message: "Dispatch TableView reload.")
-                        tableView.reloadData()
-                    }
-                }
-            } catch let error as NSError {
-                print(error.localizedDescription)
+        dataTask(with: request) { response in
+            if let response = try? JSONSerialization.jsonObject(with: response, options: []) as! [String: String] {
+                let article = Article(response: response)
+                putArticleInModel(article: article)
+                completion?()
             }
             
-        })
-        task.resume()
-    }
-    
-    class func handleArticleEndpoint(_ url: String) -> URL {
-        let BASE_URL = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/"
-        let ENV = "dev/"
-        if hasPaywall(url) {
-            return URL(string: BASE_URL + ENV + "raw-html")!
-        } else {
-            return URL(string: BASE_URL + ENV + "audio")!
         }
     }
     
-    class func hasPaywall(_ url: String) -> Bool {
-        let paywalls = ["wsj", "nytimes", "economist"]
-        for paywall in paywalls {
-            if url.range(of: paywall + ".com") != nil {
-                return true
+    private class func dataTask(with request: URLRequest, completion: @escaping (Data) -> ()) {
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: request) { data, resp, err in
+            if let error = err {
+                print("dataTask(request:\(request), completion:\(completion)) had an error: \(error) ")
+            } else {
+                if let json = data {
+                    completion(json)
+                }
             }
         }
-        return false
+        task.resume()
     }
-    
-    
 }

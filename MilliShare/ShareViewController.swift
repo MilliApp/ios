@@ -10,43 +10,64 @@ import UIKit
 import Social
 import MobileCoreServices
 
-class ShareViewController: SLComposeServiceViewController {
+class ShareViewController: UIViewController {
+    @IBOutlet weak var savedDialog: UIView!
     
-    let tagID = "[SHARE_VIEW_CONTROLLER]"
-    
-    override func didSelectPost() {
-        print(tagID, "didSelectPost...")
-        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-    }
-    
-    override func configurationItems() -> [Any]! {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpDialog()
         shareArticle()
-        sleep(3)
-        return []
-    }
-    
-    func shareArticle() {
-        let item = self.extensionContext?.inputItems.first as! NSExtensionItem
-        let itemProvider = item.attachments?.first as! NSItemProvider
-        let propertyList = String(kUTTypePropertyList)
         
-        if !itemProvider.hasItemConformingToTypeIdentifier(propertyList) {
-            return
-        }
-        
-        itemProvider.loadItem(forTypeIdentifier: propertyList, completionHandler: {(item, error) -> Void in
-            
-            guard let processedResults = item as? NSDictionary else { return }
-            OperationQueue.main.addOperation {
-                if let article = processedResults[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary {
-                    var articleBuffer = getShareBuffer()
-                    articleBuffer.append(article)
-                    setShareBuffer(with: articleBuffer)
-                    
-                    self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-                }
-            }
+        _ = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { _ in
+            self.complete()
         })
     }
+    
+    func complete() {
+        self.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+    }
+    
+    
+    func shareArticle() {
+        guard let item = self.extensionContext?.inputItems.first as? NSExtensionItem else { return }
+        guard let itemProvider = item.attachments?.first else { return }
+        
+        if itemProvider.hasItemConformingToTypeIdentifier(kUTTypePropertyList as String) {
+            itemProvider.loadItem(forTypeIdentifier: kUTTypePropertyList as String) { item, _ in
+                if let response = item as? NSDictionary, let article = response[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary {
+                    self.shareArticle(article: article)
+                }
+            }
+        } else if itemProvider.hasItemConformingToTypeIdentifier("public.url") {
+            itemProvider.loadItem(forTypeIdentifier: "public.url") { item, _ in
+                if let url = item as? URL {
+                    self.shareArticle(article: ["articleUrl": url.absoluteString])
+                }
+            }
+        }
+    }
+    
+    func shareArticle(article: NSDictionary) {
+        shareBuffer += [article]
+        AWSClient.addArticle(rawArticle: article, completion: nil)
+    }
+    
+    func setUpDialog() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ShareViewController.tapped(recognizer:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        tapGestureRecognizer.numberOfTouchesRequired = 1
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+        savedDialog.layer.cornerRadius = 5;
+        savedDialog.layer.masksToBounds = true;
+        
+        // TODO: Animate Dialog Popup
+    }
+    
+    @objc func tapped(recognizer: UITapGestureRecognizer) {
+        print("tapped")
+        complete()
+    }
+    
+    
 }
 

@@ -46,6 +46,7 @@ class PullUpPageViewController: UIPageViewController, DeckTransitionViewControll
         // Instructions for setViewControllers https://spin.atomicobject.com/2015/12/23/swift-uipageviewcontroller-tutorial/
         articleViewController.articleURL = articleURL
         setViewControllers([articleViewController], direction: .forward, animated: true, completion: nil)
+//        setViewControllers([controlViewController], direction: .forward, animated: true, completion: nil)
         viewState = .ARTICLE
     }
 }
@@ -55,7 +56,7 @@ extension PullUpPageViewController: UIPageViewControllerDataSource {
     private func pageUpdate(newViewState: ViewState, forwardAnimation:Bool) {
         pageControl.currentPage = newViewState.rawValue
         viewState = newViewState
-        let directionAnimation = forwardAnimation ? NavigationDirection.forward : NavigationDirection.reverse
+        let directionAnimation = forwardAnimation ? UIPageViewController.NavigationDirection.forward : UIPageViewController.NavigationDirection.reverse
         switch viewState {
         case .ARTICLE:
             print_debug(tagID, message: "here1")
