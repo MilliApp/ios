@@ -14,10 +14,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // IBOutlets
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var mediaBarView: UIView!
-    @IBOutlet var mediaBarImage: UIImageView!
-    @IBOutlet var playPauseButton: UIButton!
-    @IBOutlet var mediaBarProgressView: UIProgressView!
     
     // Setting initial variables
     private let tagID = "[HOME_VIEW_CONTROLLER]"
@@ -46,7 +42,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.navigationBar.layer.zPosition = -1
         
         // Initialize variables
-        pullUpViewCollapseY = self.mediaBarView.frame.origin.y
+//        pullUpViewCollapseY = self.mediaBarView.frame.origin.y
         pullUpViewExpandY = self.navigationController!.navigationBar.frame.height / -2
         // TODO(chwang): this height calculation doesn't make sense. I think
         // the article view controller should just be turned into a view with a
@@ -63,7 +59,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.rowHeight = UITableView.automaticDimension
         
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(panGesture))
-        mediaBarView.addGestureRecognizer(gesture)
+//        mediaBarView.addGestureRecognizer(gesture)
         
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
@@ -111,7 +107,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // 2- Add pullUpViewController as a child view
         self.addChild(pullUpViewController)
-        self.view.insertSubview(pullUpViewController.view, belowSubview: mediaBarView)
+//        self.view.insertSubview(pullUpViewController.view, belowSubview: mediaBarView)
         pullUpViewController.didMove(toParent: self)
         
         // 3- Adjust bottomSheet frame and initial position.
@@ -209,7 +205,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
             // Set progress bar
             
-            mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress), animated: true)
+//            mediaBarProgressView.setProgress((Float)(currentArticleAudioPlayer.progress), animated: true)
             
             // Set time label on media panel
             let timeLeft = Int64(currentArticleAudioPlayer.duration - currentArticleAudioPlayer.currentTime)
@@ -234,18 +230,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if currentArticleAudioPlayer.isPlaying {
                 playbackTimer.invalidate()
                 currentArticleAudioPlayer.pause()
-                playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
+//                playPauseButton.setImage(#imageLiteral(resourceName: "Play Filled-50"), for: .normal)
                 
             } else {
                 currentArticleAudioPlayer.play()
                 playbackTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                     self.updateProgress()
                 }
-                playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
+//                playPauseButton.setImage(#imageLiteral(resourceName: "Pause Filled-50"), for: .normal)
             }
             
             // Set media bar article logo image
-            mediaBarImage.image = ArticleManager.currentArticle?.sourceLogo?.image ?? UIImage()
+//            mediaBarImage.image = ArticleManager.currentArticle?.sourceLogo?.image ?? UIImage()
             updateNowPlayingInfo()
         }
     }

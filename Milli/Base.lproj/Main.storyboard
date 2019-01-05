@@ -21,11 +21,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-Sy-kmT">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="2t6-W2-bVZ">
-                                    <rect key="frame" x="0.0" y="118" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MainTableViewCell" rowHeight="90" id="flk-wC-3pe" customClass="MainTableViewCell" customModule="Milli" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
@@ -101,95 +96,32 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gpa-5x-FiF">
-                                <rect key="frame" x="0.0" y="557" width="375" height="46"/>
-                                <subviews>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="DVv-6P-W6N">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
-                                        <color key="progressTintColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </progressView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-app" translatesAutoresizingMaskIntoConstraints="NO" id="ZAH-y1-583">
-                                        <rect key="frame" x="0.0" y="1" width="45" height="45"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="ZAH-y1-583" secondAttribute="height" multiplier="1:1" id="1ZO-qE-tly"/>
-                                            <constraint firstAttribute="height" constant="45" id="Jb4-mJ-A8H"/>
-                                        </constraints>
-                                    </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="YyG-cQ-awH">
-                                        <rect key="frame" x="241.5" y="12" width="126" height="22"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3t3-YX-gv2">
-                                                <rect key="frame" x="0.0" y="0.0" width="22" height="22"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="3t3-YX-gv2" secondAttribute="height" multiplier="1:1" id="z4z-9N-3rT"/>
-                                                </constraints>
-                                                <state key="normal" image="Rewind Filled-50"/>
-                                                <connections>
-                                                    <action selector="rewindPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="1er-za-btK"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jSz-9E-iCR">
-                                                <rect key="frame" x="52" y="0.0" width="22" height="22"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="jSz-9E-iCR" secondAttribute="height" multiplier="1:1" id="hbr-lF-EBH"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="tintColor" red="1" green="0.57609218360000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" image="Play Filled-50"/>
-                                                <connections>
-                                                    <action selector="playPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="0HK-wT-xJI"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Mo-LP-Wxk">
-                                                <rect key="frame" x="104" y="0.0" width="22" height="22"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="1Mo-LP-Wxk" secondAttribute="height" multiplier="1:1" id="oiA-XX-W6b"/>
-                                                </constraints>
-                                                <state key="normal" title="Forward Button" image="Fast Forward Filled-50"/>
-                                                <connections>
-                                                    <action selector="forwardPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="ias-ME-v6V"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.97638529539999996" green="0.97652524709999999" blue="0.97635465860000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ceu-pe-qur">
+                                <rect key="frame" x="0.0" y="539" width="375" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="DVv-6P-W6N" secondAttribute="trailing" id="8og-RX-aJS"/>
-                                    <constraint firstItem="YyG-cQ-awH" firstAttribute="centerY" secondItem="Gpa-5x-FiF" secondAttribute="centerY" id="Eh2-pP-Ega"/>
-                                    <constraint firstAttribute="bottom" secondItem="ZAH-y1-583" secondAttribute="bottom" id="Gau-im-8rv"/>
-                                    <constraint firstAttribute="trailing" secondItem="YyG-cQ-awH" secondAttribute="trailing" constant="7.5" id="H0G-IK-iNe"/>
-                                    <constraint firstItem="YyG-cQ-awH" firstAttribute="top" secondItem="DVv-6P-W6N" secondAttribute="bottom" constant="12" id="KV2-2l-H3J"/>
-                                    <constraint firstAttribute="bottom" secondItem="YyG-cQ-awH" secondAttribute="bottom" constant="12" id="Vdc-8g-bVn"/>
-                                    <constraint firstItem="ZAH-y1-583" firstAttribute="leading" secondItem="Gpa-5x-FiF" secondAttribute="leading" id="WSS-N4-mzl"/>
-                                    <constraint firstItem="DVv-6P-W6N" firstAttribute="leading" secondItem="Gpa-5x-FiF" secondAttribute="leading" id="hwh-Ye-d1R"/>
-                                    <constraint firstAttribute="height" constant="46" id="pw7-bn-NTc"/>
-                                    <constraint firstItem="DVv-6P-W6N" firstAttribute="top" secondItem="Gpa-5x-FiF" secondAttribute="top" id="sjd-7m-uwv"/>
+                                    <constraint firstAttribute="height" constant="64" id="JDi-Vp-JFs"/>
                                 </constraints>
-                            </view>
+                                <connections>
+                                    <segue destination="wXK-la-zmc" kind="embed" id="PSW-qz-y8V"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="T9w-Sy-kmT" firstAttribute="top" secondItem="zE7-LD-udM" secondAttribute="top" id="78m-sI-9mR"/>
-                            <constraint firstItem="Gpa-5x-FiF" firstAttribute="leading" secondItem="Pyk-7z-mNH" secondAttribute="leading" id="DtX-26-mJJ"/>
                             <constraint firstItem="Pyk-7z-mNH" firstAttribute="trailing" secondItem="T9w-Sy-kmT" secondAttribute="trailing" id="F7E-mZ-AXo"/>
                             <constraint firstItem="Pyk-7z-mNH" firstAttribute="bottom" secondItem="T9w-Sy-kmT" secondAttribute="bottom" id="JOs-64-o7r"/>
-                            <constraint firstItem="Pyk-7z-mNH" firstAttribute="trailing" secondItem="Gpa-5x-FiF" secondAttribute="trailing" id="dDI-gw-Er8"/>
-                            <constraint firstItem="Pyk-7z-mNH" firstAttribute="bottom" secondItem="Gpa-5x-FiF" secondAttribute="bottom" id="qSu-vy-ckZ"/>
+                            <constraint firstItem="ceu-pe-qur" firstAttribute="leading" secondItem="Pyk-7z-mNH" secondAttribute="leading" id="f9S-4l-eIW"/>
+                            <constraint firstItem="Pyk-7z-mNH" firstAttribute="bottom" secondItem="ceu-pe-qur" secondAttribute="bottom" id="oIh-cD-Svj"/>
+                            <constraint firstItem="ceu-pe-qur" firstAttribute="trailing" secondItem="Pyk-7z-mNH" secondAttribute="trailing" id="q2l-gb-Jim"/>
                             <constraint firstItem="T9w-Sy-kmT" firstAttribute="leading" secondItem="Pyk-7z-mNH" secondAttribute="leading" id="yJx-7J-7dD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pyk-7z-mNH"/>
                     </view>
                     <navigationItem key="navigationItem" id="m3L-kf-5GV"/>
                     <connections>
-                        <outlet property="mediaBarImage" destination="ZAH-y1-583" id="b4R-YL-8cQ"/>
-                        <outlet property="mediaBarProgressView" destination="DVv-6P-W6N" id="2QC-32-rck"/>
-                        <outlet property="mediaBarView" destination="Gpa-5x-FiF" id="2KT-89-AWX"/>
-                        <outlet property="playPauseButton" destination="jSz-9E-iCR" id="54q-iu-YCi"/>
                         <outlet property="tableView" destination="T9w-Sy-kmT" id="9sy-Es-ckf"/>
                         <outlet property="view" destination="zE7-LD-udM" id="vp0-d3-Ams"/>
-                        <segue destination="d6y-WC-7i5" kind="custom" identifier="articleDetailPageSegue" customClass="DeckSegue" customModule="DeckTransition" id="59t-uU-Igb"/>
-                        <segue destination="9LS-ih-9pH" kind="custom" identifier="pullUpSegue" customClass="DeckSegue" customModule="DeckTransition" id="fVr-8G-s38"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H1h-gy-RgJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -285,14 +217,6 @@ Let’s say for a moment that you want to become a successful mixed martial arts
             </objects>
             <point key="canvasLocation" x="2936.8000000000002" y="142.57871064467767"/>
         </scene>
-        <!--Pull Up Page View Controller-->
-        <scene sceneID="5zp-bb-yRb">
-            <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="d6y-WC-7i5" customClass="PullUpPageViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ndf-2N-ebh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2225" y="912"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ldg-Nd-mdh">
             <objects>
@@ -317,56 +241,92 @@ Let’s say for a moment that you want to become a successful mixed martial arts
             </objects>
             <point key="canvasLocation" x="674" y="143"/>
         </scene>
-        <!--Pull Up View Controller-->
-        <scene sceneID="fcV-l2-aI2">
+        <!--View Controller-->
+        <scene sceneID="fbC-hU-d9g">
             <objects>
-                <viewController id="9LS-ih-9pH" customClass="PullUpViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="2Zr-DF-Vyx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="wXK-la-zmc" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vFi-my-IzL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eqd-nL-ctc">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BjY-Mm-APO">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                                        <connections>
-                                            <segue destination="d6y-WC-7i5" kind="embed" id="3hM-Dy-uFw"/>
-                                        </connections>
-                                    </containerView>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="0jw-5r-VJT">
-                                        <rect key="frame" x="176" y="610" width="23" height="37"/>
-                                        <color key="pageIndicatorTintColor" red="0.73717361690000005" green="0.73730176690000004" blue="0.73716557029999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="currentPageIndicatorTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    </pageControl>
-                                </subviews>
-                                <color key="backgroundColor" red="0.91676475759999998" green="0.91676475759999998" blue="0.91676475759999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="sb9-qU-ymB">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="6"/>
                                 <constraints>
-                                    <constraint firstItem="0jw-5r-VJT" firstAttribute="centerX" secondItem="Eqd-nL-ctc" secondAttribute="centerX" id="Aqy-9H-Ibg"/>
-                                    <constraint firstItem="BjY-Mm-APO" firstAttribute="top" secondItem="Eqd-nL-ctc" secondAttribute="top" id="Hqs-JH-Obx"/>
-                                    <constraint firstAttribute="bottom" secondItem="BjY-Mm-APO" secondAttribute="bottom" id="Iyj-xM-o4N"/>
-                                    <constraint firstItem="BjY-Mm-APO" firstAttribute="leading" secondItem="Eqd-nL-ctc" secondAttribute="leading" id="OxS-WL-Fft"/>
-                                    <constraint firstAttribute="trailing" secondItem="BjY-Mm-APO" secondAttribute="trailing" id="Uu1-4v-OLA"/>
-                                    <constraint firstAttribute="bottom" secondItem="0jw-5r-VJT" secondAttribute="bottom" id="bMt-f2-hYK"/>
+                                    <constraint firstAttribute="height" constant="5" id="Cd5-f4-bT2"/>
                                 </constraints>
-                            </view>
+                                <color key="progressTintColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </progressView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-app" translatesAutoresizingMaskIntoConstraints="NO" id="2Su-tS-J19">
+                                <rect key="frame" x="0.0" y="5" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2Su-tS-J19" secondAttribute="height" multiplier="1:1" id="VHO-8Q-fXx"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="gmi-dL-B8Q">
+                                <rect key="frame" x="247" y="10" width="118" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mm6-Np-X0N">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="mm6-Np-X0N" secondAttribute="height" multiplier="1:1" id="f4W-pd-br0"/>
+                                        </constraints>
+                                        <state key="normal" title="Rewind Button" image="Rewind Filled-50"/>
+                                        <connections>
+                                            <action selector="rewindPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="A7e-0O-vs4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6c-rQ-yTj">
+                                        <rect key="frame" x="44" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="W6c-rQ-yTj" secondAttribute="height" multiplier="1:1" id="V6j-Jk-UBF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="1" green="0.57609218360000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Play Button" image="Play Filled-50"/>
+                                        <connections>
+                                            <action selector="playPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="EtC-KC-zak"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iXz-ZY-V3Y">
+                                        <rect key="frame" x="88" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="iXz-ZY-V3Y" secondAttribute="height" multiplier="1:1" id="sor-jC-mDg"/>
+                                        </constraints>
+                                        <state key="normal" title="Forward Button" image="Fast Forward Filled-50"/>
+                                        <connections>
+                                            <action selector="forwardPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="gmM-8c-AfP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="mm6-Np-X0N" firstAttribute="leading" secondItem="gmi-dL-B8Q" secondAttribute="leading" id="3dX-J8-UCv"/>
+                                    <constraint firstAttribute="bottom" secondItem="mm6-Np-X0N" secondAttribute="bottom" id="52K-9t-okk"/>
+                                    <constraint firstAttribute="height" constant="30" id="Anf-qU-hkU"/>
+                                    <constraint firstItem="W6c-rQ-yTj" firstAttribute="top" secondItem="gmi-dL-B8Q" secondAttribute="top" id="H17-yH-qhm"/>
+                                    <constraint firstAttribute="trailing" secondItem="iXz-ZY-V3Y" secondAttribute="trailing" id="HEx-bc-yRf"/>
+                                    <constraint firstItem="mm6-Np-X0N" firstAttribute="top" secondItem="gmi-dL-B8Q" secondAttribute="top" id="Ngg-GU-bdk"/>
+                                    <constraint firstAttribute="bottom" secondItem="W6c-rQ-yTj" secondAttribute="bottom" id="TxD-JH-yig"/>
+                                    <constraint firstItem="iXz-ZY-V3Y" firstAttribute="top" secondItem="gmi-dL-B8Q" secondAttribute="top" id="dLT-Zz-nkJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="iXz-ZY-V3Y" secondAttribute="bottom" id="mVe-gR-v0n"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Eqd-nL-ctc" firstAttribute="trailing" secondItem="UvB-Vm-9ib" secondAttribute="trailing" id="bIG-Ff-9SB"/>
-                            <constraint firstItem="Eqd-nL-ctc" firstAttribute="bottom" secondItem="UvB-Vm-9ib" secondAttribute="bottom" id="gDz-xC-GGT"/>
-                            <constraint firstItem="Eqd-nL-ctc" firstAttribute="leading" secondItem="UvB-Vm-9ib" secondAttribute="leading" id="ikX-dI-qAU"/>
-                            <constraint firstItem="Eqd-nL-ctc" firstAttribute="top" secondItem="UvB-Vm-9ib" secondAttribute="top" id="qNe-Oj-W8p"/>
+                            <constraint firstItem="sb9-qU-ymB" firstAttribute="top" secondItem="vFi-my-IzL" secondAttribute="top" id="5T6-wl-tK4"/>
+                            <constraint firstAttribute="trailing" secondItem="gmi-dL-B8Q" secondAttribute="trailing" constant="10" id="6xl-D8-Cia"/>
+                            <constraint firstItem="sb9-qU-ymB" firstAttribute="leading" secondItem="vFi-my-IzL" secondAttribute="leading" id="7Sm-p7-0Uc"/>
+                            <constraint firstAttribute="trailing" secondItem="sb9-qU-ymB" secondAttribute="trailing" id="L5B-qo-Nd3"/>
+                            <constraint firstItem="2Su-tS-J19" firstAttribute="top" secondItem="sb9-qU-ymB" secondAttribute="bottom" id="NZD-n1-gYp"/>
+                            <constraint firstItem="gmi-dL-B8Q" firstAttribute="centerY" secondItem="vFi-my-IzL" secondAttribute="centerY" id="R42-ml-kgq"/>
+                            <constraint firstAttribute="bottom" secondItem="2Su-tS-J19" secondAttribute="bottom" id="dv5-Mk-cAI"/>
+                            <constraint firstItem="2Su-tS-J19" firstAttribute="leading" secondItem="vFi-my-IzL" secondAttribute="leading" id="smO-ia-phV"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="UvB-Vm-9ib"/>
                     </view>
-                    <connections>
-                        <outlet property="pageControl" destination="0jw-5r-VJT" id="Wha-vx-BoB"/>
-                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="569-oU-pJ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DSN-OS-Czc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1445.5999999999999" y="911.69415292353835"/>
+            <point key="canvasLocation" x="1445.5999999999999" y="646.77661169415296"/>
         </scene>
     </scenes>
     <resources>
@@ -375,8 +335,5 @@ Let’s say for a moment that you want to become a successful mixed martial arts
         <image name="Rewind Filled-50" width="100" height="100"/>
         <image name="icon-app" width="60" height="60"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="59t-uU-Igb"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
