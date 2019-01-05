@@ -241,10 +241,10 @@ Let’s say for a moment that you want to become a successful mixed martial arts
             </objects>
             <point key="canvasLocation" x="674" y="143"/>
         </scene>
-        <!--View Controller-->
+        <!--Mini Player View Controller-->
         <scene sceneID="fbC-hU-d9g">
             <objects>
-                <viewController id="wXK-la-zmc" sceneMemberID="viewController">
+                <viewController id="wXK-la-zmc" customClass="MiniPlayerViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vFi-my-IzL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -322,7 +322,13 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                             <constraint firstAttribute="bottom" secondItem="2Su-tS-J19" secondAttribute="bottom" id="dv5-Mk-cAI"/>
                             <constraint firstItem="2Su-tS-J19" firstAttribute="leading" secondItem="vFi-my-IzL" secondAttribute="leading" id="smO-ia-phV"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="WvJ-Bc-PS2"/>
                     </view>
+                    <connections>
+                        <outlet property="mediaBarImage" destination="2Su-tS-J19" id="TBI-HG-uZ8"/>
+                        <outlet property="mediaBarProgressView" destination="sb9-qU-ymB" id="SUI-YY-4xq"/>
+                        <outlet property="playPauseButton" destination="W6c-rQ-yTj" id="HcH-56-vMc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DSN-OS-Czc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

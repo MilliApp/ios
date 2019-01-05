@@ -18,7 +18,7 @@ class MiniPlayerViewController: UIViewController {
     weak var delegate: MiniPlayerDelegate?
     
     // MARK: - IBOutlets
-    @IBOutlet var mediaBarView: UIView!
+//    @IBOutlet var mediaBarView: UIView!
     @IBOutlet var mediaBarImage: UIImageView!
     @IBOutlet var playPauseButton: UIButton!
     @IBOutlet var mediaBarProgressView: UIProgressView!
