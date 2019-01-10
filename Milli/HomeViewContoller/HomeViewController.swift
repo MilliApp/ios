@@ -12,6 +12,9 @@ import MediaPlayer
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // MARK: - Properties
+    var miniPlayer:MiniPlayerViewController?
+    
     // IBOutlets
     @IBOutlet var tableView: UITableView!
     
@@ -289,10 +292,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // TODO(chwang): probably can delete this segue
         if let vc = segue.destination as? PullUpViewController {
             // Pass on current playing article URL
             vc.articleURL = ArticleManager.currentArticle!.articleUrl.absoluteString
+        }
+        // Mini player segue
+        else if let destination = segue.destination as? MiniPlayerViewController {
+            miniPlayer = destination
+            miniPlayer?.delegate = self
         }
     }
     
@@ -346,4 +356,23 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         remoteTransportControlsSetUp = true
     }
     
+}
+
+extension HomeViewController: MiniPlayerDelegate {
+    func expandArticle() {
+        //1.
+        guard let maxiCard = storyboard?.instantiateViewController(
+            withIdentifier: "MaxiArticleCardViewController")
+            as? MaxiArticleCardViewController else {
+                assertionFailure("No view controller ID MaxiSongCardViewController in storyboard")
+                return
+        }
+        
+        //2.
+        maxiCard.backingImage = view.makeSnapshot()
+        //3.
+//        maxiCard.currentSong = song
+        //4.
+        present(maxiCard, animated: false)
+    }
 }
