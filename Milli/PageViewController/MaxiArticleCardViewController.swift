@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol MaxiArticleSourceProtocol: class {
+    var originatingFrameInWindow: CGRect { get }
+//    var originatingCoverImageView: UIImageView { get }
+}
+
 class MaxiArticleCardViewController: UIViewController {
     
     private let tagID = "[MAXI_ARTICLE_CARD_VIEW_CONTROLLER]"
     
     // MARK: - Properties
+    var currentArticle: Article?
     let cardCornerRadius: CGFloat = 10
     let primaryDuration = 4.0 //set to 0.5 when ready
     let backingImageEdgeInset: CGFloat = 15.0
@@ -35,8 +41,18 @@ class MaxiArticleCardViewController: UIViewController {
     
     //cover image
     @IBOutlet weak var coverImageContainer: UIView!
-    @IBOutlet weak var coverArtImage: UIImageView!
+//    @IBOutlet weak var articleText: UIImageView!
+    @IBOutlet var articleText: UITextView!
     @IBOutlet weak var dismissChevron: UIButton!
+    
+    //cover image constraints
+    @IBOutlet weak var articleTextLeading: NSLayoutConstraint!
+    @IBOutlet weak var articleTextTop: NSLayoutConstraint!
+    @IBOutlet weak var articleTextBottom: NSLayoutConstraint!
+    @IBOutlet weak var articleTextHeight: NSLayoutConstraint!
+    @IBOutlet weak var articleTextContainerTopInset: NSLayoutConstraint!
+    
+    weak var sourceView: MaxiArticleSourceProtocol!
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -62,22 +78,37 @@ class MaxiArticleCardViewController: UIViewController {
         
         coverImageContainer.layer.cornerRadius = cardCornerRadius
         coverImageContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        
+        // Load article content into text view
+        articleText.text = currentArticle?.content
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configureImageLayerInStartPosition()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateBackingImageIn()
+        animateImageLayerIn()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ArticleSubscriber {
+            destination.currentArticle = currentArticle
+        }
     }
 }
 
 // MARK: - IBActions
 extension MaxiArticleCardViewController {
     @IBAction func dismissAction(_ sender: Any) {
-        
+        animateBackingImageOut()
+//        animateCoverImageOut()
+        animateImageLayerOut() { _ in
+            self.dismiss(animated: false)
+        }
     }
 }
 
@@ -117,5 +148,73 @@ extension MaxiArticleCardViewController {
     
     func animateBackingImageOut() {
         animateBackingImage(presenting: false)
+    }
+}
+
+//Image Container animation.
+extension MaxiArticleCardViewController {
+    
+    private var startColor: UIColor {
+        return UIColor.white.withAlphaComponent(0.3)
+    }
+    
+    private var endColor: UIColor {
+        return .white
+    }
+    
+    //1.
+    private var imageLayerInsetForOutPosition: CGFloat {
+        let imageFrame = view.convert(sourceView.originatingFrameInWindow, to: view)
+        let inset = imageFrame.minY - backingImageEdgeInset
+        return inset
+    }
+    
+    //2.
+    func configureImageLayerInStartPosition() {
+        coverImageContainer.backgroundColor = startColor
+        let startInset = imageLayerInsetForOutPosition
+        dismissChevron.alpha = 0
+        articleText.alpha = 0
+        coverImageContainer.layer.cornerRadius = 0
+        articleTextContainerTopInset.constant = startInset
+        view.layoutIfNeeded()
+    }
+    
+    //3.
+    func animateImageLayerIn() {
+        //4.
+        UIView.animate(withDuration: primaryDuration / 4.0) {
+            self.coverImageContainer.backgroundColor = self.endColor
+        }
+        
+        //5.
+        UIView.animate(withDuration: primaryDuration, delay: 0, options: [.curveEaseIn], animations: {
+            self.articleTextContainerTopInset.constant = 0
+            self.dismissChevron.alpha = 1
+            self.articleText.alpha = 1
+            self.coverImageContainer.layer.cornerRadius = self.cardCornerRadius
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    //6.
+    func animateImageLayerOut(completion: @escaping ((Bool) -> Void)) {
+        let endInset = imageLayerInsetForOutPosition
+        
+        UIView.animate(withDuration: primaryDuration / 4.0,
+                       delay: primaryDuration,
+                       options: [.curveEaseOut], animations: {
+                        self.coverImageContainer.backgroundColor = self.startColor
+        }, completion: { finished in
+            completion(finished) //fire complete here , because this is the end of the animation
+        })
+        
+        UIView.animate(withDuration: primaryDuration, delay: 0, options: [.curveEaseOut], animations: {
+            self.articleTextContainerTopInset.constant = endInset
+            self.dismissChevron.alpha = 0
+            self.articleText.alpha = 0
+            self.coverImageContainer.layer.cornerRadius = 0
+            self.view.layoutIfNeeded()
+        })
     }
 }

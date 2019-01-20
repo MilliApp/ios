@@ -253,6 +253,19 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ixr-52-dZZ">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8d-Ls-PfC">
+                                            <rect key="frame" x="73" y="22" width="206" height="20.333333333333329"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="X8d-Ls-PfC" firstAttribute="leading" secondItem="Ixr-52-dZZ" secondAttribute="leading" constant="73" id="qkb-XP-BfH"/>
+                                        <constraint firstAttribute="trailing" secondItem="X8d-Ls-PfC" secondAttribute="trailing" constant="135" id="wdl-wZ-Icv"/>
+                                        <constraint firstItem="X8d-Ls-PfC" firstAttribute="centerY" secondItem="Ixr-52-dZZ" secondAttribute="centerY" id="xyp-dX-dp5"/>
+                                    </constraints>
                                 </view>
                                 <blurEffect style="light"/>
                                 <connections>
@@ -340,6 +353,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                         <viewLayoutGuide key="safeArea" id="WvJ-Bc-PS2"/>
                     </view>
                     <connections>
+                        <outlet property="articleTitle" destination="X8d-Ls-PfC" id="hP5-OM-9zP"/>
                         <outlet property="mediaBarImage" destination="2Su-tS-J19" id="TBI-HG-uZ8"/>
                         <outlet property="mediaBarProgressView" destination="sb9-qU-ymB" id="SUI-YY-4xq"/>
                         <outlet property="playPauseButton" destination="W6c-rQ-yTj" id="HcH-56-vMc"/>
@@ -352,7 +366,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1445.5999999999999" y="646.77661169415296"/>
+            <point key="canvasLocation" x="1444.9275362318842" y="646.46739130434787"/>
         </scene>
         <!--Maxi Article Card View Controller-->
         <scene sceneID="TCg-Mw-vmw">
@@ -369,25 +383,12 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NmX-0w-y9a">
+                            <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NmX-0w-y9a">
                                 <rect key="frame" x="0.0" y="15" width="414" height="721"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZgU-74-DfZ">
                                         <rect key="frame" x="0.0" y="57" width="414" height="422"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IM5-Ql-d2r">
-                                                <rect key="frame" x="30" y="38" width="354" height="354"/>
-                                                <color key="backgroundColor" red="0.95971648310000002" green="1" blue="0.40833558920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="354" id="9hr-MZ-rCV"/>
-                                                    <constraint firstAttribute="width" secondItem="IM5-Ql-d2r" secondAttribute="height" multiplier="1:1" id="ZhY-Qk-f26"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="box-MO-wK5">
                                                 <rect key="frame" x="189" y="4" width="36" height="22"/>
                                                 <state key="normal" image="chevron"/>
@@ -395,15 +396,25 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                                     <action selector="dismissAction:" destination="8aW-e2-fyt" eventType="touchUpInside" id="sfk-4H-0T5"/>
                                                 </connections>
                                             </button>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XVc-qs-pzU">
+                                                <rect key="frame" x="30" y="38" width="354" height="354"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="XVc-qs-pzU" secondAttribute="height" multiplier="1:1" id="1AH-EY-hhz"/>
+                                                    <constraint firstAttribute="height" constant="354" id="4g2-07-cHK"/>
+                                                </constraints>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="box-MO-wK5" firstAttribute="centerX" secondItem="IM5-Ql-d2r" secondAttribute="centerX" id="82E-O6-0Pv"/>
-                                            <constraint firstItem="IM5-Ql-d2r" firstAttribute="top" secondItem="ZgU-74-DfZ" secondAttribute="top" constant="38" id="A2E-yk-NOX"/>
+                                            <constraint firstItem="XVc-qs-pzU" firstAttribute="leading" secondItem="ZgU-74-DfZ" secondAttribute="leading" constant="30" id="Bhn-Mq-Kdc"/>
+                                            <constraint firstItem="XVc-qs-pzU" firstAttribute="top" secondItem="ZgU-74-DfZ" secondAttribute="top" constant="38" id="MWk-yC-ocv"/>
+                                            <constraint firstAttribute="bottom" secondItem="XVc-qs-pzU" secondAttribute="bottom" constant="30" id="RvR-Tm-bNw"/>
                                             <constraint firstItem="box-MO-wK5" firstAttribute="centerX" secondItem="ZgU-74-DfZ" secondAttribute="centerX" id="UsK-0a-6ot"/>
-                                            <constraint firstItem="IM5-Ql-d2r" firstAttribute="leading" secondItem="ZgU-74-DfZ" secondAttribute="leading" constant="30" id="XWB-pS-iRp"/>
                                             <constraint firstItem="box-MO-wK5" firstAttribute="top" secondItem="ZgU-74-DfZ" secondAttribute="top" constant="4" id="qxW-Mr-KjK"/>
-                                            <constraint firstAttribute="bottom" secondItem="IM5-Ql-d2r" secondAttribute="bottom" constant="30" id="rBZ-bc-8s5"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6A-hD-Ha7">
@@ -429,6 +440,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                     <constraint firstItem="o6A-hD-Ha7" firstAttribute="leading" secondItem="NmX-0w-y9a" secondAttribute="leading" id="C6I-yZ-F2V"/>
                                     <constraint firstAttribute="bottom" secondItem="o6A-hD-Ha7" secondAttribute="bottom" id="FDf-6H-n8s"/>
                                     <constraint firstAttribute="trailing" secondItem="iR4-3h-1XP" secondAttribute="trailing" id="Yb3-0j-aNR"/>
+                                    <constraint firstItem="ZgU-74-DfZ" firstAttribute="centerX" secondItem="NmX-0w-y9a" secondAttribute="centerX" id="dpE-q8-cUI"/>
                                     <constraint firstItem="ZgU-74-DfZ" firstAttribute="leading" secondItem="NmX-0w-y9a" secondAttribute="leading" id="iRV-Gw-ybb"/>
                                     <constraint firstAttribute="trailing" secondItem="ZgU-74-DfZ" secondAttribute="trailing" id="ppm-Bh-5GY"/>
                                     <constraint firstItem="o6A-hD-Ha7" firstAttribute="top" secondItem="ZgU-74-DfZ" secondAttribute="bottom" id="yhg-4q-VXw"/>
@@ -454,12 +466,17 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                         <viewLayoutGuide key="safeArea" id="ZRx-mm-ava"/>
                     </view>
                     <connections>
+                        <outlet property="articleText" destination="XVc-qs-pzU" id="klg-g0-oDV"/>
+                        <outlet property="articleTextBottom" destination="RvR-Tm-bNw" id="rfY-8Z-5AY"/>
+                        <outlet property="articleTextContainerTopInset" destination="3oE-1z-tWs" id="AfT-XT-IcC"/>
+                        <outlet property="articleTextHeight" destination="4g2-07-cHK" id="0P9-F6-ONc"/>
+                        <outlet property="articleTextLeading" destination="Bhn-Mq-Kdc" id="grt-bl-xp0"/>
+                        <outlet property="articleTextTop" destination="MWk-yC-ocv" id="b5b-Mx-8fk"/>
                         <outlet property="backingImageBottomInset" destination="uIJ-Zc-i0Y" id="q8U-w1-ytQ"/>
                         <outlet property="backingImageLeadingInset" destination="i5a-GI-5kN" id="atp-ka-2af"/>
                         <outlet property="backingImageTopInset" destination="SRz-CC-BcR" id="BEl-Va-UTz"/>
                         <outlet property="backingImageTrailingInset" destination="kMY-i6-9B9" id="Tqi-Fj-uyc"/>
                         <outlet property="backingImageView" destination="FUI-1f-AEA" id="EVV-fr-Ixg"/>
-                        <outlet property="coverArtImage" destination="IM5-Ql-d2r" id="gMR-BJ-Zyg"/>
                         <outlet property="coverImageContainer" destination="ZgU-74-DfZ" id="uIp-Q0-deZ"/>
                         <outlet property="dimmerLayer" destination="Jvg-Sa-vLN" id="Rxi-dH-gjw"/>
                         <outlet property="dismissChevron" destination="box-MO-wK5" id="vFx-yZ-OiJ"/>

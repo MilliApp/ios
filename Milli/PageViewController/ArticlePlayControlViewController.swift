@@ -18,30 +18,30 @@ class ArticlePlayControlViewController: UIViewController, ArticleSubscriber {
     // MARK: - Properties
     var currentArticle: Article? {
         didSet {
-//            configureFields()
+            configureFields()
         }
     }
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configureFields()
+        configureFields()
     }
 }
 
 // MARK: - Internal
-//extension ArticlePlayControlViewController {
-//
-//    func configureFields() {
-//        guard articleTitle != nil else {
-//            return
-//        }
-//
-//        articleTitle.text = currentArticle?.title
-//        articleArtist.text = currentArticle?.artist
+extension ArticlePlayControlViewController {
+
+    func configureFields() {
+        guard articleTitle != nil else {
+            return
+        }
+
+        articleTitle.text = currentArticle?.title
+        articleArtist.text = currentArticle?.source
 //        articleDuration.text = "Duration \(currentArticle?.presentationTime ?? "")"
-//    }
-//}
+    }
+}
 
 // MARK: - Article Extension
 //extension Article {

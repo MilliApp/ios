@@ -227,6 +227,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return ArticleManager.currentArticle?.audioPlayer?.player
     }
     
+    private func getCurrentArticle() -> Article? {
+        return ArticleManager.currentArticle
+    }
+    
     private func playSelectedArticleAudio(orPause: Bool = false) {
         if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
             // PlayPause vs. just Play
@@ -251,6 +255,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print_debug(tagID, message: "didSelectRowAt \(indexPath.row)")
+        miniPlayer?.configure(article: getCurrentArticle())
         if let currentArticleAudioPlayer = getCurrentArticleAudioPlayer() {
             // If new article is selected, pause old article if it is playing
             if ArticleManager.currentArticleIdx != indexPath.row && currentArticleAudioPlayer.isPlaying {
@@ -359,7 +364,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 }
 
 extension HomeViewController: MiniPlayerDelegate {
-    func expandArticle() {
+    func expandArticle(article: Article) {
         //1.
         guard let maxiCard = storyboard?.instantiateViewController(
             withIdentifier: "MaxiArticleCardViewController")
@@ -372,6 +377,10 @@ extension HomeViewController: MiniPlayerDelegate {
         maxiCard.backingImage = view.makeSnapshot()
         //3.
 //        maxiCard.currentSong = song
+        maxiCard.currentArticle = article
+        
+        maxiCard.sourceView = miniPlayer
+        
         //4.
         present(maxiCard, animated: false)
     }
