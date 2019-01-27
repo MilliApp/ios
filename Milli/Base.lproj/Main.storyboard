@@ -480,6 +480,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                         <outlet property="coverImageContainer" destination="ZgU-74-DfZ" id="uIp-Q0-deZ"/>
                         <outlet property="dimmerLayer" destination="Jvg-Sa-vLN" id="Rxi-dH-gjw"/>
                         <outlet property="dismissChevron" destination="box-MO-wK5" id="vFx-yZ-OiJ"/>
+                        <outlet property="lowerModuleTopConstraint" destination="4o5-Am-P9p" id="6lk-IX-RKI"/>
                         <outlet property="scrollView" destination="NmX-0w-y9a" id="aPJ-81-b9J"/>
                         <outlet property="stretchySkirt" destination="o6A-hD-Ha7" id="XUG-sn-bgq"/>
                     </connections>
@@ -521,32 +522,62 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="evT-Pa-5pF">
-                                <rect key="frame" x="33" y="124.66666666666669" width="348" height="100"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="lXx-q9-YmE">
+                                <rect key="frame" x="148" y="125" width="118" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5h3-jT-dfg">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                                        <state key="normal" image="Rewind Filled-50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ph3-Rq-RIG">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ph3-Rq-RIG" secondAttribute="height" multiplier="1:1" id="SrS-3s-I7P"/>
+                                        </constraints>
+                                        <state key="normal" title="Rewind Button" image="Rewind Filled-50"/>
+                                        <connections>
+                                            <action selector="rewindPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="NYi-h9-PTj"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p0v-uE-vPi">
-                                        <rect key="frame" x="124" y="0.0" width="100" height="100"/>
-                                        <state key="normal" image="Play Filled-50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="beH-Vw-UYT">
+                                        <rect key="frame" x="44" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="beH-Vw-UYT" secondAttribute="height" multiplier="1:1" id="2yh-6o-Gdw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="1" green="0.57609218360000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Play Button" image="Play Filled-50"/>
+                                        <connections>
+                                            <action selector="playPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="XFE-WE-l6z"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XAJ-BR-C5B">
-                                        <rect key="frame" x="248" y="0.0" width="100" height="100"/>
-                                        <state key="normal" image="Fast Forward Filled-50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kxz-t8-PAh">
+                                        <rect key="frame" x="88" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Kxz-t8-PAh" secondAttribute="height" multiplier="1:1" id="2sH-gQ-vJX"/>
+                                        </constraints>
+                                        <state key="normal" title="Forward Button" image="Fast Forward Filled-50"/>
+                                        <connections>
+                                            <action selector="forwardPressed:" destination="ek0-nw-3Tb" eventType="touchUpInside" id="SSP-fT-9a6"/>
+                                        </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="ph3-Rq-RIG" firstAttribute="leading" secondItem="lXx-q9-YmE" secondAttribute="leading" id="34f-8p-Odf"/>
+                                    <constraint firstItem="beH-Vw-UYT" firstAttribute="top" secondItem="lXx-q9-YmE" secondAttribute="top" id="7NF-XV-HD2"/>
+                                    <constraint firstAttribute="bottom" secondItem="Kxz-t8-PAh" secondAttribute="bottom" id="Avt-cG-dVB"/>
+                                    <constraint firstAttribute="bottom" secondItem="beH-Vw-UYT" secondAttribute="bottom" id="GXd-US-FnN"/>
+                                    <constraint firstItem="Kxz-t8-PAh" firstAttribute="top" secondItem="lXx-q9-YmE" secondAttribute="top" id="amo-hX-3BZ"/>
+                                    <constraint firstAttribute="height" constant="30" id="esc-u8-FiY"/>
+                                    <constraint firstItem="ph3-Rq-RIG" firstAttribute="top" secondItem="lXx-q9-YmE" secondAttribute="top" id="ftR-mg-WAO"/>
+                                    <constraint firstAttribute="trailing" secondItem="Kxz-t8-PAh" secondAttribute="trailing" id="u8B-Bh-wNN"/>
+                                    <constraint firstAttribute="bottom" secondItem="ph3-Rq-RIG" secondAttribute="bottom" id="u8c-bf-bp7"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="lXx-q9-YmE" firstAttribute="centerX" secondItem="mr7-26-x8E" secondAttribute="centerX" id="4QW-CW-9un"/>
                             <constraint firstItem="4dg-Y9-nxJ" firstAttribute="top" secondItem="mr7-26-x8E" secondAttribute="topMargin" constant="16" id="8tL-fR-zYg"/>
-                            <constraint firstItem="QjV-ud-pca" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="evT-Pa-5pF" secondAttribute="bottom" constant="20" id="98x-Kp-q7L"/>
+                            <constraint firstItem="lXx-q9-YmE" firstAttribute="top" secondItem="4dg-Y9-nxJ" secondAttribute="bottom" constant="16.670000000000002" id="BVQ-zg-MyF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4dg-Y9-nxJ" secondAttribute="trailing" id="Bja-lU-QKx"/>
-                            <constraint firstItem="evT-Pa-5pF" firstAttribute="top" secondItem="6UX-n8-Ozb" secondAttribute="bottom" constant="40" id="GQ3-w4-2ke"/>
                             <constraint firstItem="4dg-Y9-nxJ" firstAttribute="leading" secondItem="mr7-26-x8E" secondAttribute="leadingMargin" id="U17-Qp-RVS"/>
-                            <constraint firstItem="evT-Pa-5pF" firstAttribute="centerX" secondItem="6UX-n8-Ozb" secondAttribute="centerX" id="waM-ww-wpy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QjV-ud-pca"/>
                     </view>
@@ -559,7 +590,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VFL-rN-b8d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3081" y="920"/>
+            <point key="canvasLocation" x="3079.7101449275365" y="919.56521739130437"/>
         </scene>
     </scenes>
     <resources>

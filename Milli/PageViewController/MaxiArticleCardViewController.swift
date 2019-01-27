@@ -39,6 +39,9 @@ class MaxiArticleCardViewController: UIViewController {
     @IBOutlet weak var backingImageTrailingInset: NSLayoutConstraint!
     @IBOutlet weak var backingImageBottomInset: NSLayoutConstraint!
     
+    //lower module constraints
+    @IBOutlet weak var lowerModuleTopConstraint: NSLayoutConstraint!
+    
     //cover image
     @IBOutlet weak var coverImageContainer: UIView!
 //    @IBOutlet weak var articleText: UIImageView!
@@ -86,12 +89,15 @@ class MaxiArticleCardViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureImageLayerInStartPosition()
+        stretchySkirt.backgroundColor = .white //from starter project, this hides the gap
+        configureLowerModuleInStartPosition()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateBackingImageIn()
         animateImageLayerIn()
+        animateLowerModuleIn()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -106,6 +112,7 @@ extension MaxiArticleCardViewController {
     @IBAction func dismissAction(_ sender: Any) {
         animateBackingImageOut()
 //        animateCoverImageOut()
+        animateLowerModuleOut()
         animateImageLayerOut() { _ in
             self.dismiss(animated: false)
         }
@@ -216,5 +223,43 @@ extension MaxiArticleCardViewController {
             self.coverImageContainer.layer.cornerRadius = 0
             self.view.layoutIfNeeded()
         })
+    }
+}
+
+//lower module animation
+extension MaxiArticleCardViewController {
+    
+    //1.
+    private var lowerModuleInsetForOutPosition: CGFloat {
+        let bounds = view.bounds
+        let inset = bounds.height - bounds.width
+        return inset
+    }
+    
+    //2.
+    func configureLowerModuleInStartPosition() {
+        lowerModuleTopConstraint.constant = lowerModuleInsetForOutPosition
+    }
+    
+    //3.
+    func animateLowerModule(isPresenting: Bool) {
+        let topInset = isPresenting ? 0 : lowerModuleInsetForOutPosition
+        UIView.animate(withDuration: primaryDuration,
+                       delay:0,
+                       options: [.curveEaseIn],
+                       animations: {
+                        self.lowerModuleTopConstraint.constant = topInset
+                        self.view.layoutIfNeeded()
+        })
+    }
+    
+    //4.
+    func animateLowerModuleOut() {
+        animateLowerModule(isPresenting: false)
+    }
+    
+    //5.
+    func animateLowerModuleIn() {
+        animateLowerModule(isPresenting: true)
     }
 }
