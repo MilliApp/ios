@@ -33,6 +33,7 @@ class MaxiArticleCardViewController: UIViewController {
     var backingImage: UIImage?
     @IBOutlet var backingImageView: UIImageView!
     @IBOutlet var dimmerLayer: UIView!
+    
     //backing image constraints
     @IBOutlet weak var backingImageTopInset: NSLayoutConstraint!
     @IBOutlet weak var backingImageLeadingInset: NSLayoutConstraint!
@@ -44,9 +45,10 @@ class MaxiArticleCardViewController: UIViewController {
     
     //cover image
     @IBOutlet weak var coverImageContainer: UIView!
-//    @IBOutlet weak var articleText: UIImageView!
     @IBOutlet var articleText: UITextView!
     @IBOutlet weak var dismissChevron: UIButton!
+    @IBOutlet var articleTitle: UILabel!
+    @IBOutlet var articleSource: UILabel!
     
     //cover image constraints
     @IBOutlet weak var articleTextLeading: NSLayoutConstraint!
@@ -84,6 +86,8 @@ class MaxiArticleCardViewController: UIViewController {
         
         // Load article content into text view
         articleText.text = currentArticle?.content
+        articleTitle.text = currentArticle?.title
+        articleSource.text = currentArticle?.source
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -236,6 +240,13 @@ extension MaxiArticleCardViewController {
         return inset
     }
     
+    private var lowerModuleInsetForInPosition: CGFloat {
+        let bounds = view.bounds
+//        let inset = bounds.height - bounds.width
+        let inset = bounds.height - backingImageEdgeInset - 15 - coverImageContainer.frame.height - 150
+        return (inset)
+    }
+    
     //2.
     func configureLowerModuleInStartPosition() {
         lowerModuleTopConstraint.constant = lowerModuleInsetForOutPosition
@@ -243,7 +254,8 @@ extension MaxiArticleCardViewController {
     
     //3.
     func animateLowerModule(isPresenting: Bool) {
-        let topInset = isPresenting ? 0 : lowerModuleInsetForOutPosition
+//        let topInset = isPresenting ? 0 : lowerModuleInsetForOutPosition
+        let topInset = isPresenting ? lowerModuleInsetForInPosition : lowerModuleInsetForOutPosition
         UIView.animate(withDuration: primaryDuration,
                        delay:0,
                        options: [.curveEaseIn],

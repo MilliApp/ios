@@ -387,17 +387,17 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                 <rect key="frame" x="0.0" y="15" width="414" height="721"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZgU-74-DfZ">
-                                        <rect key="frame" x="0.0" y="57" width="414" height="422"/>
+                                        <rect key="frame" x="0.0" y="56.999999999999972" width="414" height="443.33333333333326"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="box-MO-wK5">
-                                                <rect key="frame" x="189" y="4" width="36" height="22"/>
+                                                <rect key="frame" x="16" y="16" width="40" height="22"/>
                                                 <state key="normal" image="chevron"/>
                                                 <connections>
                                                     <action selector="dismissAction:" destination="8aW-e2-fyt" eventType="touchUpInside" id="sfk-4H-0T5"/>
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XVc-qs-pzU">
-                                                <rect key="frame" x="30" y="38" width="354" height="354"/>
+                                                <rect key="frame" x="30" y="59.333333333333343" width="354" height="354"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="XVc-qs-pzU" secondAttribute="height" multiplier="1:1" id="1AH-EY-hhz"/>
@@ -407,25 +407,44 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhQ-7R-T55">
+                                                <rect key="frame" x="64" y="8" width="286" height="21"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article Source" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iz1-Km-yl1">
+                                                <rect key="frame" x="153" y="29" width="108" height="20.333333333333329"/>
+                                                <color key="tintColor" red="1" green="0.25007479399999999" blue="0.084036610580000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="1" green="0.25007479399999999" blue="0.084036610580000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="HhQ-7R-T55" firstAttribute="top" secondItem="ZgU-74-DfZ" secondAttribute="top" constant="8" id="0AX-4S-O1O"/>
+                                            <constraint firstItem="box-MO-wK5" firstAttribute="leading" secondItem="ZgU-74-DfZ" secondAttribute="leading" constant="16" id="27w-rS-Bbr"/>
+                                            <constraint firstItem="box-MO-wK5" firstAttribute="top" secondItem="ZgU-74-DfZ" secondAttribute="top" constant="16" id="2XM-LP-IvC"/>
                                             <constraint firstItem="XVc-qs-pzU" firstAttribute="leading" secondItem="ZgU-74-DfZ" secondAttribute="leading" constant="30" id="Bhn-Mq-Kdc"/>
-                                            <constraint firstItem="XVc-qs-pzU" firstAttribute="top" secondItem="ZgU-74-DfZ" secondAttribute="top" constant="38" id="MWk-yC-ocv"/>
+                                            <constraint firstItem="HhQ-7R-T55" firstAttribute="centerX" secondItem="ZgU-74-DfZ" secondAttribute="centerX" id="J6c-EA-4aN"/>
+                                            <constraint firstItem="XVc-qs-pzU" firstAttribute="top" secondItem="Iz1-Km-yl1" secondAttribute="bottom" constant="10" id="MWk-yC-ocv"/>
+                                            <constraint firstItem="Iz1-Km-yl1" firstAttribute="top" secondItem="HhQ-7R-T55" secondAttribute="bottom" id="R77-Sy-31W"/>
                                             <constraint firstAttribute="bottom" secondItem="XVc-qs-pzU" secondAttribute="bottom" constant="30" id="RvR-Tm-bNw"/>
-                                            <constraint firstItem="box-MO-wK5" firstAttribute="centerX" secondItem="ZgU-74-DfZ" secondAttribute="centerX" id="UsK-0a-6ot"/>
-                                            <constraint firstItem="box-MO-wK5" firstAttribute="top" secondItem="ZgU-74-DfZ" secondAttribute="top" constant="4" id="qxW-Mr-KjK"/>
+                                            <constraint firstItem="Iz1-Km-yl1" firstAttribute="centerX" secondItem="ZgU-74-DfZ" secondAttribute="centerX" id="pgB-dB-sYi"/>
+                                            <constraint firstItem="HhQ-7R-T55" firstAttribute="leading" secondItem="box-MO-wK5" secondAttribute="trailing" constant="8" id="t2H-eH-TfA"/>
+                                            <constraint firstAttribute="trailing" secondItem="HhQ-7R-T55" secondAttribute="trailing" constant="64" id="zG0-Ew-d5A"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6A-hD-Ha7">
-                                        <rect key="frame" x="0.0" y="479" width="414" height="430"/>
+                                        <rect key="frame" x="0.0" y="500.33333333333337" width="414" height="180"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iR4-3h-1XP">
-                                        <rect key="frame" x="0.0" y="509" width="414" height="400"/>
+                                        <rect key="frame" x="0.0" y="530.33333333333337" width="414" height="150"/>
                                         <color key="backgroundColor" red="0.99004775290000002" green="0.4921230674" blue="0.057545989749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="400" id="RlK-6V-0e3"/>
+                                            <constraint firstAttribute="height" constant="150" id="RlK-6V-0e3"/>
                                         </constraints>
                                         <connections>
                                             <segue destination="S6Y-aS-TC1" kind="embed" id="kOZ-Kg-8mR"/>
@@ -466,18 +485,20 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                         <viewLayoutGuide key="safeArea" id="ZRx-mm-ava"/>
                     </view>
                     <connections>
+                        <outlet property="articleSource" destination="Iz1-Km-yl1" id="io1-fn-bb9"/>
                         <outlet property="articleText" destination="XVc-qs-pzU" id="klg-g0-oDV"/>
                         <outlet property="articleTextBottom" destination="RvR-Tm-bNw" id="rfY-8Z-5AY"/>
                         <outlet property="articleTextContainerTopInset" destination="3oE-1z-tWs" id="AfT-XT-IcC"/>
                         <outlet property="articleTextHeight" destination="4g2-07-cHK" id="0P9-F6-ONc"/>
                         <outlet property="articleTextLeading" destination="Bhn-Mq-Kdc" id="grt-bl-xp0"/>
                         <outlet property="articleTextTop" destination="MWk-yC-ocv" id="b5b-Mx-8fk"/>
+                        <outlet property="articleTitle" destination="HhQ-7R-T55" id="RZR-Pu-Xro"/>
                         <outlet property="backingImageBottomInset" destination="uIJ-Zc-i0Y" id="q8U-w1-ytQ"/>
                         <outlet property="backingImageLeadingInset" destination="i5a-GI-5kN" id="atp-ka-2af"/>
                         <outlet property="backingImageTopInset" destination="SRz-CC-BcR" id="BEl-Va-UTz"/>
                         <outlet property="backingImageTrailingInset" destination="kMY-i6-9B9" id="Tqi-Fj-uyc"/>
                         <outlet property="backingImageView" destination="FUI-1f-AEA" id="EVV-fr-Ixg"/>
-                        <outlet property="coverImageContainer" destination="ZgU-74-DfZ" id="uIp-Q0-deZ"/>
+                        <outlet property="coverImageContainer" destination="ZgU-74-DfZ" id="tYL-cI-iLj"/>
                         <outlet property="dimmerLayer" destination="Jvg-Sa-vLN" id="Rxi-dH-gjw"/>
                         <outlet property="dismissChevron" destination="box-MO-wK5" id="vFx-yZ-OiJ"/>
                         <outlet property="lowerModuleTopConstraint" destination="4o5-Am-P9p" id="6lk-IX-RKI"/>
