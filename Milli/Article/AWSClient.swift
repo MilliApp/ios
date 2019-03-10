@@ -11,7 +11,7 @@ import Foundation
 class AWSClient {
     
     private static let tagID = "[AWS_CLIENT]"
-    private static let API_URL = "https://wphd9pi355.execute-api.us-east-1.amazonaws.com/dev/audio"
+    private static let API_URL = "https://5udp6bauld.execute-api.us-east-1.amazonaws.com/dev/audio"
     
     class func getArticles(articles: [Article], completion: (() -> ())?) {
         let articleIds = articles.filter{ !$0.invalid }.map{ $0.articleId }
