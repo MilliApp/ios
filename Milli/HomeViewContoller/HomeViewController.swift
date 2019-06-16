@@ -299,13 +299,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // TODO(chwang): probably can delete this segue
-        if let vc = segue.destination as? PullUpViewController {
-            // Pass on current playing article URL
-            vc.articleURL = ArticleManager.currentArticle!.articleUrl.absoluteString
-        }
         // Mini player segue
-        else if let destination = segue.destination as? MiniPlayerViewController {
+        if let destination = segue.destination as? MiniPlayerViewController {
             miniPlayer = destination
             miniPlayer?.delegate = self
         }

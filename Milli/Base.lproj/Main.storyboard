@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6hs-qs-OjI">
-    <device id="retina5_5" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6hs-qs-OjI">
+    <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,41 +15,41 @@
             <objects>
                 <viewController title="Milli" id="ek0-nw-3Tb" customClass="HomeViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zE7-LD-udM">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-Sy-kmT">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MainTableViewCell" rowHeight="90" id="flk-wC-3pe" customClass="MainTableViewCell" customModule="Milli" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="flk-wC-3pe" id="oiH-nv-bm4">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="N3Q-s6-gEf">
-                                                    <rect key="frame" x="16" y="4" width="382" height="81.666666666666671"/>
+                                                    <rect key="frame" x="16" y="4" width="382" height="81.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="O0k-gl-Qpx">
-                                                            <rect key="frame" x="0.0" y="3.3333333333333357" width="302" height="75"/>
+                                                            <rect key="frame" x="0.0" y="3.5" width="302" height="75"/>
                                                             <subviews>
                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Mental Model Fallacy" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRb-5R-hTr">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="211.33333333333334" height="18.333333333333332"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="211.5" height="18.5"/>
                                                                     <fontDescription key="fontDescription" name="Georgia-Bold" family="Georgia" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nytimes.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKF-I7-35U">
-                                                                    <rect key="frame" x="0.0" y="20.333333333333336" width="56.666666666666664" height="11.666666666666664"/>
+                                                                    <rect key="frame" x="0.0" y="20.5" width="57" height="11.5"/>
                                                                     <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="10"/>
                                                                     <color key="textColor" red="0.2027770877" green="0.20276418330000001" blue="0.20277169349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yM-bZ-7IA">
-                                                                    <rect key="frame" x="0.0" y="34" width="297.66666666666669" height="27.333333333333329"/>
+                                                                    <rect key="frame" x="0.0" y="34" width="298" height="27.5"/>
                                                                     <string key="text">The mental model fallacy is that it’s worth it to read descriptions of mental models, written and aggregated by non-practitioners, in the pursuit of self-improvement and success.
 
 If this sounds controversial to you, let me reframe that assertion.
@@ -60,7 +60,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMY-f6-N3B">
-                                                                    <rect key="frame" x="0.0" y="63.333333333333336" width="59.333333333333336" height="11.666666666666664"/>
+                                                                    <rect key="frame" x="0.0" y="63.5" width="59.5" height="11.5"/>
                                                                     <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="10"/>
                                                                     <color key="textColor" red="0.2027770877" green="0.20276418330000001" blue="0.20277169349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -68,7 +68,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                                             </subviews>
                                                         </stackView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uYu-py-e9P">
-                                                            <rect key="frame" x="318" y="0.0" width="64" height="81.666666666666671"/>
+                                                            <rect key="frame" x="318" y="0.0" width="64" height="81.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="64" id="UDW-zz-Bq7"/>
                                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="81.5" id="t4r-DG-epy"/>
@@ -97,7 +97,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                 </prototypes>
                             </tableView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ceu-pe-qur">
-                                <rect key="frame" x="0.0" y="672" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="798" width="414" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="JDi-Vp-JFs"/>
                                 </constraints>
@@ -133,11 +133,11 @@ Let’s say for a moment that you want to become a successful mixed martial arts
             <objects>
                 <viewController storyboardIdentifier="ArticleViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mpz-Cz-9XM" customClass="ArticleViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eoy-dy-wlA">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hvX-43-RCo">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -167,7 +167,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
             <objects>
                 <viewController storyboardIdentifier="ControlViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tCe-RS-3t4" customClass="ControlViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sWi-ud-33B">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1.5" minValue="0.5" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="8hI-Ej-XSG">
@@ -248,13 +248,13 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                         <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lXL-Xw-jRc">
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXL-Xw-jRc">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ixr-52-dZZ">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="Ixr-52-dZZ">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8d-Ls-PfC">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8d-Ls-PfC">
                                             <rect key="frame" x="73" y="22" width="206" height="20.333333333333329"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -373,21 +373,21 @@ Let’s say for a moment that you want to become a successful mixed martial arts
             <objects>
                 <viewController storyboardIdentifier="MaxiArticleCardViewController" id="8aW-e2-fyt" customClass="MaxiArticleCardViewController" customModule="Milli" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DhX-Jp-POR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FUI-1f-AEA">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                             </imageView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jvg-Sa-vLN">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NmX-0w-y9a">
-                                <rect key="frame" x="0.0" y="15" width="414" height="721"/>
+                                <rect key="frame" x="0.0" y="15" width="414" height="881"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZgU-74-DfZ">
-                                        <rect key="frame" x="0.0" y="56.999999999999972" width="414" height="443.33333333333326"/>
+                                        <rect key="frame" x="0.0" y="57" width="414" height="443.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="box-MO-wK5">
                                                 <rect key="frame" x="16" y="16" width="40" height="22"/>
@@ -397,7 +397,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XVc-qs-pzU">
-                                                <rect key="frame" x="30" y="59.333333333333343" width="354" height="354"/>
+                                                <rect key="frame" x="30" y="59.5" width="354" height="354"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="XVc-qs-pzU" secondAttribute="height" multiplier="1:1" id="1AH-EY-hhz"/>
@@ -414,7 +414,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article Source" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iz1-Km-yl1">
-                                                <rect key="frame" x="153" y="29" width="108" height="20.333333333333329"/>
+                                                <rect key="frame" x="153" y="29" width="108" height="20.5"/>
                                                 <color key="tintColor" red="1" green="0.25007479399999999" blue="0.084036610580000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="0.25007479399999999" blue="0.084036610580000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -437,14 +437,14 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6A-hD-Ha7">
-                                        <rect key="frame" x="0.0" y="500.33333333333337" width="414" height="180"/>
+                                        <rect key="frame" x="0.0" y="500.5" width="414" height="230"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iR4-3h-1XP">
-                                        <rect key="frame" x="0.0" y="530.33333333333337" width="414" height="150"/>
+                                        <rect key="frame" x="0.0" y="530.5" width="414" height="200"/>
                                         <color key="backgroundColor" red="0.99004775290000002" green="0.4921230674" blue="0.057545989749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="RlK-6V-0e3"/>
+                                            <constraint firstAttribute="height" constant="200" id="RlK-6V-0e3"/>
                                         </constraints>
                                         <connections>
                                             <segue destination="S6Y-aS-TC1" kind="embed" id="kOZ-Kg-8mR"/>
@@ -501,6 +501,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                         <outlet property="coverImageContainer" destination="ZgU-74-DfZ" id="tYL-cI-iLj"/>
                         <outlet property="dimmerLayer" destination="Jvg-Sa-vLN" id="Rxi-dH-gjw"/>
                         <outlet property="dismissChevron" destination="box-MO-wK5" id="vFx-yZ-OiJ"/>
+                        <outlet property="lowerModule" destination="iR4-3h-1XP" id="fGR-mK-Xe0"/>
                         <outlet property="lowerModuleTopConstraint" destination="4o5-Am-P9p" id="6lk-IX-RKI"/>
                         <outlet property="scrollView" destination="NmX-0w-y9a" id="aPJ-81-b9J"/>
                         <outlet property="stretchySkirt" destination="o6A-hD-Ha7" id="XUG-sn-bgq"/>
@@ -519,23 +520,23 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4dg-Y9-nxJ">
-                                <rect key="frame" x="20" y="35.999999999999993" width="374" height="72.333333333333314"/>
+                                <rect key="frame" x="20" y="60" width="374" height="73"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVt-gi-9O2">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="20.333333333333332"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article Source" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6UX-n8-Ozb">
-                                        <rect key="frame" x="0.0" y="28.333333333333329" width="374" height="20.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="28.5" width="374" height="20.5"/>
                                         <color key="tintColor" red="1" green="0.25007479399999999" blue="0.084036610580000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.25007479399999999" blue="0.084036610580000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration: 0:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qd3-3v-e61">
-                                        <rect key="frame" x="0.0" y="56.666666666666664" width="374" height="15.666666666666664"/>
+                                        <rect key="frame" x="0.0" y="57" width="374" height="16"/>
                                         <color key="tintColor" red="1" green="0.25007479399999999" blue="0.084036610580000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -544,7 +545,7 @@ Let’s say for a moment that you want to become a successful mixed martial arts
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="lXx-q9-YmE">
-                                <rect key="frame" x="148" y="125" width="118" height="30"/>
+                                <rect key="frame" x="148" y="149.5" width="118" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ph3-Rq-RIG">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -615,9 +616,9 @@ Let’s say for a moment that you want to become a successful mixed martial arts
         </scene>
     </scenes>
     <resources>
-        <image name="Fast Forward Filled-50" width="100" height="100"/>
-        <image name="Play Filled-50" width="100" height="100"/>
-        <image name="Rewind Filled-50" width="100" height="100"/>
+        <image name="Fast Forward Filled-50" width="50" height="50"/>
+        <image name="Play Filled-50" width="50" height="50"/>
+        <image name="Rewind Filled-50" width="50" height="50"/>
         <image name="chevron" width="36" height="12"/>
         <image name="icon-app" width="60" height="60"/>
     </resources>

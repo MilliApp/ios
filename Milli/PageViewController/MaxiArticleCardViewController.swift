@@ -42,6 +42,7 @@ class MaxiArticleCardViewController: UIViewController {
     
     //lower module constraints
     @IBOutlet weak var lowerModuleTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lowerModule: UIView!
     
     //cover image
     @IBOutlet weak var coverImageContainer: UIView!
@@ -242,8 +243,9 @@ extension MaxiArticleCardViewController {
     
     private var lowerModuleInsetForInPosition: CGFloat {
         let bounds = view.bounds
+        let lowerModuleHeight = lowerModule.bounds.height
 //        let inset = bounds.height - bounds.width
-        let inset = bounds.height - backingImageEdgeInset - 15 - coverImageContainer.frame.height - 150
+        let inset = bounds.height - backingImageEdgeInset - 15 - coverImageContainer.frame.height - lowerModuleHeight
         return (inset)
     }
     
